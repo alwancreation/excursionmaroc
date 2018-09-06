@@ -1,0 +1,83 @@
+{% extends '@App/base.html.twig' %}
+{% form_theme form "bootstrap_3_layout.html.twig" %}
+{% block body %}
+    <div class="second-page-head">
+        <h1>{% trans %}Sign in{% endtrans %}</h1>
+    </div>
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a>
+            </li>
+            <li class="active">{% trans %}Sign in{% endtrans %}</li>
+        </ol>
+    </div>
+
+    <div class="container">
+        <h1>{% trans %}Subscribe for new agency{% endtrans %}</h1>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                	<div class="panel-body">
+                        {{ form_start(form) }}
+                        <div class="form-group">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.email) }}
+                            {{ form_widget(form.email) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.phone) }}
+                            {{ form_widget(form.phone) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.address) }}
+                            {{ form_widget(form.address) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.city) }}
+                            {{ form_widget(form.city) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.site) }}
+                            {{ form_widget(form.site) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.user_first_name) }}
+                            {{ form_widget(form.user_first_name) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.user_last_name) }}
+                            {{ form_widget(form.user_last_name) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.user_email) }}
+                            {{ form_widget(form.user_email) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.user_password) }}
+                            {{ form_widget(form.user_password) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.user_password_confirm) }}
+                            {{ form_widget(form.user_password_confirm) }}
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">{% trans %}Sign In{% endtrans %}</button>
+                        </div>
+                        {{ form_end(form) }}
+                	</div>
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,111 @@
+{% extends 'AdminBundle::base.html.twig' %}
+{% form_theme edit_form "bootstrap_3_layout.html.twig" %}
+{% form_theme meta_form "bootstrap_3_layout.html.twig" %}
+
+{% block body %}
+
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from 'AdminBundle' %}Page edit{% endtrans %}
+                <small>{% trans from 'AdminBundle' %}Page edit{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans from 'AdminBundle' %}Page edit{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+
+            <!-- Page tabs -->
+            <div class="tabbable page-tabs">
+                <ul class="nav nav-tabs" style="margin-bottom: -1px;">
+                    <li class="active"><a href="#page" data-toggle="tab"><i class="icon-paragraph-justify2"></i> {% trans from 'AdminBundle' %}Page details{% endtrans %}</a></li>
+                    <li><a href="#meta" data-toggle="tab"><i class="icon-code"></i> {% trans from 'AdminBundle' %}Meta tags{% endtrans %}</a></li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <!-- First tab -->
+                    <div class="tab-pane active fade in" id="page">
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                {{ form_start(edit_form) }}
+                                    {{ form_widget(edit_form) }}
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary" value="Edit"/>
+                                    </div>
+                                {{ form_end(edit_form) }}
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="meta">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                {{ form_start(meta_form) }}
+                                {{ form_widget(meta_form) }}
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary" value="{% trans from 'AdminBundle' %}Update{% endtrans %}"/>
+                                </div>
+                                {{ form_end(meta_form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-6">
+            {% if page.asset %}
+                <div class="panel panel-default">
+                	<div class="panel-body">
+                        <img class="img-responsive" src="{{ asset('uploads/originals/'~page.asset.assetBasepath) }}" alt="">
+                    </div>
+                </div>
+            {% endif %}
+            
+            <div class="panel panel-default">
+            	<div class="panel-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <a href="{{ path('section_new',{'id':page.pageId}) }}">{% trans from 'AdminBundle' %}Create a new section{% endtrans %}</a>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>{% trans from 'AdminBundle' %}Sectiontitle{% endtrans %}</th>
+                            <th>{% trans from 'AdminBundle' %}Sectionorder{% endtrans %}</th>
+                            <th>{% trans from 'AdminBundle' %}Actions{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for section in page.sections %}
+                            <tr>
+                                <td><a href="{{ path('section_edit', { 'id': section.sectionId }) }}">{{ section.sectionTitle }}</a></td>
+
+                                <td>{{ section.sectionOrder }}</td>
+                                <td>
+                                    <a href="{{ path('section_delete', { 'id': section.sectionId }) }}" class="btn btn-xs btn-danger">{% trans from 'AdminBundle' %}delete{% endtrans %}</a>
+                                    <a href="{{ path('section_edit', { 'id': section.sectionId }) }}" class="btn btn-xs btn-primary">{% trans from 'AdminBundle' %}edit{% endtrans %}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+            	</div>
+            </div>
+            
+        </div>
+    </div>
+
+{% endblock %}

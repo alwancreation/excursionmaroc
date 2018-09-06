@@ -1,0 +1,81 @@
+{% extends '@App/base.html.twig' %}
+
+{% block metas %}
+    <title>{{ agency }}</title>
+{% endblock %}
+
+{% block body %}
+    <div class="second-page-head">
+        {{ include('@App/inc/form-search.html.twig') }}
+    </div>
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a>
+            </li>
+            <li>
+                <a href="{{ url("agencies_index") }}">{% trans %}Agencies{% endtrans %}</a>
+            </li>
+            <li class="active">{{ agency }}</li>
+        </ol>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="agency-left-sidebar">
+                {% if agency.logo %}
+                    <div class="img-agency">
+                    <img src="{{ asset('uploads/agencies/'~agency.logo)|imagine_filter('agency_400_300') }}"
+                         class="img-responsive" alt="{{ agency }}">
+                    </div>
+                {% endif %}
+                    <h1><a href="{{ routing_service.agencyUrl(agency) }}">
+                    {{ agency }}
+                    </a>
+                    </h1>
+                    <p>
+                        {{ agency.longDescription }}
+                    </p>
+                <ul>
+                    {% if agency.phone %}
+                        <li><b>{% trans %}Phone{% endtrans %} : </b> <a href="">{{ agency.phone }}</a></li>
+                    {% endif %}
+
+                    {% if agency.email %}
+                        <li><b>{% trans %}Email{% endtrans %} : </b> <a href="mailto:{{ agency.email }}">{{ agency.email }}</a></li>
+                    {% endif %}
+
+                    {% if agency.address %}
+                        <li><b>{% trans %}Address{% endtrans %} : </b> {{ agency.address }}</li>
+                    {% endif %}
+
+                    {% if agency.site %}
+                        <li><b>{% trans %}Site{% endtrans %} : </b> <a href="{{ agency.site }}">{{ agency.site }}</a></li>
+                    {% endif %}
+                    {% if agency.city %}
+                        <li><b>{% trans %}City{% endtrans %} : </b> <a href="#">{{ agency.city }}</a></li>
+                    {% endif %}
+
+                </ul>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="products-list content-grid">
+                    <div class="row">
+                        {% for product in agency.products %}
+                            {{ include('AppBundle:default:product_line_2.html.twig',{product:product}) }}
+                        {% endfor %}
+                    </div>
+                </div>
+                {# display navigation #}
+                <div class="navigation">
+                    {#{{ knp_pagination_render(products) }}#}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+

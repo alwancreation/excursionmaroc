@@ -1,0 +1,686 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 7, ../sass/login.scss */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 11, ../sass/login.scss */
+img {
+  border: none;
+}
+
+/* line 15, ../sass/login.scss */
+html, body {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+/* line 22, ../sass/login.scss */
+body {
+  background: #507cab;
+  font-family: "lucida grande", "Segoe UI", arial, verdana, "lucida sans unicode", tahoma, sans-serif;
+  font-size: 95%;
+}
+
+/* line 28, ../sass/login.scss */
+input[type="text"], input[type="email"], input[type="password"], button[type="submit"], input[type="submit"] {
+  -webkit-appearance: none;
+}
+
+/* line 31, ../sass/login.scss */
+h2 {
+  margin-bottom: 1em;
+}
+
+/* line 34, ../sass/login.scss */
+.wrapper {
+  position: relative;
+  height: 100%;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+/* line 40, ../sass/login.scss */
+.l-left {
+  float: left;
+}
+
+/* line 43, ../sass/login.scss */
+.l-left a {
+  display: inline-block;
+  outline: none;
+}
+
+/* line 47, ../sass/login.scss */
+.partners-logos {
+  text-align: center;
+  background: #fff;
+  margin: 1px;
+  border: solid 1px #E3E3E3;
+  border-radius: 10px;
+  padding: 15px 0px;
+  font-size: 11px;
+  color: #999;
+}
+/* line 56, ../sass/login.scss */
+.partners-logos img {
+  width: 150px;
+}
+
+/* line 61, ../sass/login.scss */
+label.l-left {
+  color: #333333;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* line 67, ../sass/login.scss */
+.l-right {
+  float: right;
+}
+
+/* line 71, ../sass/login.scss */
+.footer {
+  color: #777777;
+  font-size: 72.4%;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+/* line 79, ../sass/login.scss */
+.login-links-wrapper {
+  border-bottom: 1px solid #DCDCDD;
+  line-height: 18px;
+  padding-bottom: 5px;
+}
+
+/* line 85, ../sass/login.scss */
+.login-horizontal-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0 auto;
+  min-height: 530px;
+  -webkit-transform: translate(-50%, -50%);
+  /* for Safari */
+  -ms-transform: translate(-50%, -50%);
+  /* for IE9 */
+  transform: translate(-50%, -50%);
+  width: 382px;
+}
+
+/* line 97, ../sass/login.scss */
+.login-horizontal-centered-footer {
+  margin: 0 auto;
+}
+
+/* Allow word to break onto the next line in info (text) block */
+/* line 102, ../sass/login.scss */
+.login-block .t-block {
+  word-wrap: break-word;
+}
+
+/* line 106, ../sass/login.scss */
+.login-copyright-wrapper {
+  padding: 15px 0;
+  font-size: 82%;
+  color: #878787;
+  font-family: Verdana, Tahoma, Arial;
+}
+
+/* line 113, ../sass/login.scss */
+a.link-footer:link, a.link-footer:visited {
+  color: #46799F;
+  text-decoration: none;
+  margin: 0 0 0 15px;
+  white-space: nowrap;
+}
+
+/* line 120, ../sass/login.scss */
+a.link-footer:hover {
+  text-decoration: underline;
+}
+
+/* line 124, ../sass/login.scss */
+.khadamat-ppm-logo {
+  background: url(../images/site-logo.png) no-repeat 50% 20px;
+  height: 180px;
+  background-size: contain;
+  background-position: center;
+
+}
+
+/* line 129, ../sass/login.scss */
+.login-block {
+  background: #FFFFFF;
+  border: 1px solid #E3E4E7;
+  padding: 20px 30px 40px 30px;
+  border-radius: 11px;
+}
+
+/* line 136, ../sass/login.scss */
+.login-block.readonly {
+  background: #FFFFFF;
+  border: 1px solid #E3E4E7;
+  padding: 15px 30px 15px 30px;
+}
+
+/* line 142, ../sass/login.scss */
+.validation-tip, .validation-block > div {
+  line-height: 15px;
+  color: #ffffff;
+  text-align: center;
+  padding: 8px 15px;
+  background-color: #ff8383;
+}
+
+/* line 150, ../sass/login.scss */
+.validation-block .error {
+  line-height: 1.15;
+  display: block;
+  background: #DFFFBF;
+  padding: 10px 8px;
+}
+
+/* line 156, ../sass/login.scss */
+.validation-block .error:first-child {
+  margin-bottom: 10px;
+}
+
+/* line 166, ../sass/login.scss */
+.validation-div {
+  width: 10px;
+  height: 40px;
+  background: #DFFFBF;
+  float: left;
+  position: absolute;
+  left: -15px;
+  display: none;
+}
+
+/* line 176, ../sass/login.scss */
+.error + .validation-div {
+  display: block;
+}
+
+/* line 180, ../sass/login.scss */
+.login-input {
+  min-height: 40px;
+  position: relative;
+  margin: 20px 0 0 0;
+}
+
+/* line 186, ../sass/login.scss */
+.login-input input[type="text"], .login-input input[type="email"], .login-input input[type="password"] {
+  height: 40px;
+  padding: 10.5px 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 15px;
+  background: #FBFBFB;
+  border: 1px solid #CCCCCC;
+  float: left;
+  color: #666666;
+  outline: none;
+}
+
+/* line 199, ../sass/login.scss */
+input::-ms-reveal {
+  display: none;
+}
+
+/* line 202, ../sass/login.scss */
+input::-ms-clear {
+  display: none;
+}
+
+/* line 206, ../sass/login.scss */
+.login-input input[type="text"]:focus, .login-input input[type="email"]:focus, .login-input input[type="password"]:focus, .login-input input[type="text"].focus, .login-input input[type="email"]:focus, .login-input input[type="password"].focus {
+  background: #FFFFFF;
+  border: 1px solid #41AEE9;
+  box-shadow: 0 0 4px 0 #507CAB;
+  -moz-box-shadow: 0 0 4px 0 #507CAB;
+  -webkit-box-shadow: 0 0 4px 0 #507CAB;
+  filter: progid:DXImageTransform.Microsoft.shadow(direction = 0, color = #507CAB, strength = 0);
+}
+
+/* line 215, ../sass/login.scss */
+.login-input input::-webkit-input-placeholder {
+  color: #666666;
+}
+
+/* line 216, ../sass/login.scss */
+.login-input input:-moz-placeholder {
+  color: #666666;
+}
+
+/* line 217, ../sass/login.scss */
+.login-input input:-ms-input-placeholder {
+  color: #666666;
+  font-size: 13px !important;
+  font-family: inherit;
+}
+
+/* line 218, ../sass/login.scss */
+.login-input input:focus::-webkit-input-placeholder {
+  color: #BBBBBB;
+}
+
+/* line 219, ../sass/login.scss */
+.login-input input:focus:-moz-placeholder {
+  color: #BBBBBB;
+}
+
+/* line 220, ../sass/login.scss */
+.login-input input:focus:-ms-input-placeholder {
+  color: #BBBBBB;
+  font-size: 13px !important;
+  font-family: inherit;
+}
+
+/* line 222, ../sass/login.scss */
+.login-input > .l-left {
+  padding: 10px 0 0 0;
+}
+
+/* line 226, ../sass/login.scss */
+label.placeholder {
+  color: #666666;
+  font-size: 100%;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  cursor: text;
+}
+
+/* line 234, ../sass/login.scss */
+.link-content:link, .link-content:visited {
+  color: #507CAB;
+  text-decoration: none;
+}
+
+/* line 239, ../sass/login.scss */
+.link-content:hover {
+  text-decoration: underline;
+}
+
+/* line 243, ../sass/login.scss */
+.input-content {
+  color: #507CAB;
+  text-decoration: none;
+  border: none;
+  font-size: 100%;
+  cursor: pointer;
+}
+
+/* line 251, ../sass/login.scss */
+.input-content:hover {
+  text-decoration: underline;
+}
+
+/* line 255, ../sass/login.scss */
+.arrow-blue {
+  position: relative;
+  line-height: 1.2em;
+  padding-left: 18px;
+}
+
+/* line 261, ../sass/login.scss */
+.link-pass {
+  position: absolute;
+  float: right;
+  top: 0;
+  line-height: 38px;
+  font-size: 15px;
+  right: 0;
+  padding: 0 10px 0 0;
+}
+
+/* line 271, ../sass/login.scss */
+button {
+  width: 0;
+  overflow: visible;
+}
+
+/* line 276, ../sass/login.scss */
+.button-light-blue {
+  padding: 0 10px;
+  height: 40px;
+  min-width: 120px;
+  background: #507CAB;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #FFFFFF;
+  font-size: 100%;
+  font-size: 13px;
+}
+
+/* line 287, ../sass/login.scss */
+*:first-child + html .button-light-blue {
+  padding: 0;
+}
+
+/* line 290, ../sass/login.scss */
+.button-light-blue:hover {
+  background: #446F9E;
+}
+
+/* line 294, ../sass/login.scss */
+.button-light-blue:active, .button-light-blue:visited {
+  border: none;
+}
+
+/* line 298, ../sass/login.scss */
+.button-light-blue > img.active {
+  display: block;
+  padding: 2px 12px 0 12px;
+}
+
+/* line 303, ../sass/login.scss */
+.button-light-blue > img.loading {
+  display: none;
+  padding: 2px 1px 0;
+}
+
+/* line 308, ../sass/login.scss */
+.button-light-blue.loading > img.active {
+  display: none;
+}
+
+/* line 312, ../sass/login.scss */
+.button-light-blue.loading > img.loading {
+  display: block;
+}
+
+/* line 316, ../sass/login.scss */
+*:first-child + html .button-light-blue > img {
+  padding: 2px 22px 0 22px;
+}
+
+/* line 319, ../sass/login.scss */
+.ssoForm .checkbox {
+  background: transparent;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+}
+
+/* line 326, ../sass/login.scss */
+.ssoForm .checkbox input[type="checkbox"] {
+  position: relative;
+  top: 2px;
+}
+
+/* line 331, ../sass/login.scss */
+.ssoForm .checkbox.rich-checkbox {
+  background: url("../images/checkbox-sprite.png") no-repeat 0 0 transparent;
+  margin: 1px 5px 0 0;
+}
+
+/* line 336, ../sass/login.scss */
+.ssoForm .checkbox.rich-checkbox:hover {
+  background-position: 0 -20px;
+}
+
+/* line 340, ../sass/login.scss */
+.ssoForm .checkbox.rich-checkbox.checkbox-checked {
+  background-position: -20px 0;
+}
+
+/* line 344, ../sass/login.scss */
+.ssoForm .checkbox.rich-checkbox.checkbox-checked:hover {
+  background-position: -20px -20px;
+}
+
+/* line 348, ../sass/login.scss */
+.ssoForm .checkbox.rich-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  filter: alpha(opacity=0);
+  -khtml-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+  outline-style: none;
+  cursor: pointer;
+}
+
+/* line 359, ../sass/login.scss */
+.alternative-login {
+  position: relative;
+  margin-top: 30px;
+  padding: 20px 0;
+  font-size: 0;
+  white-space: nowrap;
+}
+
+/* line 367, ../sass/login.scss */
+.alternative-login:before {
+  content: '';
+  width: 119%;
+  height: 1px;
+  position: absolute;
+  left: -31px;
+  top: 0;
+  background-color: #cccccc;
+}
+
+/* line 377, ../sass/login.scss */
+.alternative-login > p {
+  font-size: 13px;
+  line-height: 18px;
+  color: #333333;
+  margin-bottom: 10px;
+  white-space: normal;
+}
+
+/* line 385, ../sass/login.scss */
+.alternative-login-block {
+  /*display: block;*/
+  border-radius: 5px;
+  background-color: #f3f3f4;
+  text-align: center;
+  padding: 11px 0;
+  font-size: 13px;
+  color: #507CAB;
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  width: 150px;
+  vertical-align: top;
+}
+
+/* line 400, ../sass/login.scss */
+.alternative-login-block:hover span {
+  text-decoration: underline;
+}
+
+/* line 404, ../sass/login.scss */
+.alternative-login-block > span {
+  margin-left: 9px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/*.alternative-login-block > span {
+    margin-left: 12px;
+}*/
+/* line 415, ../sass/login.scss */
+.g-block {
+  margin-right: 20px;
+}
+
+/* line 419, ../sass/login.scss */
+.g-block:before, .office-block:before {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: 12px;
+}
+
+/* line 426, ../sass/login.scss */
+.g-block:before {
+  width: 16px;
+  height: 17px;
+  background: url("../images/login-sprite.png") no-repeat 0 0;
+  /*    position: static;
+      display: inline-block;
+      vertical-align: middle;*/
+}
+
+/* line 434, ../sass/login.scss */
+.office-block:before {
+  width: 14px;
+  height: 17px;
+  background: url("../images/login-sprite.png") no-repeat -18px 1px;
+}
+
+/* line 440, ../sass/login.scss */
+.signup-block {
+  font-size: 15px;
+  color: #507CAB;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* line 447, ../sass/login.scss */
+.s-block {
+  text-align: center;
+  color: #777777;
+  font-size: 85.5%;
+  margin: 15px 0;
+}
+
+/* line 454, ../sass/login.scss */
+.t-block {
+  color: #333333;
+  font-size: 15px;
+  line-height: 21px;
+  padding-top: 20px;
+}
+
+@media screen and (max-width: 360px) {
+  /* line 462, ../sass/login.scss */
+  .login-horizontal-centered {
+    width: 356px;
+    margin-left: -178px;
+    -webkit-transform: translate(0, -50%);
+    /* for Safari */
+    -ms-transform: translate(0, -50%);
+    /* for IE9 */
+    transform: translate(0, -50%);
+  }
+
+  /* line 470, ../sass/login.scss */
+  .login-block {
+    padding: 32px 20px 24px 20px;
+  }
+
+  /* line 474, ../sass/login.scss */
+  .g-block {
+    margin-right: 14px;
+  }
+}
+@media screen and (max-width: 320px) {
+  /* line 480, ../sass/login.scss */
+  .login-horizontal-centered {
+    width: 320px;
+    margin-left: -160px;
+  }
+
+  /* line 485, ../sass/login.scss */
+  .login-block {
+    padding: 32px 20px 24px 20px;
+  }
+
+  /* line 489, ../sass/login.scss */
+  .alternative-login-block {
+    width: 132px;
+  }
+}
+/* line 494, ../sass/login.scss */
+.ssoForm .leftPane {
+  position: absolute;
+  top: 0;
+  right: 270px;
+  width: 200px;
+  display: none;
+}
+
+/* line 501, ../sass/login.scss */
+table {
+  border: 0px;
+  border-collapse: collapse;
+}
+
+/* line 505, ../sass/login.scss */
+table td {
+  padding: 0px;
+}
+
+/* line 508, ../sass/login.scss */
+.b-table {
+  width: 100%;
+  vertical-align: middle;
+}
+
+/* line 510, ../sass/login.scss */
+.get-app {
+  margin: 60px auto 20px;
+  position: relative;
+  width: 100%;
+}
+
+/* line 515, ../sass/login.scss */
+.get-app .tip {
+  position: absolute;
+  top: -35px;
+  left: 140px;
+  background-color: #666666;
+  color: white;
+  padding: 9px;
+  opacity: 0;
+}
+
+/* line 524, ../sass/login.scss */
+.get-app .tip:after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  margin-left: -7px;
+  width: 1px;
+  height: 1px;
+  border-width: 7px 7px 0px 7px;
+  border-color: #666666 transparent;
+  border-style: solid;
+}
+
+/* line 537, ../sass/login.scss */
+.get-app .icon:hover {
+  background-position: -52px 10px;
+}
+
+/* line 540, ../sass/login.scss */
+.get-app .icon:hover ~ .tip {
+  opacity: 1;
+}
+
+/* line 543, ../sass/login.scss */
+.get-app .icon:active {
+  background-position: -104px 10px;
+}
+
+/* line 546, ../sass/login.scss */
+iframe {
+  height: 0;
+  width: 0;
+}

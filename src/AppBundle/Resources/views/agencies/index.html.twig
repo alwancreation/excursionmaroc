@@ -1,0 +1,48 @@
+{% extends '@App/base.html.twig' %}
+{% if page is defined and page.meta %}
+    {% block metas %}
+        <title>{{ page.meta.metaTitle }}</title>
+        <meta name="description" content="{{ page.meta.metaDescription }}">
+        <meta name="keywords" content="{{ page.meta.metaKeywords }}">
+        {{ page.meta.metaKeywords|raw }}
+    {% endblock %}
+{% endif %}
+{% block body %}
+    <div class="second-page-head">
+        {{ include('@App/inc/form-search.html.twig') }}
+    </div>
+    <section class="agencies-list">
+        <div class="container">
+            <h2 class="page-title">{% trans %}Agencies list{% endtrans %}</h2>
+            <div class="row row-agencies">
+                {% for agency in agencies %}
+                    <div class="col-md-3 col-sm-4 col-xs-6">
+                        <div class="one-agency">
+                            <a href="{{ routing_service.agencyUrl(agency) }}" class="img-name">
+                                {% if agency.logo %}
+                                    <img src="{{ asset('uploads/agencies/'~agency.logo)|imagine_filter('agency_400_300') }}"
+                                         class="img-responsive" alt="{{ agency }}">
+                                {% else %}
+                                    <img src="{{ asset('uploads/agencies/no-logo.jpg')|imagine_filter('agency_400_300') }}"
+                                         class="img-responsive" alt="{{ agency }}">
+                                {% endif %}
+                                <b>{{ agency }}</b>
+                            </a>
+                            {% if agency.city %}
+                                <a href="#">{{ agency.city }}</a> /
+                            {% endif %}
+
+                            <a href="{{ routing_service.agencyUrl(agency) }}">{{ agency.products.count }} {% trans %}Product(s){% endtrans %}</a>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="agency-sign-in-btn">
+            <a href="{{ url('agency_sign_in') }}" class="btn btn-primary">{% trans %}SignIn New Agency{% endtrans %}</a>
+        </div>
+    </section>
+{% endblock %}
+

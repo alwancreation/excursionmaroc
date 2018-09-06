@@ -1,0 +1,53 @@
+{% extends "AdminBundle::base.html.twig" %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block body %}
+
+
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                Equipe
+                <small>Ajouter</small>
+            </h3>
+        </div>
+
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                {% trans from 'AdminBundle' %}Add new User{% endtrans %}
+            </h6>
+        </div>
+        <div class="panel-body">
+
+
+            <div class="row">
+
+                <div class="col-sm-6">
+
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+
+                    {{ form_widget(form) }}
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+
+                    {{ form_end(form) }}
+
+                    <div class="panel panel-default">
+                    	<div class="panel-body">
+                            <a href="{{ path('users') }}" class="btn btn-default">
+                                Retour a la liste
+                            </a>
+                    	</div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from 'AdminBundle' %}Settings{% endtrans %}
+                <small>{% trans from 'AdminBundle' %}configure your application settings{% endtrans %}</small>
+            </h3>
+        </div>
+
+    </div>
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans from 'AdminBundle' %}Settings{% endtrans %}</li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{% trans from "AdminBundle" %}Settings{% endtrans %}</h3>
+                </div>
+            	<div class="panel-body">
+                    <form action="{{ path('settings_update') }}" method="post">
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Application Name{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="application_name" value="{{ (settings.application_name is defined)?settings.application_name:'' }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Application Email{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="application_email" value="{{ (settings.application_email is defined)?settings.application_email:'' }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Application Phone 1{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="application_phone_1" value="{{ (settings.application_phone_1 is defined)?settings.application_phone_1:'' }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Application Phone 2{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="application_phone_2" value="{{ (settings.application_phone_2 is defined)?settings.application_phone_2:'' }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Application Fax{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="application_fax" value="{{ (settings.application_fax is defined)?settings.application_fax:'' }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Application Url{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="application_url" value="{{ (settings.application_url is defined)?settings.application_url:'' }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Application Address{% endtrans %}</label>
+                            <div class="controls">
+                                <textarea class="form-control" rows="6" name="application_address">{{ (settings.application_address is defined)?settings.application_address:'' }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Application Description{% endtrans %}</label>
+                            <div class="controls">
+                                <textarea class="form-control" rows="6" name="application_description">{{ (settings.application_description is defined)?settings.application_description:'' }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">{% trans from "AdminBundle" %}
+                                Save{% endtrans %}</button>
+                        </div>
+                    </form>
+            	</div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{% trans from "AdminBundle" %}Social{% endtrans %}</h3>
+                </div>
+            	<div class="panel-body">
+                    <form action="{{ path('settings_update') }}" method="post">
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Facebook Url{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="facebook_url" value="{{ (settings.facebook_url is defined)?settings.facebook_url:'' }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Twitter Url{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="twitter_url" value="{{ (settings.twitter_url is defined)?settings.twitter_url:'' }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Linkedin Url{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="linkedin_url" value="{{ (settings.linkedin_url is defined)?settings.linkedin_url:'' }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Youtube Url{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="youtube_url" value="{{ (settings.youtube_url is defined)?settings.youtube_url:'' }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Google Plus Url{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="google_plus_url" value="{{ (settings.google_plus_url is defined)?settings.google_plus_url:'' }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Pinterest Url{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="pinterest_url" value="{{ (settings.pinterest_url is defined)?settings.pinterest_url:'' }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Instagram Url{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="instagram_url" value="{{ (settings.instagram_url is defined)?settings.instagram_url:'' }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">{% trans from "AdminBundle" %}Skype pseudo{% endtrans %}</label>
+                            <div class="controls">
+                                <input type="text" class="form-control" name="skype_pseudo" value="{{ (settings.skype_pseudo is defined)?settings.skype_pseudo:'' }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">{% trans from "AdminBundle" %}
+                                Save{% endtrans %}</button>
+                        </div>
+                    </form>
+            	</div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

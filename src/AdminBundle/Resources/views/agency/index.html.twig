@@ -1,0 +1,68 @@
+{% extends '@Admin/base.html.twig' %}
+
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from "AdminBundle" %}Agencies list{% endtrans %}
+                <small>{% trans from "AdminBundle" %}Agencies list{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('agency_new') }}" class="btn btn-sm btn-success pull-right">{% trans %}Create a new agency{% endtrans %}</a>
+        {% endif %}
+
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans %}Admin Dashboard{% endtrans %}</a></li>
+            <li class="active">{% trans from "AdminBundle" %}Agencies list{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="panel panel-default">
+    	<div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>{% trans %}agency.Name{% endtrans %}</th>
+                    <th>{% trans %}agency.Phone{% endtrans %}</th>
+                    <th>{% trans %}agency.Email{% endtrans %}</th>
+                    <th>{% trans %}agency.City{% endtrans %}</th>
+                    <th>{% trans %}agency.Valid{% endtrans %}</th>
+                    <th>{% trans %}agency.Products{% endtrans %}</th>
+                    <th>{% trans %}agency.Actions{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for agency in agencies %}
+                    <tr>
+                        <td><a href="{{ path('agency_show', { 'id': agency.id }) }}">{{ agency.name }}</a></td>
+                        <td>{{ agency.phone }}</td>
+                        <td>{{ agency.email }}</td>
+
+                        <td>
+                            {% if agency.city %}
+                                {{ agency.city.name }}
+                            {% endif %}
+                        </td>
+                        <td>{% if agency.valid %}Yes{% else %}No{% endif %}</td>
+                        <td>{{ agency.products|length }}</td>
+                        <td>
+                            <a class="btn btn-xs btn-info" href="{{ path('agency_show', { 'id': agency.id }) }}">{% trans %}show{% endtrans %}</a>
+                            <a class="btn btn-xs btn-primary" href="{{ path('agency_edit', { 'id': agency.id }) }}">{% trans %}edit{% endtrans %}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+    	</div>
+    </div>
+
+
+
+{% endblock %}

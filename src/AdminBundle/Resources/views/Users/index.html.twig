@@ -1,0 +1,64 @@
+{% extends "AdminBundle::base.html.twig" %}
+
+{% block body %}
+
+
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from "AdminBundle" %}Users{% endtrans %}
+                <small>{% trans from "AdminBundle" %}Users{% endtrans %}</small>
+            </h3>
+        </div>
+        <div class="range">
+            <a href="{{ url('users_new') }}" class="btn btn-success btn-sm pull-right">
+                <i class="fa fa-plus"></i> {% trans from "AdminBundle" %}New User{% endtrans %}
+            </a>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                {% trans from "AdminBundle" %}Users{% endtrans %}
+            </h6>
+        </div>
+        <div class="panel-body">
+            <div class="datatable">
+
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{% trans from "AdminBundle" %}Contact{% endtrans %}</th>
+                        <th>{% trans from "AdminBundle" %}Date Expiration{% endtrans %}</th>
+                        <th>{% trans from "AdminBundle" %}Email{% endtrans %}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entity in users %}
+                        <tr>
+                            <td>{{ entity }}</td>
+                            <td>Date </td>
+                            <td>{{ entity.email }}</td>
+
+                            <td class="text-right">
+                                <a href="{{ path('users_edit', { 'id': entity.id }) }}" class="btn btn-success btn-xs">
+                                    {% trans from "AdminBundle" %}Edit{% endtrans %}</a>
+                                <a href="{{ path('users_show_profile', { 'id': entity.id }) }}"
+                                   class="btn btn-success btn-xs">
+                                    {% trans from "AdminBundle" %}Show{% endtrans %}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

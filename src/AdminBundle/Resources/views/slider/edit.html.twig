@@ -1,0 +1,88 @@
+{% extends 'AdminBundle::base.html.twig' %}
+{% form_theme edit_form "bootstrap_3_layout.html.twig"  %}
+
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from 'AdminBundle' %}Slider edit{% endtrans %}
+                <small>{% trans from 'AdminBundle' %}Slider edit{% endtrans %}</small>
+            </h3>
+        </div>
+
+    </div>
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans from 'AdminBundle' %}Slider edit{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="content">
+        
+        <!-- BEGIN BASIC FORM ELEMENTS-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4 class="panel-title">{% trans from "AdminBundle" %}Slider edit{% endtrans %}</h4></div>
+                	<div class="panel-body">
+                        {{ form_start(edit_form) }}
+                        {{ form_widget(edit_form) }}
+                        <input type="submit" class="btn btn-primary" value="{% trans from 'AdminBundle' %}Edit{% endtrans %}"/>
+                        {{ form_end(edit_form) }}
+                	</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                	<div class="panel-body">
+                        <form action="{{ url('slider_add_photo',{id:slider.sliderId}) }}" class="dropzone no-margin" enctype="multipart/form-data">
+                            <div class="fallback">
+                                <input name="photos" type="file" multiple />
+                            </div>
+                        </form>
+                	</div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">
+                            {% trans from "AdminBundle" %}Sliders{% endtrans %}
+                        </h6>
+                    </div>
+                	<div class="panel-body">
+                        <div class="row">
+                            {% for asset in slider.assets %}
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="block">
+                                        <div class="thumbnail">
+                                            <img src="{{ asset("uploads/originals/"~asset.assetBasepath) | imagine_filter('admin_thumb') }}" alt="">
+                                            <div class="caption text-center">
+
+                                                <div class="icons-group">
+                                                    <a href="{{ url("delete_slider_photo",{asset_id:asset.assetId,slider_id:slider.sliderId}) }}" title="" class="tip" data-original-title="Delete" onclick="return confirm('Confirmer !')"><i class="icon-remove"></i></a>
+                                                    <a href="{{ url("edit_slider_photo",{asset_id:asset.assetId,slider_id:slider.sliderId}) }}" title="" class="tip" data-original-title="Edit"><i class="icon-pencil"></i></a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+                        </div>
+                        <div class="clearfix"></div>
+
+
+                        
+                	</div>
+                </div>
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+/* line 4, ../sass/custum_bootstrap.scss */
+.form-control {
+  border-radius: 0;
+  border-color: #DDDDDD;
+}
+
+/* line 9, ../sass/custum_bootstrap.scss */
+.panel {
+  border-color: #E7E7E7;
+  box-shadow: 0 1px 0 #cfcfcf;
+  border-radius: 0px;
+}
+
+/* line 14, ../sass/custum_bootstrap.scss */
+.panel-default {
+  margin-bottom: 10px;
+}
+/* line 19, ../sass/custum_bootstrap.scss */
+.panel-default .panel-heading h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+}
+
+/* line 26, ../sass/custum_bootstrap.scss */
+.panel-default > .panel-heading {
+  color: #8e8e8e;
+  font-family: 'Roboto', sans-serif;
+}

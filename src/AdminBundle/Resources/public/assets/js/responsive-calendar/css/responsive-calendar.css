@@ -1,0 +1,76 @@
+.responsive-calendar .controls {
+  text-align: center;
+}
+.responsive-calendar .controls a {
+  cursor: pointer;
+}
+.responsive-calendar .controls h4 {
+  display: inline;
+}
+.responsive-calendar .day-headers,
+.responsive-calendar .days {
+  font-size: 0;
+}
+.responsive-calendar .day {
+  display: inline-block;
+  position: relative;
+  font-size: 14px;
+  width: 14.285714285714286%;
+  text-align: center;  
+}
+.responsive-calendar .day a {
+  color: #fff;
+  background: #00b337;
+  border-radius: 4px;
+  margin: 5%;
+  display: block;
+  cursor: pointer;
+  padding: 20% 0 20% 0;
+}
+.responsive-calendar .day a:hover {  
+  text-decoration: none;
+}
+.responsive-calendar .day.header {
+  border-bottom: 1px gray solid;
+}
+.responsive-calendar .day.active a {
+  
+  color: #000;
+}
+.responsive-calendar .day.active a:hover {
+  
+}
+.responsive-calendar .day.active .not-current {
+  
+  color: #ffffff;
+}
+.responsive-calendar .day.active .not-current:hover {
+  
+}
+.responsive-calendar .day.not-current a {
+  color: #ddd;
+}
+.responsive-calendar .day .badge {
+  position: absolute;
+  display: inline-block;
+  font-size: 14px;
+  width: 90%;
+  height:90%;
+  padding-top:10%;
+  text-align: center;
+  top:5%;
+  left:5%;
+  z-index: 1;
+  border-radius:4px !important;
+}
+.badge-rouge {
+  background: #d83c06;
+}
+
+.badge-vert {
+  background: #00b337;
+}
+
+.badge-orange {
+  background: #E48561;
+}

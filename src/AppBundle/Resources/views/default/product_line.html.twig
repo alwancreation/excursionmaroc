@@ -1,0 +1,40 @@
+
+<div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="grid-item grid-item-product">
+        <a href="{{ routing_service.url(product) }}" class="item-thumbnail to-hover">
+            {% if product.mainAsset %}
+                <img src="{{ asset("uploads/originals/"~product.mainAsset.assetBasePath)|imagine_filter("product_400_400") }}" alt="Photo {{ product }}" />
+            {% else %}
+                <img src="http://placehold.it/400x250/999999/E3E3E3" alt="Photo {{ product }}" />
+            {% endif %}
+            <span class="on-hover"></span>
+        </a>
+
+        <div class="item-content">
+            <div class="item-title">
+                <h3 class="item-title-title"><a href="{{ routing_service.url(product) }}"> {{ product }} </a>  </h3>
+
+                <div class="item-price">
+                    <div class="price-label">{% trans %}Start From{% endtrans %}
+                        <span class="price-number">{{ product.productPrice|my_price }}</span>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+            <div class="item-details">
+                {{ product.productShortDescription|slice(0,200) }}
+            </div>
+        </div>
+        <div class="item-footer">
+            <div class="product-actions">
+                <a href="{{ routing_service.url(product) }}" class="product-more">{% trans %}+ MORE INFOS{% endtrans %}</a>
+                <a href="{{ routing_service.url(product) }}" class="product-book"><i class="icon-cart"></i> {% trans %}BOOK{% endtrans %}</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+    </div>
+
+</div>

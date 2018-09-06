@@ -1,0 +1,45 @@
+{% extends 'AdminBundle::base.html.twig' %}
+{% form_theme edit_form "bootstrap_3_layout.html.twig" %}
+
+{% block body %}
+
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from 'AdminBundle' %}Destination edit{% endtrans %}
+                <small>{% trans from 'AdminBundle' %}Destination edit{% endtrans %}</small>
+            </h3>
+        </div>
+
+    </div>
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans from 'AdminBundle' %}Destination edit{% endtrans %}</li>
+        </ul>
+    </div>
+    {% if destination.mainAsset %}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <img src="{{ asset('uploads/originals/'~destination.mainAsset.assetBasePath) }}" alt="" class="img-responsive">
+            </div>
+        </div>
+    {% endif %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+        {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" class="btn btn-primary" value="Edit"/>
+        {{ form_end(edit_form) }}
+        </div>
+
+    </div>
+    <div class="panel panel-default">
+    	<div class="panel-body">
+            <a href="{{ path('destination_index') }}" class="btn btn-default">{% trans from 'AdminBundle' %}Back to the list{% endtrans %}</a>
+    	</div>
+    </div>
+{% endblock %}

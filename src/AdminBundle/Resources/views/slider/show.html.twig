@@ -1,0 +1,41 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>{% trans from 'AdminBundle' %}Slider{% endtrans %}</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>{% trans from 'AdminBundle' %}Sliderid{% endtrans %}</th>
+                <td>{{ slider.sliderId }}</td>
+            </tr>
+            <tr>
+                <th>{% trans from 'AdminBundle' %}Slidername{% endtrans %}</th>
+                <td>{{ slider.sliderName }}</td>
+            </tr>
+            <tr>
+                <th>{% trans from 'AdminBundle' %}Slidertitle{% endtrans %}</th>
+                <td>{{ slider.sliderTitle }}</td>
+            </tr>
+            <tr>
+                <th>{% trans from 'AdminBundle' %}Sliderdescription{% endtrans %}</th>
+                <td>{{ slider.sliderDescription }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('slider_index') }}">{% trans from 'AdminBundle' %}Back to the list{% endtrans %}</a>
+        </li>
+        <li>
+            <a href="{{ path('slider_edit', { 'id': slider.sliderId }) }}">{% trans from 'AdminBundle' %}
+                Edit{% endtrans %}</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="{% trans from 'AdminBundle' %}Delete{% endtrans %}">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

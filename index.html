@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Skeleton: Responsive CSS Boilerplate</title>
+	<title>Morocco Excursions selection - Excursion Maroc</title>
 	<meta name="description" content="">
-	<meta name="author" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300,600' rel='stylesheet' type='text/css' />
 	<link rel="stylesheet" href="css/normalize.css">
@@ -22,8 +21,7 @@
 	</div>
 	<header>
 		<h1><a href="/" class="logo" title="Excursion Maroc" data-scroll="">Excursion Maroc</a></h1>
-		<a href="#" class="nav-toggle" aria-hidden="true">Menu</a>
-		<nav class="nav-collapse nav-collapse-0 closed" aria-hidden="false" style="transition: max-height 284ms ease 0s; position: relative;">
+		<nav class="nav-collapse">
 			<ul>
 				<li class="menu-item "><a href="#">Home</a></li>
 				<li class="menu-item "><a href="#">Excursions</a></li>
@@ -40,7 +38,7 @@
           <h6>About Morocco excursion and trips from diffirent cities and locations.</h6>
           <form method="get" action="" id="">
             <span class="input">
-            <input name="dom" id="dom" value="" class="input-search required blk" type="text" placeholder="Try Name Or Destination">
+            <input name="query" id="query" value="" class="input-search required blk" type="text" placeholder="Try Name Or Destination">
             <button style="width:104px" id="searchSubmit" class="button button-m button-red" type="submit">OK</button>
             
             </span>
@@ -54,5 +52,8 @@
   </section>
 	
   </div>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/responsive-nav.js"></script>
+  <script src="js/fixed-responsive-nav.js"></script>
 </body>
 </html>

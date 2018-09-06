@@ -1,0 +1,50 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-title">
+        <h3>
+            {% trans from 'AdminBundle' %}Vehicles list{% endtrans %}
+            <small>{% trans from 'AdminBundle' %}Vehicles list{% endtrans %}</small>
+        </h3>
+    </div>
+
+</div>
+<!-- Breadcrumbs line -->
+<div class="breadcrumb-line">
+    <ul class="breadcrumb">
+        <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+        <li class="active">{% trans from 'AdminBundle' %}Vehicles list{% endtrans %}</li>
+    </ul>
+</div>
+<div class="content">
+    <div class="panel panel-default">
+    	<div class="panel-body">
+            <a class="btn btn-primary pull-right" href="{{ path('vehicules_new') }}">{% trans from 'AdminBundle' %}Create a new vehicle{% endtrans %}</a>
+    	</div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans from 'AdminBundle' %}Vehiclename{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}Vehicleprice{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}Actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vehicle in vehicles %}
+            <tr>
+                <td><a href="{{ path('vehicules_show', { 'id': vehicle.vehicleId }) }}">{{ vehicle.vehicleName }}</a></td>
+                <td>{{ vehicle.vehiclePrice }}</td>
+                <td>
+                    <a class="btn btn-xs btn-primary" href="{{ path('vehicules_edit', { 'id': vehicle.vehicleId }) }}">{% trans from 'AdminBundle' %}edit{% endtrans %}</a>
+                    <a class="btn btn-xs btn-danger" href="{{ path('vehicules_delete', { 'id': vehicle.vehicleId }) }}">{% trans from 'AdminBundle' %}delete{% endtrans %}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

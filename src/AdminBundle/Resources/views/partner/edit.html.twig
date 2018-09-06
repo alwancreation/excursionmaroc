@@ -1,0 +1,36 @@
+{% extends '@Admin/base.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from "AdminBundle" %}Partner edit{% endtrans %}
+                <small>{% trans from "AdminBundle" %}Partner edit{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    {{ form_start(edit_form) }}
+                    {{ form_widget(edit_form) }}
+                    <input type="submit" value="Edit" class="btn btn-primary"/>
+                    {{ form_end(edit_form) }}
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+            	<div class="panel-body">
+                    {% if partner.logo %}
+                        <img src="{{ asset('uploads/partners/'~partner.logo) }}" class="img-responsive" alt="">
+                    {% endif %}
+            	</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

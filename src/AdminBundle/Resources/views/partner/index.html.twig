@@ -1,0 +1,59 @@
+{% extends '@Admin/base.html.twig' %}
+
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from "AdminBundle" %}Partners list{% endtrans %}
+                <small>{% trans from "AdminBundle" %}Partners list{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <a href="{{ path('partner_new') }}" class="btn btn-sm pull-right">{% trans %}Create a new partner{% endtrans %}</a>
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans %}Admin Dashboard{% endtrans %}</a></li>
+            <li class="active">{% trans from "AdminBundle" %}Partners list{% endtrans %}</li>
+        </ul>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="datatable-devices">
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>{% trans %}Name{% endtrans %}</th>
+                    <th>{% trans %}Site{% endtrans %}</th>
+                    <th>{% trans %}Email{% endtrans %}</th>
+                    <th>{% trans %}Phone{% endtrans %}</th>
+                    <th>{% trans %}Actions{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for partner in partners %}
+                    <tr>
+                        <td><a href="{{ path('partner_edit', { 'id': partner.id }) }}">{{ partner.name }}</a></td>
+                        <td>{{ partner.site }}</td>
+                        <td>{{ partner.email }}</td>
+                        <td>{{ partner.phone }}</td>
+                        <td>
+
+                            <a class="btn btn-xs btn-danger" onclick="return confirm('Confirm !')" href="{{ path('partner_delete', { 'id': partner.id }) }}">{% trans %}delete{% endtrans %}</a>
+
+                            <a class="btn btn-xs btn-primary" href="{{ path('partner_edit', { 'id': partner.id }) }}">{% trans %}edit{% endtrans %}</a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

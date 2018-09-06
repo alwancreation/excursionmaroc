@@ -1,0 +1,153 @@
+{% for section in sections %}
+    {% if section.sectionType==4 %}
+        <div class="container">
+            <h2 class="main-title">
+                {{ section.sectionTitle }}
+                <span>{{ section.sectionSubTitle }}</span>
+            </h2>
+            {% if (section.sectionDescription!='' and section.sectionDescription is not null ) %}
+                <div>{{ section.sectionDescription|raw }}</div>
+            {% endif %}
+
+            <div class="products-list content-grid">
+                <div class="row">
+                    {% for product in section.products %}
+                        {{ include('AppBundle:default:product_line_2.html.twig',{product:product}) }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {#Content title + subtitle + desc#}
+    {% if section.sectionType is null %}
+        <section class="home-about-us">
+            <div class="container">
+                <h2>{{ section.sectionTitle }}</h2>
+                <h3>{{ section.sectionSubTitle }}</h3>
+                <div>{{ section.sectionDescription|raw }}</div>
+            </div>
+        </section>
+    {% endif %}
+    {# scrollable backgrount 2 cols #}
+    {% if section.sectionType == 1 %}
+        <section class="home-vision-mission" style="background-image: url({{ (section.mainAsset)?asset('uploads/images/home/'~section.mainAsset.assetBasePath):'' }});">
+            <div class="container">
+                <div class="row">
+                    {% for asset in section.assets %}
+                        <div class="col-sm-6">
+                            <div class="vm-bloc">
+                                <h3>{{ asset.assetTitle }}</h3>
+                                <p>{{ asset.assetDescription|raw }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {#Gallery center#}
+    {% if section.sectionType == 2 %}
+        <section class="about-us-gallery">
+            <div class="container">
+                <div class="row">
+                    {% for asset in section.assets %}
+                        <div class="col-sm-4">
+                            <div class="bloc-animate">
+                                <h3 class="title-bloc"><span>{{ asset.assetTitle }}</span></h3>
+                                <div class="content-container">
+                                    <h2>{{ asset.assetLinkTitle }}</h2>
+                                    <p>{{ asset.assetDescription|raw }}</p>
+                                </div>
+                                <div class="img-container">
+                                    <img src="{{ asset('/uploads/images/home/'~asset.assetBasePath)|imagine_filter('product_400_250') }}" alt="{{ asset.assetTitle }}">
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </section>
+    {% endif %}
+
+    {#Gallery full#}
+
+    {% if section.sectionType == 3 %}
+        <section class="section-gallery">
+            <h2>{{ section.sectionTitle }}</h2>
+            <p>{{ section.sectionSubTitle }}</p>
+            <div class="row row-gallery">
+                {% for asset in section.assets %}
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <div class="full-gallery-container">
+                            <a href="{{ (asset.assetLink is not null)?asset.assetLink:asset('uploads/images/home/'~asset.assetBasePath) }}">
+                                <img src="{{ asset('uploads/images/home/'~asset.assetBasePath)|imagine_filter('gallery_400_300') }}" class="img-responsive" alt="{{ asset.assetTitle }}">
+                                <b>{{ asset.assetTitle }}</b>
+                                <span>{{ asset.assetLinkTitle }}</span>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <p>
+                <br>
+                {{ section.sectionDescription|raw }}
+                <br>
+            </p>
+        </section>
+    {% endif %}
+    {% if section.sectionType == 5 %}
+        <section class="section-gallery">
+            <h2>{{ section.sectionTitle }}</h2>
+            <p>{{ section.sectionSubTitle }}</p>
+            <div class="row row-gallery">
+                {% for destination in section.destinations %}
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <div class="full-gallery-container">
+                            <a href="{{ routing_service.destinationUrl(destination) }}">
+                                {% if destination.mainAsset %}
+                                    <img src="{{ asset('uploads/originals/'~destination.mainAsset.assetBasePath)|imagine_filter('gallery_400_300') }}" class="img-responsive" alt="{{ destination.mainAsset.assetTitle }}">
+                                {% endif %}
+                                <b>{{ destination }}</b>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <p>
+                <br>
+                {{ section.sectionDescription|raw }}
+                <br>
+            </p>
+        </section>
+    {% endif %}
+    {% if section.sectionType == 6 %}
+        <section class="section-gallery">
+            <h2>{{ section.sectionTitle }}</h2>
+            <p>{{ section.sectionSubTitle }}</p>
+            <div class="row row-gallery">
+                {% for theme in section.themes %}
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <div class="full-gallery-container">
+                            <a href="{{ routing_service.themeUrl(theme) }}">
+                                {% if theme.mainAsset %}
+                                    <img src="{{ asset('uploads/originals/themes/'~theme.mainAsset.assetBasePath)|imagine_filter('gallery_400_300') }}" class="img-responsive" alt="{{ theme.mainAsset.assetTitle }}">
+                                {% endif %}
+                                <b>{{ theme }}</b>
+                                <span>{{ theme.themeShortDescription }}</span>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <p>
+                <br>
+                {{ section.sectionDescription|raw }}
+                <br>
+            </p>
+        </section>
+    {% endif %}
+
+{% endfor %}

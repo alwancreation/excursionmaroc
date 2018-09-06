@@ -1,0 +1,72 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from 'AdminBundle' %}Products list{% endtrans %}
+                <small>{% trans from 'AdminBundle' %}Products list{% endtrans %}</small>
+            </h3>
+        </div>
+
+    </div>
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans from 'AdminBundle' %}Products list{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="{{ path('product_new') }}" class="btn btn-primary btn-sm pull-right">{% trans from 'AdminBundle' %}Create a new product{% endtrans %}</a>
+            <h6 class="panel-title">{% trans from 'AdminBundle' %}Products list{% endtrans %}</h6>
+        </div>
+        <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr style="background-color: #E3E3E3;">
+                        <th>{% trans from 'AdminBundle' %}Productname{% endtrans %}</th>
+                        <th>{% trans from 'AdminBundle' %}Category{% endtrans %}</th>
+                        <th>{% trans from 'AdminBundle' %}Destination{% endtrans %}</th>
+                        <th width="150">{% trans from 'AdminBundle' %}Actions{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('product_show', { 'id': product.productId }) }}">{{ product.productName }}</a>
+                            </td>
+                            <td>
+                                {% if product.category %}
+                                    {{ product.category }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if product.destination %}
+                                    {{ product.destination }}
+                                {% endif %}
+                            </td>
+
+                            <td>
+
+                                <a class="btn btn-xs btn-danger"
+                                   href="{{ path('product_delete', { 'id': product.productId }) }}"><i class="icon-remove"></i> {% trans from 'AdminBundle' %}delete{% endtrans %}</a>
+
+                                <a class="btn btn-xs btn-default"
+                                   href="{{ path('product_edit', { 'id': product.productId }) }}"><i class="icon-pencil"></i> {% trans from 'AdminBundle' %}edit{% endtrans %}</a>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+    <hr>
+
+
+{% endblock %}

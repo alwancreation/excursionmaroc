@@ -1,0 +1,44 @@
+{% extends 'AdminBundle::base.html.twig' %}
+{% form_theme form "bootstrap_3_layout.html.twig" %}
+
+{% block body %}
+
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from 'AdminBundle' %}Page new{% endtrans %}
+                <small>{% trans from 'AdminBundle' %}Page new{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans from 'AdminBundle' %}Page new{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Create"/>
+                    </div>
+                    {{ form_end(form) }}
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            {% if page.asset %}
+                <img class="img-responsive" src="{{ asset('uploads/originals/'~page.asset.assetBasepath) }}" alt="">
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

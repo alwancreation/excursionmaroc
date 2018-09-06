@@ -1,0 +1,41 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Product</h1>
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Productid</th>
+                <td>{{ product.productId }}</td>
+            </tr>
+            <tr>
+                <th>Productname</th>
+                <td>{{ product.productName }}</td>
+            </tr>
+            <tr>
+                <th>Productshortdescription</th>
+                <td>{{ product.productShortDescription }}</td>
+            </tr>
+            <tr>
+                <th>Productlongdescription</th>
+                <td>{{ product.productLongDescription }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('product_index') }}" class="btn btn-default">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('product_edit', { 'id': product.productId }) }}" class="btn btn-primary">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

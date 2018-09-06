@@ -1,0 +1,201 @@
+{% extends '@Admin/base.html.twig' %}
+
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from "AdminBundle" %}Show agency{% endtrans %}
+                <small>{% trans from "AdminBundle" %}Show agency{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans %}Admin Dashboard{% endtrans %}</a></li>
+            <li class="active">{% trans from "AdminBundle" %}Show agency{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% if agency.photo!='' %}
+                        <img src="{{ asset('uploads/agencies/'~agency.photo) }}" alt="" class="img-responsive">
+                        <hr>
+                    {% endif %}
+                    <table class="table table-bordered">
+                        <tbody>
+
+                        <tr>
+                            <th>{% trans %}agency.Name{% endtrans %}</th>
+                            <td>{{ agency.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}agency.Description{% endtrans %}</th>
+                            <td>{{ agency.description }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{% trans %}agency.Telephone{% endtrans %}</th>
+                            <td>{{ agency.telephone }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}agency.Adresse{% endtrans %}</th>
+                            <td>{{ agency.adresse }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}agency.Email{% endtrans %}</th>
+                            <td>{{ agency.email }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{% trans %}agency.Valide{% endtrans %}</th>
+                            <td>{% if agency.valide %}Yes{% else %}No{% endif %}</td>
+                        </tr>
+
+
+                        <tr>
+                            <th>{% trans %}agency.Dateajout{% endtrans %}</th>
+                            <td>{% if agency.dateajout %}{{ agency.dateajout|date('Y-m-d H:i:s') }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{% trans %}agency.Ville{% endtrans %}</th>
+                            <td>{{ agency.city }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}agency.Active{% endtrans %}</th>
+                            <td>{% if agency.active %}Yes{% else %}No{% endif %}</td>
+                        </tr>
+
+
+                        <tr>
+                            <th>{% trans %}agency.Comptebanque{% endtrans %}</th>
+                            <td>{{ agency.comptebanque }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}agency.Autorisation{% endtrans %}</th>
+                            <td>{{ agency.autorisation }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+
+                            <a class="btn btn-default" href="{{ path('agency_index') }}">Back to the list</a>
+
+                            <a class="btn btn-primary" href="{{ path('agency_edit', { 'id': agency.id }) }}">Edit</a>
+                    <hr>
+                            {{ form_start(delete_form) }}
+                            <input type="submit" class="btn btn-danger" value="Delete">
+                            {{ form_end(delete_form) }}
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a href="{{ url('vehicle_new',{id:agency.id}) }}" class="btn btn-sm btn-primary pull-right">+ {% trans %}New vehicle{% endtrans %}</a>
+                    <h6 class="panel-title">{% trans %}Agency vehicle{% endtrans %}</h6>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>{% trans %}Brand Model{% endtrans %}</th>
+                            <th>{% trans %}Registration number{% endtrans %}</th>
+                            <th>{% trans %}Actions{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for vehicle in agency.vehicles %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('vehicle_edit', { 'id': vehicle.id }) }}">
+                                        {% if vehicle.brand %}
+                                            <b>{{ vehicle.brand.name }}</b>
+                                        {% endif %}
+                                        {% if vehicle.model %}
+                                            {{ vehicle.model.name }}
+                                        {% endif %}
+                                    </a>
+                                </td>
+
+                                <td>{{ vehicle.matricule }}</td>
+                                <td>
+                                    <a class="btn btn-xs btn-primary" href="{{ path('vehicle_edit', { 'id': vehicle.id }) }}">{% trans %}
+                                        edit{% endtrans %}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a class="btn btn-sm btn-primary pull-right" data-toggle="modal" href="#modal-id">+</a>
+                    <div class="modal fade" id="modal-id">
+                    	<div class="modal-dialog">
+                    		<div class="modal-content">
+                    			<div class="modal-header">
+                    				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    				<h4 class="modal-title">{% trans %}Add new manager{% endtrans %}</h4>
+                    			</div>
+                                <form action="{{ path('agency_add_manager', { 'id': agency.id }) }}" method="post">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="">{% trans %}Select a user{% endtrans %}</label>
+                                        </div>
+                                        <select name="user_id" class="form-control">
+                                            {% for user in users %}
+                                                <option value="{{ user.id }}">{{ user }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">{% trans %}Add{% endtrans %}</button>
+                                    </div>
+                                </form>
+                    		</div><!-- /.modal-content -->
+                    	</div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                    <h6 class="panel-title">{% trans %}Users managers{% endtrans %}</h6>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>{% trans %}User name{% endtrans %}</th>
+                            <th>{% trans %}Actions{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for userAgency in agency.users %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('users_edit', { 'id': userAgency.user.id }) }}">
+                                        {{ userAgency.user }}
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <a class="btn btn-xs btn-danger" onclick="return confirm('Confirm !');" href="{{ path('agency_remove_manager', { 'id': agency.id,'user_id': userAgency.user.id }) }}">{% trans %}delete{% endtrans %}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

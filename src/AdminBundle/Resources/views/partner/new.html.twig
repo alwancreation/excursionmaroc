@@ -1,0 +1,33 @@
+{% extends '@Admin/base.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from "AdminBundle" %}Partner creation{% endtrans %}
+                <small>{% trans from "AdminBundle" %}Partner creation{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <input type="submit" class="btn btn-primary" value="Create" />
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+
+            <ul>
+                <li>
+                    <a href="{{ path('partner_index') }}">Back to the list</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

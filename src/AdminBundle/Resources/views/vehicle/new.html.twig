@@ -1,0 +1,31 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-title">
+        <h3>
+            {% trans from 'AdminBundle' %}Vehicle creation{% endtrans %}
+            <small>{% trans from 'AdminBundle' %}Vehicle creation{% endtrans %}</small>
+        </h3>
+    </div>
+</div>
+<!-- Breadcrumbs line -->
+<div class="breadcrumb-line">
+    <ul class="breadcrumb">
+        <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+        <li class="active">{% trans from 'AdminBundle' %}Vehicle creation{% endtrans %}</li>
+    </ul>
+</div>
+<div class="content">
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn btn-primary" type="submit" value="{% trans from 'AdminBundle' %}Create{% endtrans %}" />
+    {{ form_end(form) }}
+</div>
+    <div class="panel panel-default">
+    	<div class="panel-body">
+            <a href="{{ path('vehicules_index') }}">{% trans from 'AdminBundle' %}Back to the list{% endtrans %}</a>
+    	</div>
+    </div>
+{% endblock %}

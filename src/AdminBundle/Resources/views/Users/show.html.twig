@@ -1,0 +1,110 @@
+{% extends "AdminBundle::base.html.twig" %}
+{% block body %}
+
+    <div class="page-content-inner">
+
+
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-title">
+                <h3>{% trans from "AdminBundle" %}Profile page{% endtrans %}
+                    <small>{% trans from "AdminBundle" %}User profile page{% endtrans %}</small>
+                </h3>
+            </div>
+
+
+        </div>
+        <!-- /page header -->
+
+
+        <!-- Breadcrumbs line -->
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li><a href="{{ url('admin_homepage') }}">{% trans from "AdminBundle" %}Home{% endtrans %}</a></li>
+                <li><a href="{{ url('users') }}">{% trans from "AdminBundle" %}Users{% endtrans %}</a></li>
+                <li class="active">{% trans from "AdminBundle" %}Profile{% endtrans %}</li>
+            </ul>
+
+            <div class="visible-xs breadcrumb-toggle">
+                <a class="btn btn-link btn-lg btn-icon" data-toggle="collapse" data-target=".breadcrumb-buttons">
+                    <i class="icon-menu2"></i></a>
+            </div>
+
+
+        </div>
+
+        <!-- Profile grid -->
+        <div class="row">
+            <div class="col-lg-2">
+
+                <!-- Profile links -->
+                <div class="block">
+
+                    <div class="block">
+                        <div class="thumbnail">
+                            <div class="thumb">
+                                    <img src="{{ asset('bundles/admin/assets/images/defaultProfilePic.png') }}" alt="">
+                            </div>
+
+                            <div class="caption text-center">
+                                <h6>{{ user }}</h6>
+                                <div class="icons-group">
+                                    <a href="#" title="" class="tip" data-original-title="Github"><i
+                                                class="icon-facebook"></i></a>
+                                    <a href="#" title="" class="tip" data-original-title="Twitter"><i
+                                                class="icon-twitter"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /profile links -->
+
+            </div>
+
+            <div class="col-lg-10">
+
+                <table class="table table-bordered dataTable">
+                    <thead>
+                    <tr>
+                        <th>{% trans from "ManagerBundle" %}Accountid{% endtrans %}</th>
+                        <th>{% trans from "ManagerBundle" %}Password{% endtrans %}</th>
+                        <th>{% trans from "ManagerBundle" %}Contactname{% endtrans %}</th>
+                        <th>{% trans from "ManagerBundle" %}Contactphone{% endtrans %}</th>
+                        <th>{% trans from "ManagerBundle" %}Contactemail{% endtrans %}</th>
+                        <th>{% trans from "ManagerBundle" %}Lastlogintime{% endtrans %}</th>
+                        <th>{% trans from "ManagerBundle" %}Isactive{% endtrans %}</th>
+                        <th>{% trans from "ManagerBundle" %}Description{% endtrans %}</th>
+                        <th>{% trans from "ManagerBundle" %}Lastupdatetime{% endtrans %}</th>
+                        <th>{% trans from "ManagerBundle" %}Creationtime{% endtrans %}</th>
+                        <th>{% trans from "ManagerBundle" %}Actions{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for account in user.accounts %}
+                        <tr>
+                            <td><a href="{{ path('accounts_show', { 'id': account.accountid }) }}">{{ account.accountid }}</a></td>
+
+                            <td>{{ account.password }}</td>
+                            <td>{{ account.contactname }}</td>
+                            <td>{{ account.contactphone }}</td>
+                            <td>{{ account.contactemail }}</td>
+                            <td>{{ account.lastlogintime }}</td>
+                            <td>{% if account.isactive %}<span class="label label-success">Yes</span>{% else %}<span class="label label-danger">No</span>{% endif %}</td>
+                            <td>{{ account.description }}</td>
+                            <td>{{ account.lastupdatetime }}</td>
+                            <td>{{ account.creationtime }}</td>
+                            <td>
+                                <a href="{{ path('accounts_show', { 'id': account.accountid }) }}" class="btn btn-xs btn-info">{% trans from "ManagerBundle" %}show{% endtrans %}</a>
+                                <a href="{{ path('accounts_edit', { 'id': account.accountid }) }}" class="btn btn-xs btn-primary">{% trans from "ManagerBundle" %}edit{% endtrans %}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

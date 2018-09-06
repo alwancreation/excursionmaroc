@@ -1,0 +1,56 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from 'AdminBundle' %}Themes{% endtrans %}
+                <small>{% trans from 'AdminBundle' %}Themes{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans from 'AdminBundle' %}Themes{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="{{ path('theme_new') }}"
+               class="btn btn-primary btn-sm pull-right">{% trans from 'AdminBundle' %}Create a new
+                theme{% endtrans %}</a>
+            <h6 class="panel-title">{% trans from 'AdminBundle' %}Themes{% endtrans %}</h6>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>{% trans from 'AdminBundle' %}Themename{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}Actions{% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for theme in themes %}
+                <tr>
+                    <td>
+                        <a href="{{ path('theme_show', { 'id': theme.themeId }) }}">
+                            {{ theme.themeName }}
+                        </a>
+                    </td>
+                    <td>
+
+                                <a class="btn  btn-default" href="{{ path('theme_show', { 'id': theme.themeId }) }}">{% trans from 'AdminBundle' %}
+                                    show{% endtrans %}</a>
+
+                                <a class="btn  btn-default" href="{{ path('theme_edit', { 'id': theme.themeId }) }}">{% trans from 'AdminBundle' %}
+                                    edit{% endtrans %}</a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

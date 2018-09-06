@@ -1,0 +1,66 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from 'AdminBundle' %}Categories list{% endtrans %}
+                <small>{% trans from 'AdminBundle' %}Categories list{% endtrans %}</small>
+            </h3>
+        </div>
+
+    </div>
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans from 'AdminBundle' %}Categories list{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h6 class="panel-title">Categories list</h6>
+        </div>
+    	<div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>{% trans from 'AdminBundle' %}Categoryid{% endtrans %}</th>
+                    <th>{% trans from 'AdminBundle' %}Categoryname{% endtrans %}</th>
+                    <th>{% trans from 'AdminBundle' %}Categorylongdescription{% endtrans %}</th>
+                    <th>{% trans from 'AdminBundle' %}Categoryshortdescription{% endtrans %}</th>
+                    <th>{% trans from 'AdminBundle' %}Actions{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td><a href="{{ path('category_show', { 'id': category.categoryId }) }}">{{ category.categoryId }}</a></td>
+                        <td>{{ category.categoryName }}</td>
+                        <td>{{ category.categoryLongDescription }}</td>
+                        <td>{{ category.categoryShortDescription }}</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('category_show', { 'id': category.categoryId }) }}">{% trans from 'AdminBundle' %}show{% endtrans %}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('category_edit', { 'id': category.categoryId }) }}">{% trans from 'AdminBundle' %}edit{% endtrans %}</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+    	</div>
+    </div>
+
+
+    <ul>
+        <li>
+            <a href="{{ path('category_new') }}" class="btn btn-primary">Create a new category</a>
+        </li>
+    </ul>
+{% endblock %}

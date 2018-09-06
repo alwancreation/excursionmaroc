@@ -1,0 +1,139 @@
+{% extends '@App/base.html.twig' %}
+{% block metas %}{{ seo_service.metaProduct(product)|raw }}{% endblock %}
+{% block body %}
+    <div class="second-page-head">
+        {{ include('@App/inc/form-search.html.twig') }}
+    </div>
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a>
+            </li>
+            {% if product.category %}
+                <li>
+                    <a href="{{ routing_service.categoryUrl(product.category) }}">{{ product.category }}</a>
+                </li>
+
+            {% endif %}
+            <li class="active">{{ product }}</li>
+        </ol>
+    </div>
+    <div class="container singlePackage">
+        <div class="row ">
+            <div class="col-sm-8 col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="top-product-section">
+                            <h1>{{ product }}</h1>
+                            <div class="product-header">
+                                {% if product.agency %}
+                                    <span>{% trans %}By{% endtrans %} : <a
+                                                href="{{ routing_service.agencyUrl(product.agency) }}">{{ product.agency }}</a></span>
+                                {% endif %}
+                                <span>
+                                    {% trans %}Rating{% endtrans %} : <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                </span>
+
+
+                            </div>
+                            {% if product.assets|length>0 %}
+                                <div id="package-carousel" class="carousel slide" data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        {% for key,asset in product.assets %}
+                                            <li data-target="#package-carousel"
+                                                data-slide-to="{{ key }}" {{ (key==0)?'class="active"':'' }}></li>
+                                        {% endfor %}
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        {% for key,asset in product.assets %}
+                                            <div class="item {{ (key==0)?'active':'' }}">
+                                                <img src="{{ asset('uploads/originals/'~asset.assetBasePath)|imagine_filter('product_800_500') }}"
+                                                     alt=""/>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <a class="left carousel-control" href="#package-carousel" data-slide="prev"><span
+                                                class="glyphicon glyphicon-menu-left"><i class="fa fa-chevron-left"></i></span></a>
+                                    <a class="right carousel-control" href="#package-carousel" data-slide="next"><span
+                                                class="glyphicon glyphicon-menu-right"><i
+                                                    class="fa fa-chevron-right"></i></span></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="product-description">
+                            <div class="details-section">
+                                <h3>{% trans %}Product About{% endtrans %}</h3>
+                                <div class="product-about">
+                                    {{ product.productLongDescription|raw }}
+                                </div>
+                            </div>
+                            {% for i in 1..4 %}
+                                {% if product.getCustomPropertiesType(i)|length>0 %}
+                                    <div class="details-section">
+                                        <h3>{{ ('Custom properties ' ~ i )|trans }}</h3>
+                                        <ul class="one-line-items">
+                                            {% for prop in product.getCustomPropertiesType(i) %}
+                                                <li>
+                                                    <b>{{ prop.customPropertyName }}</b>
+                                                    <span>{{ prop.customPropertyDescription }}</span>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+
+
+                            {% if product.productVideoHtml %}
+                                <div class="details-section">
+                                    <h3>{% trans %}Product Video{% endtrans %}</h3>
+                                    <div class="video-product">
+                                        {{ product.productVideoHtml|raw }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if product.productMapHtml %}
+                                <div class="details-section">
+                                    <h3>{% trans %}Product Map{% endtrans %}</h3>
+                                    <div class="map-product">
+                                        {{ product.productMapHtml|raw }}
+                                    </div>
+                                </div>
+
+                            {% endif %}
+
+
+                        </div>
+                        {% if product.attached %}
+                            <div class="download-section">
+
+                                <a class="pdf-download" target="_blank"
+                                   href="{{ asset('uploads/attached/'~product.attached.assetBasePath) }}">
+                                    {{ product.attached.assetTitle }} <span>({% trans %}
+                                        Download the programme{% endtrans %})</span>
+                                </a>
+
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <aside class="col-sm-4 col-xs-12">
+
+                {% if mail_sent is defined and mail_sent > 0 %}
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {% trans %}We have received your message successfully.{% endtrans %}
+                    </div>
+                {% endif %}
+                {% include "@App/inc/form-book-product.html.twig" %}
+            </aside>
+        </div>
+    </div>
+
+
+{% endblock %}
+

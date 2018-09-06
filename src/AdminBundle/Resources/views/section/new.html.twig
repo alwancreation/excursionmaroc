@@ -1,0 +1,40 @@
+{% extends 'AdminBundle::base.html.twig' %}
+{% form_theme form "bootstrap_3_layout.html.twig" %}
+
+
+{% block body %}
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-title">
+        <h3>
+            {% trans from 'AdminBundle' %}New home section{% endtrans %}
+            <small>{% trans from 'AdminBundle' %}New home section{% endtrans %}</small>
+        </h3>
+    </div>
+
+</div>
+<!-- Breadcrumbs line -->
+<div class="breadcrumb-line">
+    <ul class="breadcrumb">
+        <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+        <li><a href="{{ url('pages_edit',{'id':page.pageId}) }}">{{ page.pageTitle }}</a></li>
+        <li class="active">{% trans from 'AdminBundle' %}New home section{% endtrans %}</li>
+    </ul>
+</div>
+<div class="content">
+<div class="panel panel-default">
+	<div class="panel-body">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" class="btn btn-primary" value="{% trans from 'AdminBundle' %}Create{% endtrans %}" />
+        {{ form_end(form) }}
+	</div>
+</div>
+
+</div>
+    <div class="panel panel-default">
+    	<div class="panel-body">
+            <a href="{{ url('pages_edit',{'id':page.pageId}) }}" class="btn btn-default">{% trans from 'AdminBundle' %}Back to the list{% endtrans %}</a>
+    	</div>
+    </div>
+{% endblock %}

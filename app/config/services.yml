@@ -1,0 +1,23 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+#    parameter_name: value
+
+
+services:
+    my.controller_action_twig_extension:
+        class: AppBundle\Twig\Extension\ControllerActionExtension
+        arguments: ["@request_stack"]
+        tags:
+            - { name: twig.extension }
+    app.twig.database_globals_extension:
+        class: AppBundle\Twig\Extension\DatabaseGlobalsExtension
+        arguments: ["@doctrine.orm.entity_manager",'@service_container']
+        tags:
+            - { name: twig.extension }
+    routing_service:
+        class: AppBundle\Helper\RoutingService
+        arguments: ["@router"]
+    seo_service:
+        class: AppBundle\Helper\SeoService
+        arguments: ["@router","@doctrine.orm.entity_manager",'@service_container']

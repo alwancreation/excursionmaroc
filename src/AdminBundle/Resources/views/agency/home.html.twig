@@ -1,0 +1,50 @@
+{% extends '@Admin/base.html.twig' %}
+
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from "AdminBundle" %}Manager Dashboard{% endtrans %}
+                <small>{% trans from "AdminBundle" %}preview{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('user_agency_index') }}">{% trans %}Manager Dashboard{% endtrans %}</a></li>
+            <li class="active">{% trans from "AdminBundle" %}Home{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+            	<div class="panel-body">
+
+            	</div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+            	<div class="panel-body">
+
+            	</div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+            	<div class="panel-body">
+
+            	</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

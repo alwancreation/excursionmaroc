@@ -1,0 +1,47 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Asset
+ *
+ * @ORM\Table(name="asset")
+ * @ORM\Entity
+ */
+class Asset
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="asset_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $assetId;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="asset_is_main", type="boolean", nullable=true)
+     */
+    private $assetIsMain;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="asse_base_path", type="string", length=255, nullable=true)
+     */
+    private $asseBasePath;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="asset_type", type="integer", nullable=true)
+     */
+    private $assetType;
+
+
+}
+

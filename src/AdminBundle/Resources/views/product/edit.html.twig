@@ -1,0 +1,130 @@
+{% extends 'AdminBundle::base.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+{% form_theme edit_form_prices 'bootstrap_3_layout.html.twig' %}
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from 'AdminBundle' %}Products edit{% endtrans %}
+                <small>{% trans from 'AdminBundle' %}Products edit{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans from 'AdminBundle' %}Products list{% endtrans %}</li>
+            <li class="active">{% trans from 'AdminBundle' %}Products edit{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+            	<div class="panel-body">
+                    {{ form_start(edit_form) }}
+                    {{ form_widget(edit_form) }}
+                    <input type="submit" class="btn btn-primary btn-block" value="{% trans from 'AdminBundle' %}Edit{% endtrans %}" />
+                    {{ form_end(edit_form) }}
+
+                    <hr>
+                    <a href="{{ path('product_index') }}" class="btn btn-default">{% trans from 'AdminBundle' %}Back to the list{% endtrans %}</a>
+
+            	</div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="well">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#iconified-tab1" data-toggle="tab"><i class="icon-camera2"></i> {% trans from 'AdminBundle' %}Pictures{% endtrans %}</a></li>
+                        <li class=""><a href="#iconified-tab2" data-toggle="tab"><i class="icon-stack"></i> {% trans from 'AdminBundle' %}Prices{% endtrans %}</a></li>
+                        <li class=""><a href="#iconified-custom_p1" data-toggle="tab"><i class="icon-stack"></i> {% trans %}Custom properties 1{% endtrans %}</a></li>
+                        <li class=""><a href="#iconified-custom_p2" data-toggle="tab"><i class="icon-stack"></i> {% trans %}Custom properties 2{% endtrans %}</a></li>
+                        <li class=""><a href="#iconified-custom_p3" data-toggle="tab"><i class="icon-stack"></i> {% trans %}Custom properties 3{% endtrans %}</a></li>
+                        <li class=""><a href="#iconified-custom_p4" data-toggle="tab"><i class="icon-stack"></i> {% trans %}Custom properties 4{% endtrans %}</a></li>
+
+
+                    </ul>
+
+                    <div class="tab-content with-padding" ng-app="productApp">
+                        <div class="tab-pane fade active in" id="iconified-tab1">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    {% for asset in product.assets %}
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="thumbnail">
+                                                <img src="{{ asset("uploads/originals/"~asset.assetBasePath) }}" alt="">
+                                                <a href="{{ url("delete_product_photo",{asset_id:asset.assetId,product_id:product.productId}) }}" class="btn btn-defaul" onclick="return confirm('Confirmer !')"><i class="icon-remove3"></i></a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+
+                                    <form action="{{ url('product_add_photo',{id:product.productId}) }}" class="dropzone no-margin" enctype="multipart/form-data">
+                                        <div class="fallback">
+                                            <input name="photos" type="file" multiple />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="iconified-tab2">
+                            {{ form_start(edit_form_prices) }}
+                            {{ form_widget(edit_form_prices) }}
+                            <input type="submit" class="btn btn-primary btn-block" value="{% trans from 'AdminBundle' %}Edit{% endtrans %}" />
+                            {{ form_end(edit_form_prices) }}
+                        </div>
+
+
+                        {% for i in 1..4 %}
+                            <div class="tab-pane fade" id="iconified-custom_p{{i}}">
+                                <div ng-controller="customPropCtrl" ng-init="productId = {{ product.productId }}">
+                                    <div class="panel panel-default" ng-repeat="prop in props"  ng-if="prop.type=={{i}}" style="margin-bottom: 1px;">
+                                        <div class="panel-body">
+                                            <div class="pull-right">
+                                                <a href="" ng-click="deleteProp(prop)" class="btn btn-xs btn-danger"><i class="icon-remove"></i></a>
+                                                <a href="" ng-click="editProp(prop)" class="btn btn-xs btn-primary"><i class="icon-pencil"></i></a>
+                                            </div>
+                                            <b>{{'{{ prop.name }}'}}</b> :
+                                            {{'{{ prop.description }}'}}
+                                        </div>
+                                    </div>
+
+                                    <form ng-submit="processForm()">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="row" ng-init="productId = '{{ product.productId }}'">
+                                                    <div class="col-xs-4"><input type="text" ng-model="customProperty.name" class="form-control"></div>
+                                                    <div class="col-xs-6"><input type="text" ng-model="customProperty.description" class="form-control"></div>
+                                                    <input type="hidden" ng-model="customProperty.type" ng-init="customProperty.type = {{i}}" class="form-control">
+                                                    <input type="hidden" ng-model="customProperty.product_id" ng-init="customProperty.product_id = {{ product.productId }}" class="form-control">
+                                                    <div class="col-xs-2" ng-if="!formEditProperty"><button class="btn btn-primary">{% trans from 'AdminBundle' %}Add{% endtrans %}</button></div>
+                                                    <div class="col-xs-2" ng-if="formEditProperty"><button class="btn btn-primary">{% trans from 'AdminBundle' %}Edit{% endtrans %}</button></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('bundles/admin/assets/js/angular-1.5.6.min.js') }}"></script>
+    <script src="{{ asset('bundles/admin/assets/js/angular-sanitize-1.5.6.min.js') }}"></script>
+    <script src="{{ asset('bundles/admin/assets/js/custom-module.js') }}"></script>
+{% endblock %}

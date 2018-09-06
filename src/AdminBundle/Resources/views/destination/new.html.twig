@@ -1,0 +1,38 @@
+{% extends 'AdminBundle::base.html.twig' %}
+{% form_theme form "bootstrap_3_layout.html.twig" %}
+
+{% block body %}
+
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from 'AdminBundle' %}Destination creation{% endtrans %}
+                <small>{% trans from 'AdminBundle' %}Destination creation{% endtrans %}</small>
+            </h3>
+        </div>
+
+    </div>
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans from 'AdminBundle' %}Destination creation{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" class="btn btn-primary" value="Create"/>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <a href="{{ path('destination_index') }}" class="btn btn-default">{% trans from 'AdminBundle' %}Back to the list{% endtrans %}</a>
+        </div>
+    </div>
+{% endblock %}

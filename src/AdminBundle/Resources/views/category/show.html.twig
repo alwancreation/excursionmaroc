@@ -1,0 +1,40 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Category</h1>
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Categoryid</th>
+                <td>{{ category.categoryId }}</td>
+            </tr>
+            <tr>
+                <th>Categoryname</th>
+                <td>{{ category.categoryName }}</td>
+            </tr>
+            <tr>
+                <th>Categorylongdescription</th>
+                <td>{{ category.categoryLongDescription }}</td>
+            </tr>
+            <tr>
+                <th>Categoryshortdescription</th>
+                <td>{{ category.categoryShortDescription }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('category_index') }}" class="btn btn-default">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('category_edit', { 'id': category.categoryId }) }}" class="btn btn-primary">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends '@App/base.html.twig' %}
+{% if page is defined and page.meta %}
+    {% block metas %}
+        <title>{{ page.meta.metaTitle }}</title>
+        <meta name="description" content="{{ page.meta.metaDescription }}">
+        <meta name="keywords" content="{{ page.meta.metaKeywords }}">
+        {{ page.meta.metaKeywords|raw }}
+    {% endblock %}
+{% endif %}
+{% block body %}
+
+    <div class="second-page-head"></div>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <div class="panel panel-default panel-add-ads">
+
+
+
+                    <form action="#" method="post" role="form">
+                        <legend>{% trans %}Contact us{% endtrans %}</legend>
+
+                        <div class="form-group">
+                            <label for="">{% trans %}First Name{% endtrans %}</label>
+                            <input type="text" class="form-control" name="first_name" required="required" placeholder="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">{% trans %}Last Name{% endtrans %}</label>
+                            <input type="text" class="form-control" name="last_name" required="required" placeholder="">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="">{% trans %}Email{% endtrans %}</label>
+                            <input type="email" class="form-control" name="email" required="required" placeholder="">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="">{% trans %}City{% endtrans %}</label>
+                            <input type="text" class="form-control" name="city" id="" placeholder="">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="">{% trans %}Message / comment{% endtrans %}</label>
+                            <textarea required="required" name="message" class="form-control" rows="5"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn - primary">{% trans %}Send{% endtrans %}</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4 no-padding-left-sm">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>{{ app_settings.application_name }}</h3>
+                        <address>
+                            {{ app_settings.application_address|nl2br }}
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

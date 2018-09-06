@@ -1,0 +1,94 @@
+{% form_theme form_message "bootstrap_3_layout.html.twig" %}
+<h2  class="main-title">
+    {% trans %}Please contact us for more information & quote{% endtrans %}
+    <span>{% trans %}we are available for you 24h/24 and 7days/7.{% endtrans %}</span>
+</h2>
+{{ form_start(form_message, {'attr': {'class': 'form-transport'}}) }}
+{% if v2 is not defined %}
+<div class="row">
+    <div class="col-md-4 col-sm-6">
+{% endif %}
+
+            <div class="form-group">
+                {{ form_label(form_message.category) }}
+                {{ form_widget(form_message.category) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form_message.numberPersons) }}
+                {{ form_widget(form_message.numberPersons) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form_message.vehicle) }}
+                {{ form_widget(form_message.vehicle) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form_message.theme) }}
+                {{ form_widget(form_message.theme) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form_message.destinationFrom) }}
+                {{ form_widget(form_message.destinationFrom) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form_message.destinationTo) }}
+                {{ form_widget(form_message.destinationTo) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form_message.dateStart) }}
+                {{ form_widget(form_message.dateStart) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form_message.dateEnd) }}
+                {{ form_widget(form_message.dateEnd) }}
+            </div>
+        {% if v2 is not defined %}
+
+    </div>
+    <div class="col-md-4 col-sm-6">
+    {% endif %}
+            <div class="form-group">
+                {{ form_label(form_message.firstName) }}
+                {{ form_widget(form_message.firstName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form_message.lastName) }}
+                {{ form_widget(form_message.lastName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form_message.address) }}
+                {{ form_widget(form_message.address) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form_message.email) }}
+                {{ form_widget(form_message.email) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form_message.phone) }}
+                {{ form_widget(form_message.phone) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form_message.messageContent) }}
+                {{ form_widget(form_message.messageContent) }}
+            </div>
+
+        {% if v2 is not defined %}
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <img class="img-responsive hidden-sm hidden-xs" src="{{ asset('bundles/app/assets/images/write-message.jpg') }}" alt="">
+    </div>
+    <div class="col-sm-12">
+        {% endif %}
+
+
+            <div class="form-group">
+                <input class="btn btn-default" value="{% trans %}Reset Form{% endtrans %}" type="reset">
+                <input class="btn btn-primary" value="{% trans %}Book Now{% endtrans %}" type="submit">
+            </div>
+        {% if v2 is not defined %}
+    </div>
+</div>
+        {% endif %}
+
+{{ form_end(form_message) }}
+

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ app_settings.application_name }}{% endblock %}</title>
+  <link href="{{ asset('bundles/admin/assets/css/select2.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('bundles/admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('bundles/admin/assets/css/londinium-theme.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('bundles/admin/assets/css/styles.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('bundles/admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ asset("bundles/admin/assets/css/dropzone.css") }}" rel="stylesheet" type="text/css"/>
+  {% block javascripts %}
+
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+
+  <script type="text/javascript" src="{{ asset("bundles/admin/assets/js/plugins/charts/flot.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("bundles/admin/assets/js/plugins/charts/flot.orderbars.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("bundles/admin/assets/js/plugins/charts/flot.pie.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("bundles/admin/assets/js/plugins/charts/flot.time.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("bundles/admin/assets/js/plugins/charts/flot.animator.min.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("bundles/admin/assets/js/plugins/charts/excanvas.min.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("bundles/admin/assets/js/plugins/charts/flot.resize.min.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("bundles/admin/assets/js/plugins/charts/sparkline.min.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("bundles/admin/assets/js/plugins/charts/jquery.flot.categories.js") }}"></script>
+
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/charts/sparkline.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/uniform.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/select2.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/inputmask.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/autosize.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/inputlimit.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/listbox.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/multiselect.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/validate.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/tags.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/switch.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/uploader/plupload.full.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/uploader/plupload.queue.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/wysihtml5/wysihtml5.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/forms/wysihtml5/toolbar.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/interface/daterangepicker.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/interface/fancybox.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/interface/moment.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/interface/jgrowl.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/interface/datatables.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/interface/colorpicker.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/interface/fullcalendar.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/interface/timepicker.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/plugins/interface/collapsible.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/bootstrap.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset("bundles/admin/assets/js/dropzone.js") }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/admin/assets/js/application.js') }}"></script>
+  <script src="{{ asset('bundles/admin/assets/js/responsive-calendar/js/responsive-calendar.js') }}"></script>
+  <script src="{{ asset('bundles/admin/assets/js/datetimepicker-master/jquery.datetimepicker.js') }}"></script>
+  {% endblock %}
+
+  <link href="{{ asset('bundles/admin/assets/js/responsive-calendar/css/responsive-calendar.css') }}" rel="stylesheet">
+
+  <link href="{{ asset('bundles/admin/assets/js/datetimepicker-master/jquery.datetimepicker.css') }}" rel="stylesheet">
+  <link href="{{ asset('bundles/admin/assets/css/agence.css?v=1.0') }}" rel="stylesheet">
+
+
+
+</head>
+<body class="{% block bodyclasses %}sidebar-wide{% endblock %}">
+<!-- Navbar -->
+{% block navbarmenu %}
+  <div class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{{ url("admin_default_index") }}">{{ app_settings.application_name }}</a>
+      <a class="sidebar-toggle"><i class="icon-paragraph-justify2"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-icons">
+        <span class="sr-only">Toggle navbar</span>
+        <i class="icon-grid3"></i>
+      </button>
+      <button type="button" class="navbar-toggle offcanvas">
+        <span class="sr-only">Toggle navigation</span>
+        <i class="icon-paragraph-justify2"></i>
+      </button>
+    </div>
+
+    <ul class="nav navbar-nav navbar-right collapse" id="navbar-icons">
+
+
+      <li class="user dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown">
+
+            <img src="{{ asset('bundles/app/assets/images/profile.png') }}" alt="">
+
+
+          <span>{{app.user}}</span>
+          <i class="caret"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-right icons-right">
+          <li><a href="{{ url('fos_user_security_logout') }}"><i class="icon-exit"></i> {{ 'Logout'|trans }}</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
+<!-- Page container -->
+<div class="page-container">
+  {% block mainmenu %}
+    <div class="sidebar collapse">
+      <div class="sidebar-content">
+        <div class="user-menu dropdown">
+          <div class="header-nav-left">
+            <a href=""><img src="{{ asset('bundles/app/assets/images/site-logo.png') }}" class="img-responsive" alt=""></a>
+          </div>
+        </div>
+        <!-- Main navigation -->
+        <ul class="navigation">
+          {% if not is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('user_agency_index') }}" {{ active_class('home') }}>{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li><a href="{{ path('product_index') }}" {{ active_class('home') }}>{% trans from 'AdminBundle' %}Products{% endtrans %}</a></li>
+          {% endif %}
+          {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('admin_default_index') }}" {{ active_class('home') }}>{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li><a href="{{ url("slider_edit",{id:1}) }}" {{ active_class('home') }}>{% trans from "AdminBundle" %}Home Slider{% endtrans %}</a></li>
+            <li><a href="{{ url("section_index") }}" {{ active_class('sections') }}>{% trans from "AdminBundle" %}Home Sections{% endtrans %}</a></li>
+            <li><a href="{{ path('product_index') }}" {{ active_class('home') }}>{% trans from 'AdminBundle' %}Products{% endtrans %}</a></li>
+            <li><a href="{{ path('destination_index') }}" {{ active_class('destination') }}>{% trans from 'AdminBundle' %}Destinations{% endtrans %}</a></li>
+            <li><a href="{{ path('theme_index') }}" {{ active_class('theme') }}>{% trans from 'AdminBundle' %}Themes{% endtrans %}</a></li>
+            <li><a href="{{ path('agency_index') }}" {{ active_class('agencies') }}>{% trans from "AdminBundle" %}Agencies{% endtrans %}</a></li>
+            <li><a href="{{ path('users') }}" {{ active_class('users') }}>{% trans from "AdminBundle" %}Users{% endtrans %}</a></li>
+            <li><a href="{{ path('pages_index') }}" {{ active_class('pages') }}>{% trans from 'AdminBundle' %}Pages{% endtrans %}</a></li>
+            <li><a href="{{ path('message_index') }}" {{ active_class('messages') }}>{% trans from 'AdminBundle' %}Messages{% endtrans %}</a></li>
+            <li><a href="{{ path('category_index') }}" {{ active_class('home') }}>{% trans from 'AdminBundle' %}Categories{% endtrans %}</a></li>
+            <li><a href="{{ path('settings_index') }}" {{ active_class('bookings') }}>{% trans from 'AdminBundle' %}Settings{% endtrans %}</a></li>
+          {% endif %}
+
+
+        </ul>
+      </div>
+    </div>
+  {% endblock %}
+  <!-- Page content -->
+  <div class="page-content">
+    <!-- Page tabs -->
+    {% block body %}{% endblock %}
+    <!-- /page tabs -->
+  </div>
+  <!-- /page content -->
+</div>
+<!-- /page container -->
+<!-- /navbar -->
+
+</body>
+</html>

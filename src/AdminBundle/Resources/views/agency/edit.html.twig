@@ -1,0 +1,54 @@
+{% extends '@Admin/base.html.twig' %}
+
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from "AdminBundle" %}Edit Agency{% endtrans %}
+                <small>{% trans from "AdminBundle" %}Edit Agency{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans %}Admin Dashboard{% endtrans %}</a></li>
+            <li><a href="{{ url('agency_index') }}">{% trans from "AdminBundle" %}Agencies list{% endtrans %}</a></li>
+            <li class="active">{% trans from "AdminBundle" %}Edit Agency{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% form_theme edit_form "bootstrap_3_layout.html.twig" %}
+                    {{ form_start(edit_form) }}
+                    {{ form_widget(edit_form) }}
+                    <input type="submit" class="btn btn-primary" value="{% trans %}Edit{% endtrans %}"/>
+                    {{ form_end(edit_form) }}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+
+                            <a href="{{ path('agency_index') }}" class="btn btn-default">{% trans %}Back to the list{% endtrans %}</a>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            {% if agency.logo!='' %}
+                <img src="{{ asset('uploads/agencies/'~agency.logo) }}" alt="" class="img-responsive">
+                <hr>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

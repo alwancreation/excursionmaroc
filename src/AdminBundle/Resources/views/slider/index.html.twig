@@ -1,0 +1,43 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>{% trans from 'AdminBundle' %}Sliders list{% endtrans %}</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>{% trans from 'AdminBundle' %}Sliderid{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}Slidername{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}Slidertitle{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}Sliderdescription{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}Actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for slider in sliders %}
+            <tr>
+                <td><a href="{{ path('slider_show', { 'id': slider.sliderId }) }}">{{ slider.sliderId }}</a></td>
+                <td>{{ slider.sliderName }}</td>
+                <td>{{ slider.sliderTitle }}</td>
+                <td>{{ slider.sliderDescription }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('slider_show', { 'id': slider.sliderId }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('slider_edit', { 'id': slider.sliderId }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('slider_new') }}">Create a new slider</a>
+        </li>
+    </ul>
+{% endblock %}

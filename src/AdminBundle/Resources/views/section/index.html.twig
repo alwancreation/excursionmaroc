@@ -1,0 +1,52 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-title">
+        <h3>
+            {% trans from 'AdminBundle' %}Home sections{% endtrans %}
+            <small>{% trans from 'AdminBundle' %}Home sections{% endtrans %}</small>
+        </h3>
+    </div>
+
+</div>
+<!-- Breadcrumbs line -->
+<div class="breadcrumb-line">
+    <ul class="breadcrumb">
+        <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+        <li class="active">{% trans from 'AdminBundle' %}Home sections{% endtrans %}</li>
+    </ul>
+</div>
+<div class="content">
+    <div class="panel panel-default">
+    	<div class="panel-body">
+            <a href="{{ path('section_new',{id:1}) }}">{% trans from 'AdminBundle' %}Create a new section{% endtrans %}</a>
+    	</div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans from 'AdminBundle' %}Sectiontitle{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}Sectionorder{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}Actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for section in sections %}
+            <tr>
+                <td><a href="{{ path('section_edit', { 'id': section.sectionId }) }}">{{ section.sectionTitle }}</a></td>
+
+                <td>{{ section.sectionOrder }}</td>
+                <td>
+                   <a href="{{ path('section_delete', { 'id': section.sectionId }) }}" class="btn btn-xs btn-danger">{% trans from 'AdminBundle' %}delete{% endtrans %}</a>
+                   <a href="{{ path('section_edit', { 'id': section.sectionId }) }}" class="btn btn-xs btn-primary">{% trans from 'AdminBundle' %}edit{% endtrans %}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    </div>
+{% endblock %}

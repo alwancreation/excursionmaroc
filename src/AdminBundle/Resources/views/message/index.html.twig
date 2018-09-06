@@ -1,0 +1,52 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-title">
+        <h3>
+            {% trans from 'AdminBundle' %}Messages list{% endtrans %}
+            <small>{% trans from 'AdminBundle' %}Messages list{% endtrans %}</small>
+        </h3>
+    </div>
+
+</div>
+<!-- Breadcrumbs line -->
+<div class="breadcrumb-line">
+    <ul class="breadcrumb">
+        <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+        <li class="active">{% trans from 'AdminBundle' %}Messages list{% endtrans %}</li>
+    </ul>
+</div>
+<div class="content">
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans from 'AdminBundle' %}Client{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}phone{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}email{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}numberPersons{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}Date{% endtrans %}</th>
+                <th>{% trans from 'AdminBundle' %}Actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for message in messages %}
+            <tr>
+                <td><a href="{{ path('message_show', { 'id': message.messageId }) }}">{{ message.firstName }} {{ message.lastName }}</a></td>
+                <td>{{ message.phone }}</td>
+                <td>{{ message.email }}</td>
+                <td>{{ message.numberPersons }}</td>
+                <td>{{ message.dateCreate|date('d/m/Y') }}</td>
+                <td>
+                    <a href="{{ path('message_show', { 'id': message.messageId }) }}">{% trans from 'AdminBundle' %}show{% endtrans %}</a>
+                    <a href="{{ path('message_delete', { 'id': message.messageId }) }}">{% trans from 'AdminBundle' %}delete{% endtrans %}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

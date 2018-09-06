@@ -1,0 +1,42 @@
+{% extends '@App/base.html.twig' %}
+{% block metas %}
+    {% if page is not null %}
+        <title>{{ page.meta.metaTitle }}</title>
+        <meta name="description" content="{{ page.meta.metaDescription }}">
+        <meta name="keywords" content="{{ page.meta.metaKeywords }}">
+        {{ page.meta.metaKeywords|raw }}
+    {% elseif destination is defined %}
+        <title>Destination {{ destination.destinationName }} - {{ app_settings.application_name }}</title>
+        <meta name="description" content="Parmi les meilleurs destination, {{ destination.destinationName }} une des destination préférées des voyageures {{ destination.destinationName }}, Trouvez les meilleurs programmes de circuits et d'excursions et autres préstations de voyage dans votre destination préférée sur {{ app_settings.application_name }}">
+    {% endif %}
+{% endblock %}
+{% block body %}
+    <div class="second-page-head">
+        {{ include('@App/inc/form-search.html.twig') }}
+    </div>
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a>
+            </li>
+            <li class="active">{% trans %}Search{% endtrans %}</li>
+        </ol>
+    </div>
+
+    <div class="container">
+
+        <div class="products-list content-grid">
+            <div class="row">
+            {% for product in products %}
+                {{ include('AppBundle:default:product_line_2.html.twig',{product:product}) }}
+            {% endfor %}
+        </div>
+        </div>
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(products) }}
+        </div>
+    </div>
+
+{% endblock %}
+

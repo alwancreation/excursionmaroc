@@ -1,0 +1,97 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from 'AdminBundle' %}Messages{% endtrans %}
+                <small>{% trans from 'AdminBundle' %}Messages{% endtrans %}</small>
+            </h3>
+        </div>
+    </div>
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{{ url('admin_default_index') }}">{% trans from 'AdminBundle' %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans from 'AdminBundle' %}Messages{% endtrans %}</li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                	<div class="panel-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}category{% endtrans %}</th>
+                                <td>{{ message.category }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}numberPersons{% endtrans %}</th>
+                                <td>{{ message.numberPersons }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}vehicle{% endtrans %}</th>
+                                <td>{{ message.vehicle }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}theme{% endtrans %}</th>
+                                <td>{{ message.theme }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}destinationFrom{% endtrans %}</th>
+                                <td>{{ message.destinationFrom }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}destinationTo{% endtrans %}</th>
+                                <td>{{ message.destinationTo }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}dateStart{% endtrans %}</th>
+                                <td>
+                                    {% if message.dateStart %}
+                                        {{ message.dateStart|date('d/m/Y') }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}dateEnd{% endtrans %}</th>
+                                <td>
+                                    {% if message.dateEnd %}
+                                        {{ message.dateEnd|date('d/m/Y') }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}firstName{% endtrans %}</th>
+                                <td>{{ message.firstName }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}lastName{% endtrans %}</th>
+                                <td>{{ message.lastName }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}address{% endtrans %}</th>
+                                <td>{{ message.address }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}phone{% endtrans %}</th>
+                                <td>{{ message.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans from 'AdminBundle' %}email{% endtrans %}</th>
+                                <td>{{ message.email }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                	</div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <a href="{{ path('message_index') }}" class="btn btn-default">{% trans from 'AdminBundle' %}Back to the list{% endtrans %}</a>
+    </div>
+{% endblock %}

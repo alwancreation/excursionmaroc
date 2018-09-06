@@ -1,0 +1,84 @@
+{% extends "AdminBundle::base.html.twig" %}
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+{% form_theme edit_form_password 'bootstrap_3_layout.html.twig' %}
+{% block body %}
+
+
+    <div class="page-header">
+        <div class="page-title">
+            <h3>
+                {% trans from "AdminBundle" %}User{% endtrans %}
+                <small>{% trans from "AdminBundle" %}Edit{% endtrans %}</small>
+            </h3>
+        </div>
+
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                {% trans from "AdminBundle" %}Modifier{% endtrans %}
+            </h6>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">
+                                {% trans from "AdminBundle" %}Edit{% endtrans %}
+                            </h6>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_start(edit_form) }}
+                            {{ form_errors(edit_form) }}
+                            {{ form_widget(edit_form) }}
+                            <button type="submit" class="btn btn-primary">{% trans from "AdminBundle" %}
+                                Save{% endtrans %}</button>
+                            {{ form_end(edit_form) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">
+                                {% trans from "AdminBundle" %}Edit password{% endtrans %}
+                            </h6>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_start(edit_form_password) }}
+                                {{ form_errors(edit_form_password) }}
+                                {{ form_widget(edit_form_password) }}
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">{% trans from 'AdminBundle' %}Update{% endtrans %}</button>
+                                </div>
+                            {{ form_end(edit_form_password) }}
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{% trans from "AdminBundle" %}User Roles{% endtrans %}</div>
+                        <div class="panel-body">
+                            {{ form_start(edit_form_role) }}
+                            {{ form_errors(edit_form_role) }}
+                            {{ form_widget(edit_form_role) }}
+                            {{ form_end(edit_form_role) }}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <a href="{{ path('users') }}" class="btn btn-default">
+                {% trans from "AdminBundle" %}Back{% endtrans %}
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

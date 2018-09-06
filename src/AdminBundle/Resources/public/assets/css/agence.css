@@ -1,0 +1,48 @@
+.header-nav-left img{
+    margin: 0 auto;
+}
+.header-nav-left{
+    padding: 10px;
+    text-align: center;
+    background-color: #003f56;
+}
+
+.login-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 350px;
+    margin-left: -150px;
+    margin-top: -250px;
+}
+.form-control + .form-control, .input-group + .input-group{
+    margin-top: 0;
+}
+
+.modal-body{
+    padding: 15px;
+}
+.btn-xs{
+    padding: 2px 5px 2px 5px !important;
+    font-size: 10px !important;
+    margin: 1px !important;
+}
+.form-control.select2-container{
+    padding: 0 !important;
+}
+
+.select-sim-not-used+.select2 .select2-selection__rendered:after{
+    content: attr(title);
+    display: inline-block;
+}
+.stats-title{
+    font-size: 13px;
+    color: #8b8b8b;
+    font-weight: normal;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: solid 1px #e7e7e7;
+}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+    padding: 3px 5px;
+}

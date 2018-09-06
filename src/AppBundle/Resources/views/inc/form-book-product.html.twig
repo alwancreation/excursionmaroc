@@ -1,0 +1,76 @@
+{% form_theme form "bootstrap_3_layout.html.twig" %}
+
+<div class="product-right-sidebar">
+    <div class="panel panel-default">
+        <div class="panel-heading">{% trans %}CHECK & BOOK{% endtrans %}</div>
+        <div class="panel-body">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        {{ form_label(form.firstName) }}
+                        {{ form_widget(form.firstName) }}
+                    </div>
+                </div>
+
+
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        {{ form_label(form.lastName) }}
+                        {{ form_widget(form.lastName) }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {{ form_label(form.phone) }}
+                        {{ form_widget(form.phone) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        {{ form_label(form.numberPersons) }}
+                        {{ form_widget(form.numberPersons) }}
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        {{ form_label(form.numberOfChildren) }}
+                        {{ form_widget(form.numberOfChildren) }}
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+                {{ form_label(form.dateStartInput) }}
+                {{ form_widget(form.dateStartInput) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.dateEndInput) }}
+                {{ form_widget(form.dateEndInput) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.messageContent) }}
+                {{ form_widget(form.messageContent) }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-block btn-primary large-btn">{% trans %}Send{% endtrans %}</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
