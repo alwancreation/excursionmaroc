@@ -1549,18 +1549,16 @@ padding:20px;
 
 footer {
 	padding-bottom: 30px;
-	background-color: darken($second_site_color,10%);
+	background-color: darken($footerBgColor,10%);
 	margin-top: 5px;
 	color: #efefef;
 	min-height: 180px;
 	.home-site-description{
 		padding-top: 30px;
-		padding-bottom: 20px;
-		margin-bottom: 20px;
-		border-bottom: solid 1px darken($second_site_color,10%);
-		background-color: $second_site_color;
-		color: lighten($border-2-color,20%);
-		border-top: solid 10px $border-2-color;
+		padding-bottom: 30px;
+		margin-bottom:15px;
+		background-color: $footerBgColor;
+		color: $footerColor;
 	}
 	h2{
 		font-size: 26px;
@@ -1643,8 +1641,8 @@ footer {
 			color: #FFFFFF;
 			margin-bottom: 8px;
 			padding-bottom: 8px;
-			border-bottom: solid 1px darken($second_site_color,12%);
-			box-shadow: 0px 1px 0px darken($second_site_color,7%);
+			border-bottom: solid 1px darken($footerBgColor,12%);
+			box-shadow: 0px 1px 0px darken($footerBgColor,7%);
 		}
 	}
 	.copyrights{
@@ -1653,8 +1651,8 @@ footer {
 		font-size: 11px;
 		color: #999;
 		text-align: center;
-		border-top: solid 1px darken($second_site_color,13%);
-		box-shadow: 0px 1px 0px darken($second_site_color,6%) inset;
+		border-top: solid 1px darken($footerBgColor,13%);
+		box-shadow: 0px 1px 0px darken($footerBgColor,6%) inset;
 	}
 
 	@media screen and (max-width: 767px) {

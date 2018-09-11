@@ -88,7 +88,7 @@ class ProductsController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository("AppBundle:Category")->find(2);
+        $category = $em->getRepository("AppBundle:Category")->find(1);
         $dql   = "SELECT p FROM AppBundle:Product p where p.category=:category";
         $query = $em->createQuery($dql)
         ->setParameters(array(

@@ -4,9 +4,23 @@
 .header-nav-left{
     padding: 10px;
     text-align: center;
-    background-color: #003f56;
+    background-color: #131313;
 }
-
+.navigation > li{
+    border-top: 1px solid #131313;
+}
+.sidebar{
+    background-color: #282828;
+}
+.navbar-inverse{
+    background-color: #282828;
+}
+.navigation > li:hover > a{
+    background-color: #444444;
+}
+.navigation {
+    border-bottom: 1px solid #1d1d1d;
+}
 .login-wrapper {
     position: absolute;
     left: 50%;
