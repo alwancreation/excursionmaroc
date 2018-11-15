@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AgenciesController extends Controller
 {
     /**
-     * @Route("/agences.html", name="agencies_index")
+     * @Route("/agences-de-voyage-maroc", name="agencies_index")
      */
     public function indexAction(Request $request)
     {

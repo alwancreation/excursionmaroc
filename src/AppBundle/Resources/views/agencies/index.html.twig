@@ -8,32 +8,44 @@
     {% endblock %}
 {% endif %}
 {% block body %}
-    <div class="second-page-head">
-        {{ include('@App/inc/form-search.html.twig') }}
-    </div>
     <section class="agencies-list">
         <div class="container">
             <h2 class="page-title">{% trans %}Agencies list{% endtrans %}</h2>
-            <div class="row row-agencies">
+            <div class="row-agencies">
                 {% for agency in agencies %}
-                    <div class="col-md-3 col-sm-4 col-xs-6">
-                        <div class="one-agency">
+                    <div class="one-agency">
+                        <div class="one-agency-inner">
                             <a href="{{ routing_service.agencyUrl(agency) }}" class="img-name">
-                                {% if agency.logo %}
+                                {% if false and agency.logo %}
                                     <img src="{{ asset('uploads/agencies/'~agency.logo)|imagine_filter('agency_400_300') }}"
                                          class="img-responsive" alt="{{ agency }}">
                                 {% else %}
                                     <img src="{{ asset('uploads/agencies/no-logo.jpg')|imagine_filter('agency_400_300') }}"
                                          class="img-responsive" alt="{{ agency }}">
                                 {% endif %}
-                                <b>{{ agency }}</b>
+
                             </a>
-                            {% if agency.city %}
-                                <a href="#">{{ agency.city }}</a> /
-                            {% endif %}
-
-                            <a href="{{ routing_service.agencyUrl(agency) }}">{{ agency.products.count }} {% trans %}Product(s){% endtrans %}</a>
-
+                            <div class="agency-info">
+                                <h3>
+                                    <a href="{{ routing_service.agencyUrl(agency) }}">{{ agency }}</a>
+                                    <span class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </span>
+                                </h3>
+                                <p>
+                                    Une agence de voyage au Maroc qui vous offre des opportunités de voyage originals, pour vous aider a mieux choisir vos destination nationnal et internationnal avec un bon prix. des offres de voyage et excursions partout dans le monde qui s'adaptent mieux a votre budget.
+                                </p>
+                                <div class="more-info">
+                                    {% if agency.city %}
+                                        <a href="#">{{ agency.city }}</a>
+                                    {% endif %}
+                                    <a href="{{ routing_service.agencyUrl(agency) }}">{{ agency.products.count }} {% trans %}Product(s){% endtrans %}</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}

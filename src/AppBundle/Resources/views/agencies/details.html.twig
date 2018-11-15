@@ -5,9 +5,6 @@
 {% endblock %}
 
 {% block body %}
-    <div class="second-page-head">
-        {{ include('@App/inc/form-search.html.twig') }}
-    </div>
     <div class="container">
         <ol class="breadcrumb">
             <li>
@@ -22,12 +19,17 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="agency-left-sidebar">
-                {% if agency.logo %}
+                {% if false and agency.logo %}
                     <div class="img-agency">
                     <img src="{{ asset('uploads/agencies/'~agency.logo)|imagine_filter('agency_400_300') }}"
                          class="img-responsive" alt="{{ agency }}">
+                    </div>
+                {% else %}
+                    <div class="img-agency">
+                        <img src="{{ asset('uploads/agencies/no-logo.jpg')|imagine_filter('agency_400_300') }}"
+                             class="img-responsive" alt="{{ agency }}">
                     </div>
                 {% endif %}
                     <h1><a href="{{ routing_service.agencyUrl(agency) }}">
@@ -60,11 +62,11 @@
                 </ul>
                 </div>
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-8">
                 <div class="products-list content-grid">
                     <div class="row">
                         {% for product in agency.products %}
-                            {{ include('AppBundle:default:product_line_2.html.twig',{product:product}) }}
+                            {{ include('AppBundle:default:product_line_3.html.twig',{product:product}) }}
                         {% endfor %}
                     </div>
                 </div>

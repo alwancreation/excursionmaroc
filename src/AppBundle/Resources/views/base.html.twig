@@ -41,27 +41,30 @@
         </nav>
     </header>
 
-    <section id="home" class="section hero-tools">
-        <div class="container">
-            <div class="row">
-                <div class="two-thirds column">
-                    <h2>Search Excursions In Morocco</h2>
-                    <h6>About Morocco excursion and trips from diffirent cities and locations.</h6>
-                    <form method="get" action="" id="">
+    {% block hero %}
+        <section id="home" class="section hero-tools">
+            <div class="container">
+                <div class="row">
+                    <div class="two-thirds column">
+                        <h2>Search Excursions In Morocco</h2>
+                        <h6>About Morocco excursion and trips from diffirent cities and locations.</h6>
+                        <form method="get" action="" id="">
                     <span class="input">
                     <input name="query" id="query" value="" class="input-search required blk" type="text" placeholder="Try Name Or Destination">
                     <button style="width:104px" id="searchSubmit" class="button button-m button-red" type="submit">OK</button>
 
                     </span>
-                    </form>
-                </div>
-                <div class="one-third column">
-                    <img class="u-max-full-width" src="{{ asset('bundles/app/assets/images/438knife.png') }}" alt="Morocco Excursion">
+                        </form>
+                    </div>
+                    <div class="one-third column">
+                        <img class="u-max-full-width" src="{{ asset('bundles/app/assets/images/438knife.png') }}" alt="Morocco Excursion">
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    {% endblock %}
 </div>
+{% block bodyHeader %}{% endblock %}
 {% block body %}{% endblock %}
     <footer id="footer">
         <div class="home-site-description text-center">
@@ -135,7 +138,7 @@
     <script type="text/javascript" src="{{ asset("bundles/app/assets/js/jquery.form.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/app/assets/js/jquery.cycle.all.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/app/assets/js/jquery.maximage.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/app/assets/js/jquery.min.js") }}"></script>
+    {#<script type="text/javascript" src="{{ asset("bundles/app/assets/js/jquery.min.js") }}"></script>#}
     <script type="text/javascript" src="{{ asset("bundles/app/assets/js/responsive-nav.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/app/assets/js/fixed-responsive-nav.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/app/assets/js/script.js") }}"></script>

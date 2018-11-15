@@ -4,18 +4,21 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo; // gedmo annotations
+use Gedmo\Translatable\Translatable;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Product
  *
  * @ORM\Table(name="product", indexes={@ORM\Index(name="destination_id", columns={"destination_id"}), @ORM\Index(name="category_id", columns={"category_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
+ * @Gedmo\TranslationEntity(class="AppBundle\Entity\Translation\ElementTranslation")
  */
-class Product
+class Product implements Translatable
 {
     /**
      * @var integer
-     *
      * @ORM\Column(name="product_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -23,49 +26,41 @@ class Product
     private $productId;
 
     /**
+     * @return string
+     */
+    public function getProductTitle()
+    {
+        return $this->productTitle;
+    }
+
+    /**
+     * @param string $productTitle
+     */
+    public function setProductTitle($productTitle)
+    {
+        $this->productTitle = $productTitle;
+    }
+
+    /**
      * @var string
-     *
      * @ORM\Column(name="product_name", type="string", length=255, nullable=true)
      */
     private $productName;
+
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
+     * @ORM\Column(name="product_title", type="string", length=255, nullable=true)
+     */
+    private $productTitle;
+
+
+    /**
+     * @var string
+     * @Gedmo\Slug(fields={"productName"})
      * @ORM\Column(name="product_slug", type="string", length=255, nullable=true)
      */
     private $productSlug;
-
-
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Theme",cascade={"persist"})
-     * @ORM\JoinTable(name="product_has_theme",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="product_id", referencedColumnName="product_id", onDelete="cascade")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="theme_id", referencedColumnName="theme_id", onDelete="cascade")
-     *   }
-     * )
-     */
-    private $themes;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Destination",cascade={"persist"})
-     * @ORM\JoinTable(name="product_has_destination",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="product_id", referencedColumnName="product_id", onDelete="cascade")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="destination_id", referencedColumnName="destination_id", onDelete="cascade")
-     *   }
-     * )
-     */
-    private $destinations;
 
 
     /**
@@ -76,11 +71,27 @@ class Product
     private $duration;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="available_places", type="integer", nullable=true)
+     */
+    private $availablePlaces;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="is_private", type="boolean", nullable=true)
      */
     private $private;
+
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_available", type="boolean", nullable=true)
+     */
+    private $available;
+
 
 
     /**
@@ -163,114 +174,13 @@ class Product
 
 
 
-    /**
-     * @var \AppBundle\Entity\Agency
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Agency")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="agency", referencedColumnName="id", onDelete="cascade")
-     * })
-     */
-    private $agency;
-
-    public function __construct()
-    {
-        $this->destinations = new ArrayCollection();
-        $this->themes = new ArrayCollection();
-    }
-
-
-    /**
-     * @return Agency
-     */
-    public function getAgency()
-    {
-        return $this->agency;
-    }
-
-    /**
-     * @param Agency $agency
-     */
-    public function setAgency($agency)
-    {
-        $this->agency = $agency;
-    }
-
-
-    /**
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getThemes()
-    {
-        return $this->themes;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\Collection $themes
-     */
-    public function setThemes($themes)
-    {
-        $this->themes = $themes;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDestinations()
-    {
-        return $this->destinations;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\Collection $destinations
-     */
-    public function setDestinations($destinations)
-    {
-        $this->destinations = $destinations;
-    }
-
-
-    /**
-     * @param Destination $destination
-     */
-    public function addDestination(Destination $destination)
-    {
-        $this->destinations->add($destination);
-    }
-
-    /**
-     * @param Destination $destination
-     */
-    public function removeDestination(Destination $destination)
-    {
-        $this->destinations->removeElement($destination);
-    }
-
-    /**
-     * @param Theme $theme
-     */
-    public function addTheme(Theme $theme)
-    {
-        $this->themes->add($theme);
-    }
-
-    /**
-     * @param Theme $theme
-     */
-    public function removeTheme(Theme $theme)
-    {
-        $this->themes->removeElement($theme);
-    }
-
-
-
 
     /**
      * @return string
      */
     public function getProductSlug()
     {
-        return $this->productSlug;
+        return ($this->productSlug!=null && $this->productSlug!='')?$this->productSlug:$this->getProductId();
     }
 
     /**
@@ -292,7 +202,7 @@ class Product
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="product_short_description", type="text", length=65535, nullable=true)
      */
     private $productShortDescription;
@@ -346,11 +256,28 @@ class Product
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="product_long_description", type="text", length=65535, nullable=true)
      */
     private $productLongDescription;
 
+    /**
+     * Page locale
+     * Used locale to override Translation listener's locale
+     *
+     * @Gedmo\Locale
+     */
+    protected $locale;
+
+    /**
+     * Sets translatable locale
+     *
+     * @param string $locale
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
 
     /**
      * @var double
@@ -358,6 +285,46 @@ class Product
      * @ORM\Column(name="product_price", type="float", nullable=true)
      */
     private $productPrice;
+    /**
+     * @var double
+     *
+     * @ORM\Column(name="product_saint_sylvester_price", type="float", nullable=true)
+     */
+    private $ProductSaintSylvesterPrice;
+
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="product_order", type="integer", nullable=true)
+     */
+    private $productOrder;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="custom_payment_percent", type="integer", nullable=true)
+     */
+    private $customPaymentPercent;
+
+    /**
+     * @return int
+     */
+    public function getProductOrder()
+    {
+        return $this->productOrder;
+    }
+
+    /**
+     * @param int $productOrder
+     */
+    public function setProductOrder($productOrder)
+    {
+        $this->productOrder = $productOrder;
+    }
+
+
 
     /**
      * @return float
@@ -366,6 +333,8 @@ class Product
     {
         return $this->productPrice;
     }
+
+
 
     /**
      * @param float $productPrice
@@ -406,7 +375,24 @@ class Product
     {
         return $this->prices;
     }
-    public function getPrice($adults = 2, $childs=0){
+
+    public function __construct()
+    {
+        $this->destinations = new ArrayCollection();
+        $this->themes = new ArrayCollection();
+        $this->months = new ArrayCollection();
+        $this->assets = new ArrayCollection();
+        $this->products = new ArrayCollection();
+
+    }
+
+
+    public function getPrice($adults = 2, \DateTime $date=null){
+        if ($date && $this->getProductSaintSylvesterPrice()){
+            if($date->format("d")==31 && $date->format("m")==12){
+                return $this->getProductSaintSylvesterPrice();
+            }
+        }
         $priceLine =$this->getPrices();
         if($priceLine){
             if($adults<=14) {
@@ -426,13 +412,67 @@ class Product
             if($adults>14){
                 $price = null;
                 eval('if($priceLine->getPrice14Plus()){$price = $priceLine->getPrice14Plus();};');
-                for($i=14;$i>=1;$i--){
-                    eval('if($priceLine->getPrice'.$i.'() && $price===null){$price = $priceLine->getPrice'.$i.'();};');
-                }
                 if($price!==null){
                     return $price;
                 }
             }
+        }
+        return $this->getProductPrice();
+    }
+
+    public function getTotalPrice($adults = 2, $children=0,\DateTime $date=null){
+        return $this->getPrice($adults,$date)*$adults+$this->getPriceChildren($children,$date)*$children;
+    }
+
+    public function getPriceChildren($adults=0,\DateTime $date=null){
+        if ($date && $this->getProductSaintSylvesterPrice()){
+            if($date->format("d")==31 && $date->format("m")==12){
+                $childrenReduction = 50;
+                if($this->getPrices() && $this->getPrices()->getChildReduction()>=0 && $this->getPrices()->getChildReduction()<=100){
+                    $childrenReduction = $this->getPrices()->getChildReduction();
+                }
+                return $this->getProductSaintSylvesterPrice() - $this->getProductSaintSylvesterPrice()*$childrenReduction/100;
+            }
+        }
+        $priceLine =$this->getPrices();
+        if($priceLine && $this->isPrivate()){
+            if($adults<=14) {
+                $price = null;
+                for ($a = 1; $a <= 14; $a++) {
+                    if ($adults == $a) {
+                        for ($i = $a; $i >= 1; $i--) {
+                            eval('if($priceLine->getPrice' . $i . '() && $price===null){$price = $priceLine->getPrice' . $i . '();};');
+                        }
+                    }
+                }
+                if($price!==null){
+                    $childrenReduction = 50;
+                    if($priceLine->getChildReduction()>=0){
+                        $childrenReduction = $priceLine->getChildReduction();
+                    }
+                    return $price - ($childrenReduction*$childrenReduction/100);
+                }
+            }
+
+            if($adults>14){
+                $price = null;
+                eval('if($priceLine->getPrice14Plus()){$price = $priceLine->getPrice14Plus();};');
+
+                if($price!==null){
+                    $childrenReduction = 50;
+                    if($priceLine->getChildReduction()>=0){
+                        $childrenReduction = $priceLine->getChildReduction();
+                    }
+                    return $price - ($childrenReduction*$childrenReduction/100);
+                }
+            }
+        }
+        if($priceLine){
+            $childrenReduction = 50;
+            if($priceLine->getChildReduction()>=0){
+                $childrenReduction = $priceLine->getChildReduction();
+            }
+            return $this->getProductPrice() - ($childrenReduction*$childrenReduction/100);
         }
         return $this->getProductPrice();
     }
@@ -456,6 +496,32 @@ class Product
     private $category;
 
     /**
+     * @var \AppBundle\Entity\Meta
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Meta" , cascade={"persist"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="meta_id", referencedColumnName="meta_id")
+     * })
+     */
+    private $meta;
+
+    /**
+     * @return Meta
+     */
+    public function getMeta()
+    {
+        return ($this->meta)?$this->meta:new Meta();
+    }
+
+    /**
+     * @param Meta $meta
+     */
+    public function setMeta($meta)
+    {
+        $this->meta = $meta;
+    }
+
+    /**
      * @var \AppBundle\Entity\Destination
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Destination")
@@ -464,6 +530,17 @@ class Product
      * })
      */
     private $destination;
+
+    /**
+     * @var \AppBundle\Entity\Destination
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Destination")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="destination_from_id", referencedColumnName="destination_id")
+     * })
+     */
+    private $destinationFrom;
+
 
     /**
      * @ORM\OneToMany(targetEntity="CustomProperty", mappedBy="product")
@@ -477,6 +554,23 @@ class Product
     {
         return $this->customProperties;
     }
+
+    /**
+     * @return Destination
+     */
+    public function getDestinationFrom()
+    {
+        return $this->destinationFrom;
+    }
+
+    /**
+     * @param Destination $destinationFrom
+     */
+    public function setDestinationFrom($destinationFrom)
+    {
+        $this->destinationFrom = $destinationFrom;
+    }
+
 
     /**
      * @return mixed
@@ -519,13 +613,75 @@ class Product
     private $assets;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
+     * @ORM\JoinTable(name="related_product",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="product_id", referencedColumnName="product_id", onDelete="cascade")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="related_product_id", referencedColumnName="product_id", onDelete="cascade")
+     *   }
+     * )
+     */
+    private $products;
+
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Month", cascade={"persist"})
+     * @ORM\JoinTable(name="product_in_month",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="product_id", referencedColumnName="product_id", onDelete="cascade")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="month_id", referencedColumnName="month_id", onDelete="cascade")
+     *   }
+     * )
+     */
+    private $months;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Destination", inversedBy="products", cascade={"persist"})
+     * @ORM\JoinTable(name="product_has_destination",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="product_id", referencedColumnName="product_id", onDelete="cascade")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="destination_id", referencedColumnName="destination_id", onDelete="cascade")
+     *   }
+     * )
+     */
+    private $destinations;
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Theme", inversedBy="products", cascade={"persist"})
+     * @ORM\JoinTable(name="product_has_theme",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="product_id", referencedColumnName="product_id", onDelete="cascade")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="theme_id", referencedColumnName="theme_id", onDelete="cascade")
+     *   }
+     * )
+     */
+    private $themes;
+
+
+
+
+    /**
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getAssets()
     {
         return $this->assets;
     }
-
     /**
      * @param Asset $asset
      * @internal param \Doctrine\Common\Collections\Collection $assets
@@ -534,11 +690,78 @@ class Product
     {
         $this->assets->add($asset);
     }
-
     public function removeAsset(Asset $asset)
     {
         $this->assets->removeElement($asset);
     }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMonths()
+    {
+        return $this->months;
+    }
+    /**
+     * @param Month $month
+     * @internal param \Doctrine\Common\Collections\Collection $months
+     */
+    public function addMonth(Month $month)
+    {
+        $this->months->add($month);
+    }
+    public function removeMonth(Month $month)
+    {
+        $this->months->removeElement($month);
+    }
+
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDestinations()
+    {
+        return $this->destinations;
+    }
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Section", mappedBy="products")
+     **/
+    protected $sections;
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getThemes()
+    {
+        return $this->themes;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\Collection $themes
+     */
+    public function setThemes($themes)
+    {
+        $this->themes = $themes;
+    }
+
+
+    /**
+     * @param Destination $destination
+     * @internal param \Doctrine\Common\Collections\Collection $destinations
+     */
+    public function addDestination(Destination $destination)
+    {
+        $this->destinations->add($destination);
+    }
+
+    public function removeDestination(Destination $destination)
+    {
+        $this->destinations->removeElement($destination);
+    }
+
+
+
     private $mainAsset;
 
     /**
@@ -689,30 +912,43 @@ class Product
         return $this->destination;
     }
 
-
-    function __toString()
+    /**
+     * @return int
+     */
+    public function getAvailablePlaces()
     {
-        return $this->productName;
+        return $this->availablePlaces;
     }
 
     /**
-     * @param $user User
-     * @return bool
+     * @param int $availablePlaces
      */
-    public function getAccess($user)
+    public function setAvailablePlaces($availablePlaces)
     {
-        if($user->hasRole("ROLE_ADMIN")){
-            return true;
-        }
-        if($agency = $this->getAgency()){
-            $ua = $agency->getUser();
-            if($ua==$user){
-               return true;
-            }
-        }
-        return false;
+        $this->availablePlaces = $availablePlaces;
     }
 
+    /**
+     * @return boolean
+     */
+    public function isAvailable()
+    {
+        return $this->available;
+    }
+
+    /**
+     * @param boolean $available
+     */
+    public function setAvailable($available)
+    {
+        $this->available = $available;
+    }
+
+
+    function __toString()
+    {
+        return $this->productName."";
+    }
 
 
     /**
@@ -762,4 +998,83 @@ class Product
     {
         $this->attachedFile = $attachedFile;
     }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\Collection $products
+     */
+    public function setProducts($products)
+    {
+        $this->products = $products;
+    }
+
+    /**
+     * @return float
+     */
+    public function getProductSaintSylvesterPrice()
+    {
+        return $this->ProductSaintSylvesterPrice;
+    }
+
+    /**
+     * @param float $ProductSaintSylvesterPrice
+     */
+    public function setProductSaintSylvesterPrice($ProductSaintSylvesterPrice)
+    {
+        $this->ProductSaintSylvesterPrice = $ProductSaintSylvesterPrice;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCustomPaymentPercent()
+    {
+        return $this->customPaymentPercent;
+    }
+
+    /**
+     * @param int $customPaymentPercent
+     */
+    public function setCustomPaymentPercent($customPaymentPercent)
+    {
+        $this->customPaymentPercent = $customPaymentPercent;
+    }
+
+
+
+    /**
+     * @var \AppBundle\Entity\Agency
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Agency")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="agency", referencedColumnName="id", onDelete="cascade")
+     * })
+     */
+    private $agency;
+
+    /**
+     * @return Agency
+     */
+    public function getAgency()
+    {
+        return $this->agency;
+    }
+
+    /**
+     * @param Agency $agency
+     */
+    public function setAgency($agency)
+    {
+        $this->agency = $agency;
+    }
+
+
+
 }

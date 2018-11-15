@@ -52,9 +52,20 @@ class ControllerActionExtension extends \Twig_Extension
         );
     }
 
+    public function app_devise_code($price=null){
+        $session = $this->request->getSession();
+        $currency = $session->get('app_currency');
+        if($currency && $currency!='euro'){
+            return 'MAD';
+        }
+        return 'EUR';
+
+    }
+
     public function getFilters()
     {
         return array(
+            new \Twig_SimpleFilter('app_devise_code', array($this, 'app_devise_code')),
             new \Twig_SimpleFilter('my_price', array($this, 'priceFormat')),
             new \Twig_SimpleFilter('my_yes_no', array($this, 'yesOrNo')),
             new \Twig_SimpleFilter('my_progress', array($this, 'myProgress'), array(

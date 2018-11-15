@@ -1,74 +1,55 @@
-Home: Accueil
-Hotels: Hôtels
-Riads: Riads
-Villas: Villas
-Destinations: Destinations
-Places: Lieux
-Travels: Voyages
-Operators: Agences
-'Search by keyword': Mot-clé
-'Select Category': Catégorie
-'Select Destination': Destination
-Search: Rechercher
-'Abouts us': 'A propos'
-Navigation: Navigation
-'Contacts Us': Contactez-Nous
-'Follow us': Suivez-nous
-'Contact us': Contactez-Nous
-'First Name': Nom
-'Last Name': Prénom
-Email: Email
-City: Ville
-'Message / comment': 'Message / commentaire'
-Send: 'Réservez maintenant'
-'+ MORE INFOS': 'Plus d''info'
-'Product details': Description
-'Product About': Description
-'Product Video': 'Vidéo de présentation'
-'Product Map': Carte
-'CHECK & BOOK': Réservation
-Name: Nom
-'First name': Prénom
-'Last name': Nom
-Phone: Téléphone
-'Nbr adults': 'Nbr adultes'
-'Nbr child': 'Nbr enfants'
-Date: Date
-Message: Message
-'Please contact us for more information & quote': 'Please contact us for more information & quote'
-'we are available for you 24h/24 and 7days/7.': 'we are available for you 24h/24 and 7days/7.'
-'Reset Form': Initialiser
-'Book Now': Réserver
-Logout: Logout
-'Custom properties 1': 'Points forts'
-'Custom properties 2': 'Jour par jour'
-'Custom properties one day': 'Planification du jour'
-'Custom properties 3': 'Inclus dans le prix'
-'Custom properties 4': 'Non inclus'
-Trekking: Randonnées
+Trekking: Trekking
 Excursions: Excursions
 Circuits: Circuits
-Morocco: 'Le Maroc'
-'Why us ?': 'Pourquoi nous ?'
+Morocco: Morocco
+'Why us ?': 'Why us ?'
 Contact: Contact
-'Main Menu': 'Plan du site'
-'Follow Us': 'Suivez Nous'
-'start from': 'À Partir de'
-'CONTACT & BOOKING': Contactez-nous
-'Your Email': Email
-'Your phone': Téléphone
-'Your Country': Pays
-'Adults numbers': Adultes
-'Number of children': Enfants
-'Children numbers (-12 years old)': 'Enfants (-12 ans)'
-'Select Programme': Programme
-'Your Message': Message
-'Send Message': 'Envoyer le message'
-'Your message has been successfully sent !': 'Nous avons bien reçu votre message'
-'Number persons': Adultes
-'Date start': 'Date d''activitee'
+'Abouts us': 'Abouts us'
+'Main Menu': 'Main Menu'
+Home: Home
+'Follow Us': 'Follow Us'
+'All rights reserved': 'All rights reserved'
+'Contact us': 'Contact us'
+'First Name': 'First Name'
+'Last Name': 'Last Name'
+Email: Email
+City: City
+'Message / comment': 'Message / comment'
+Send: Send
+Phone: Phone
+'Product About': 'Product About'
+'Product Video': 'Product Video'
+'Product Map': 'Product Map'
+'We have received your message successfully.': 'We have received your message successfully.'
+'CONTACT & BOOKING': 'CONTACT & BOOKING'
+'Your Email': 'Your Email'
+'Your phone': 'Your phone'
+'Your Country': 'Your Country'
+'Adults numbers': 'Adults numbers'
+'Children numbers (-12 years old)': 'Children numbers (-12 years old)'
+Date: Date
+'Select Programme': 'Select Programme'
+'Your Message': 'Your Message'
+'Send Message': 'Send Message'
+'Your message has been successfully sent !': 'Your message has been successfully sent !'
+'+ MORE INFOS': '+ MORE INFOS'
+'CHECK & BOOK': 'CHECK & BOOK'
+'Please contact us for more information & quote': 'Please contact us for more information & quote'
+'we are available for you 24h/24 and 7days/7.': 'we are available for you 24h/24 and 7days/7.'
+'Reset Form': 'Reset Form'
+'Book Now': 'Book Now'
+Logout: Logout
+'Custom properties 1': Highlights
+'Custom properties 2': 'This is the program'
+'Custom properties one day': 'This is the program'
+'Custom properties 3': 'Inclus dans le prix'
+'Custom properties 4': 'Non includ'
+'start from': 'Start from'
+'Number of children': Kids
+'Number persons': Adults
+'Date start': 'Date d''arrivée'
 'Date end': 'Date de départ'
-'Date start input': 'Date d''activitee'
+'Date start input': 'Date d''arrivée'
 'Date end input': 'Date de départ'
 'Message content': 'Message / Commentaire'
 Available: 'Places disponibles'
@@ -139,8 +120,6 @@ December: Décembre
 'You can do this programme the following months': 'Ce programme est réalisable dans les mois suivants : '
 'Feasible in': 'Réalisable en'
 'Not feasible in': 'Non réalisable en'
-'All rights reserved': 'All rights reserved'
-'We have received your message successfully.': 'We have received your message successfully.'
 'Error sending message.': 'Error sending message.'
 numberPersons: numberPersons
 numberOfChildren: numberOfChildren
@@ -161,45 +140,58 @@ Transfers: Transfers
 'About us': 'About us'
 'About Us': 'About Us'
 Contact-us: Contact-us
-'Terms of Sales': 'Conditions generals de vente'
+'Terms of Sales': 'Terms of Sales'
 'We have received your booking successfully.': 'We have received your booking successfully.'
 Product: Product
 'Number of persons': 'Number of persons'
-'To confirm your order you can pay a percentage via your credit card': 'Pour confirmer votre reservation merci de payer 20% d"acompte'
-'Pay Now Online': 'Payer Online Maintenant'
-'Our location on the MAP': 'Notre Location sur la carte'
-'About the product': 'Ce à quoi vous pouvez vous attendre'
-'Start From': 'Prix des'
-'Excursions & Circuits': 'Excursions et Circuits'
+'To confirm your order you can pay a percentage via your credit card': 'To confirm your order you can pay a percentage via your credit card'
+'Pay Now Online': 'Pay Now Online'
+'Our location on the MAP': 'Our location on the MAP'
+'About the product': 'What you can expect'
+'Start From': 'Start From'
+'Excursions & Circuits': 'Excursions & Circuits'
 'Chercher une excursion ou un circuit au maroc': 'Chercher une excursion ou un circuit au maroc'
 Transferts: Transferts
 'Choisissez votre trajet': 'Choisissez votre trajet'
-'Search By Keywords': 'quoi?'
-'By Destination': 'Par Destination'
-'Destination From': 'Destination de depart'
-'Destination To': 'Destination a d''arrivée'
-For: Pour
-'Adults and': 'Adultes et'
-Child: Enfants
-'Booking Confirm': 'Confirmation de reservation'
+'Search by keyword': 'Search by keyword'
+'Select Category': 'Select Category'
+'Select Destination': 'Select Destination'
+Search: Search
+'Max persons': 'Max persons'
+'Not Available': 'Not Available'
+category: category
+vehicle: vehicle
+theme: theme
+destinationFrom: destinationFrom
+destinationTo: destinationTo
+address: address
+Message: Message
+'Search By Keywords': 'Search By Keywords'
+'By Destination': 'By Destination'
+'Destination From': 'Destination From'
+'Destination To': 'Destination To'
+For: For
+'Adults and': 'Adults and'
+Child: Child
+'Booking Confirm': 'Booking Confirm'
 'Print Booking': 'Print Booking'
 Booking: Booking
 'Booking Step 1': 'Booking Step 1'
-'Product To Book': 'Programme a reserver'
+'Product To Book': 'Product To Book'
 'Price To Pay': 'Price To Pay'
-'Confirm and pay later': 'Confirmer et payer ultérieurement'
-'Confirm Booking Now': 'Confirmer la reservation'
+'Confirm and pay later': 'Confirm and pay later'
+'Confirm Booking Now': 'Confirm Booking Now'
 'Contact Information': 'Contact Information'
-'LEARN MORE': 'Lire plus'
-'Date Arrival': 'Date d''arrivée'
-'Next Booking Page': 'Reservez ce programme'
+'LEARN MORE': 'LEARN MORE'
+'Date Arrival': 'Date Arrival'
+'Next Booking Page': 'Book this tour'
 'By Theme': Theme
-'Per Person': PP
+'Per Person': pp
 'Which give': Total
 'In Total': ''
-'Product Duration': Duree
+'Product Duration': 'Product Duration'
 'Product Share Type': 'Product Share Type'
-'Product Difficulty': 'Niveau Dificulte'
+'Product Difficulty': 'Product Difficulty'
 'To confirm your order you can pay a percentage of %paymentPercent%% via your credit card (%amountToPay%)': 'To confirm your order you can pay a percentage of %paymentPercent%% via your credit card (%amountToPay%)'
 'Related And Similar Products': 'Related And Similar Products'
 'Discover Our Related And Similar Products': 'Discover Our Related And Similar Products'

@@ -137,7 +137,7 @@ function getPrice(){
 
 $(document).ready(function(e) {
 
-	$('.datepicker').datepicker();
+	//$('.datepicker').datepicker();
 	/*  FullScreen slider
 	 ================================================*/
 	if($("#fullscreen-slider").length > 0 ){

@@ -88,6 +88,10 @@ liip_imagine:
             quality: 100
             filters:
                 thumbnail: { size: [1900, 400], mode: outbound, allow_upscale: true }
+        product_slider:
+            quality: 100
+            filters:
+                thumbnail: { size: [1680, 400], mode: outbound, allow_upscale: true }
         product_400_250:
             quality: 100
             filters:

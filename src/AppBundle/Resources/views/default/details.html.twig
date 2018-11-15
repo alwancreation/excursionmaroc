@@ -1,10 +1,9 @@
 {% extends '@App/base.html.twig' %}
 {% block metas %}{{ seo_service.metaProduct(product)|raw }}{% endblock %}
-{% block body %}
-    <div class="second-page-head">
-        {{ include('@App/inc/form-search.html.twig') }}
-    </div>
-    <div class="container">
+{% block hero %}{% endblock %}
+{% block bodyHeader %}
+<div class="header-article-details">
+    <div class="top-product-details">
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a>
@@ -17,109 +16,200 @@
             {% endif %}
             <li class="active">{{ product }}</li>
         </ol>
+        <div class="top-product-section">
+            <h1>{{ product }}</h1>
+            <div class="product-header">
+                {% if product.agency %}
+                    <span>{% trans %}By{% endtrans %} : <a
+                                href="{{ routing_service.agencyUrl(product.agency) }}">{{ product.agency }}</a></span>
+                {% endif %}
+                <span>
+                    {% trans %}Rating{% endtrans %} : <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                </span>
+
+
+            </div>
+
+        </div>
     </div>
+
+    {% if product.assets|length>0 %}
+    <div class="container-slider">
+        <div class="home-slider">
+            <div class="slider-container">
+                <div id="fullscreen-slider">
+                    {% for key,asset in product.assets %}
+                            <div class="slider-item">
+                                <img src="{{ asset('uploads/originals/'~asset.assetBasepath)|imagine_filter('product_slider') }}" alt="">
+                                <div class="in-slide-content" style="display: none;">
+                                    <h2>{{ asset.assetTitle }}</h2>
+                                    <p>{{ asset.assetDescription|raw }}</p>
+                                    {% if asset.assetLink and asset.assetLinkTitle %}
+                                        <p><a href="{{ asset.assetLink }}" target="_blank" class="btn btn-primary">{{ asset.assetLinkTitle }}</a></p>
+                                    {% endif %}
+                                </div>
+                            </div> <!-- /.slider-item -->
+                        {% endfor %}
+                </div>
+            </div>
+            <a href="" id="arrow_left"><i class="fa fa-angle-left"></i> </a>
+            <a href="" id="arrow_right"><i class="fa fa-angle-right"></i> </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+{% block body %}
+
     <div class="container singlePackage">
         <div class="row ">
             <div class="col-sm-8 col-xs-12">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="top-product-section">
-                            <h1>{{ product }}</h1>
-                            <div class="product-header">
-                                {% if product.agency %}
-                                    <span>{% trans %}By{% endtrans %} : <a
-                                                href="{{ routing_service.agencyUrl(product.agency) }}">{{ product.agency }}</a></span>
-                                {% endif %}
-                                <span>
-                                    {% trans %}Rating{% endtrans %} : <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                </span>
-
-
-                            </div>
-                            {% if product.assets|length>0 %}
-                                <div id="package-carousel" class="carousel slide" data-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        {% for key,asset in product.assets %}
-                                            <li data-target="#package-carousel"
-                                                data-slide-to="{{ key }}" {{ (key==0)?'class="active"':'' }}></li>
-                                        {% endfor %}
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        {% for key,asset in product.assets %}
-                                            <div class="item {{ (key==0)?'active':'' }}">
-                                                <img src="{{ asset('uploads/originals/'~asset.assetBasePath)|imagine_filter('product_800_500') }}"
-                                                     alt=""/>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                    <a class="left carousel-control" href="#package-carousel" data-slide="prev"><span
-                                                class="glyphicon glyphicon-menu-left"><i class="fa fa-chevron-left"></i></span></a>
-                                    <a class="right carousel-control" href="#package-carousel" data-slide="next"><span
-                                                class="glyphicon glyphicon-menu-right"><i
-                                                    class="fa fa-chevron-right"></i></span></a>
+                {% if product.months|length>0 %}
+                    <div class="product-months">
+                        <h4>{% trans %}You can do this programme the following months{% endtrans %}</h4>
+                        <div class="row">
+                            {% for month in months %}
+                                <div class="col-xs-1"><span class="{{ (month in product.months)?'active':'' }}"
+                                                            data-toggle="tooltip"
+                                                            title="{{ (month in product.months)?'Feasible in'|trans:'Not feasible in'|trans }} {{ month.monthName|trans }}">{{ month.monthCode|trans }}</span>
                                 </div>
-                            {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
-                    <div class="col-xs-12">
-                        <div class="product-description">
-                            <div class="details-section">
-                                <h3>{% trans %}Product About{% endtrans %}</h3>
-                                <div class="product-about">
-                                    {{ product.productLongDescription|raw }}
-                                </div>
-                            </div>
-                            {% for i in 1..4 %}
-                                {% if product.getCustomPropertiesType(i)|length>0 %}
-                                    <div class="details-section">
-                                        <h3>{{ ('Custom properties ' ~ i )|trans }}</h3>
-                                        <ul class="one-line-items">
-                                            {% for prop in product.getCustomPropertiesType(i) %}
-                                                <li>
-                                                    <b>{{ prop.customPropertyName }}</b>
-                                                    <span>{{ prop.customPropertyDescription }}</span>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                {% endif %}
+                {% if product.getCustomPropertiesType(1)|length>0 %}
+                    <div class="product-description">
+                        <div class="details-section details-section-1">
+                            <h3>{{ ('Custom properties 1' )|trans }}</h3>
+                            <ul class="one-line-items">
+                                {% for prop in product.getCustomPropertiesType(1) %}
+                                    {% if (prop.customPropertyName or prop.customPropertyDescription) and (prop.customPropertyName!='' or prop.customPropertyDescription!='') %}
+                                        <li class="highlights">
+                                            {% if prop.customPropertyName and prop.customPropertyName!='' %}
+                                                <b>{{ prop.customPropertyName|raw }}</b>
+                                            {% endif %}
+                                            {% if prop.customPropertyDescription and prop.customPropertyDescription!='' %}
+                                                <span>{{ prop.customPropertyDescription|raw }}</span>
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
 
-
-
-                            {% if product.productVideoHtml %}
-                                <div class="details-section">
-                                    <h3>{% trans %}Product Video{% endtrans %}</h3>
-                                    <div class="video-product">
-                                        {{ product.productVideoHtml|raw }}
-                                    </div>
-                                </div>
-                            {% endif %}
-                            {% if product.productMapHtml %}
-                                <div class="details-section">
-                                    <h3>{% trans %}Product Map{% endtrans %}</h3>
-                                    <div class="map-product">
-                                        {{ product.productMapHtml|raw }}
-                                    </div>
-                                </div>
-
-                            {% endif %}
-
-
+                                {% endfor %}
+                            </ul>
                         </div>
-                        {% if product.attached %}
-                            <div class="download-section">
+                    </div>
+                {% endif %}
 
-                                <a class="pdf-download" target="_blank"
-                                   href="{{ asset('uploads/attached/'~product.attached.assetBasePath) }}">
-                                    {{ product.attached.assetTitle }} <span>({% trans %}
-                                        Download the programme{% endtrans %})</span>
-                                </a>
-
-                            </div>
-                        {% endif %}
+                <div class="product-section product-presentation">
+                    <h3 class="section-title">{% trans %}About the product{% endtrans %}
+                        <div class="title-under"></div>
+                    </h3>
+                    <div class="presentation-content">
+                        <meta itemprop="description" content="{{ product.productLongDescription|striptags|slice(0,300) }}">
+                        {{ product.productLongDescription|raw }}
                     </div>
                 </div>
+                {% if product.price %}
+                    <div itemprop='offers' itemscope='' itemtype='http://schema.org/Offer'>
+                        <meta content='{{ product.price }}' itemprop='price'>
+                        <meta content='{{ product.price|app_devise_code }}' itemprop='priceCurrency'>
+                    </div>
+                {% endif %}
+                <div class="product-description">
+
+                    {% for i in [2] %}
+                        {% if product.getCustomPropertiesType(i)|length>0 %}
+                            <div class="details-section details-section-{{ i }}">
+                                {% if i==2 and product.duration==1 %}
+                                    <h3>{% trans %}Custom properties one day{% endtrans %}</h3>
+                                {% else %}
+                                    <h3>{{ ('Custom properties ' ~ i )|trans }}</h3>
+                                {% endif %}
+
+                                <ul class="one-line-items">
+                                    {% for prop in product.getCustomPropertiesType(i) %}
+                                        {% if (prop.customPropertyName or prop.customPropertyDescription) and (prop.customPropertyName!='' or prop.customPropertyDescription!='') %}
+                                            <li>
+                                                {% if prop.customPropertyName and prop.customPropertyName!='' %}
+                                                    <b>{{ prop.customPropertyName|raw }}</b>
+                                                {% endif %}
+                                                {% if prop.customPropertyDescription and prop.customPropertyDescription!='' %}
+                                                    <span>{{ prop.customPropertyDescription|raw }}</span>
+                                                {% endif %}
+                                            </li>
+                                        {% endif %}
+
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if product.getCustomPropertiesType(3)|length>0 or product.getCustomPropertiesType(4)|length>0 %}
+                        <div class="details-section details-section-3">
+                            <h3>{{ ('What\s included ?')|trans }}</h3>
+
+                            <ul class="one-line-items included-list">
+                                {% for prop in product.getCustomPropertiesType(3) %}
+                                    {% if (prop.customPropertyName or prop.customPropertyDescription) and (prop.customPropertyName!='' or prop.customPropertyDescription!='') %}
+                                        <li class="included">
+                                            {% if prop.customPropertyName and prop.customPropertyName!='' %}
+                                                <b>{{ prop.customPropertyName|raw }}</b>
+                                            {% endif %}
+                                            {% if prop.customPropertyDescription and prop.customPropertyDescription!='' %}
+                                                <span>{{ prop.customPropertyDescription|raw }}</span>
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for prop in product.getCustomPropertiesType(4) %}
+                                    {% if (prop.customPropertyName or prop.customPropertyDescription) and (prop.customPropertyName!='' or prop.customPropertyDescription!='') %}
+                                        <li class="not-included">
+                                            {% if prop.customPropertyName and prop.customPropertyName!='' %}
+                                                <b>{{ prop.customPropertyName|raw }}</b>
+                                            {% endif %}
+                                            {% if prop.customPropertyDescription and prop.customPropertyDescription!='' %}
+                                                <span>{{ prop.customPropertyDescription|raw }}</span>
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    {% if product.productVideoHtml %}
+                        <div class="details-section">
+                            <h3>{% trans %}Product Video{% endtrans %}</h3>
+                            <div class="video-product">
+                                {{ product.productVideoHtml|raw }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if product.productMapHtml %}
+                        <div class="details-section">
+                            <h3>{% trans %}Product Map{% endtrans %}</h3>
+                            <div class="map-product">
+                                {{ product.productMapHtml|raw }}
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+                {% if false and product.attached %}
+                    <div class="download-section">
+
+                        <a class="pdf-download" target="_blank"
+                           href="{{ asset('uploads/attached/'~product.attached.assetBasePath) }}">
+                            {{ product.attached.assetTitle }} <span>({% trans %}Download the programme{% endtrans %}
+                                )</span>
+                        </a>
+
+                    </div>
+                {% endif %}
             </div>
             <aside class="col-sm-4 col-xs-12">
 

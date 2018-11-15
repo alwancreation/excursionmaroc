@@ -13,11 +13,13 @@
         <div class="item-content">
             <div class="item-title">
                 <h3 class="item-title-title"><a href="{{ routing_service.url(product) }}"> {{ product }} </a>  </h3>
-                <div class="item-price">
-                    <div class="price-label">{% trans %}start from{% endtrans %}
-                        <span class="price-number">{{ product.productPrice|my_price }}</span>
+                {% if product.productPrice %}
+                    <div class="item-price">
+                        <div class="price-label">{% trans %}start from{% endtrans %}
+                            <span class="price-number">{{ product.productPrice|my_price }}</span>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
                 <div class="clearfix"></div>
 
             </div>

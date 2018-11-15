@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Helper\Utils;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Ldap\Adapter\ExtLdap\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -234,6 +235,7 @@ class Agency
     {
         $this->dateCreate = new \DateTime();
         $this->valid = true;
+        $this->products = new Collection();
     }
 
     /**
