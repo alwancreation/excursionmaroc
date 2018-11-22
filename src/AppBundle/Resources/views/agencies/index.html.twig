@@ -16,14 +16,13 @@
                     <div class="one-agency">
                         <div class="one-agency-inner">
                             <a href="{{ routing_service.agencyUrl(agency) }}" class="img-name">
-                                {% if false and agency.logo %}
+                                {% if agency.logo %}
                                     <img src="{{ asset('uploads/agencies/'~agency.logo)|imagine_filter('agency_400_300') }}"
                                          class="img-responsive" alt="{{ agency }}">
                                 {% else %}
                                     <img src="{{ asset('uploads/agencies/no-logo.jpg')|imagine_filter('agency_400_300') }}"
                                          class="img-responsive" alt="{{ agency }}">
                                 {% endif %}
-
                             </a>
                             <div class="agency-info">
                                 <h3>
