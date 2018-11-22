@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     {% for agency in agencies %}
         <url>
-            <loc>http://www.excursionmaroc.net{{ url('front_agency_details',{slug:agency.slug}) }}</loc>
+            <loc>{{ url('front_agency_details',{slug:agency.slug}) }}</loc>
         </url>
     {% endfor %}
 </urlset>

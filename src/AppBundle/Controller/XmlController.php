@@ -31,12 +31,12 @@ class XmlController extends Controller
     /**
      * @Route("/xml-agencies.xml", name="xml_sitmap")
      */
-    public function indexAction(Request $request,$number)
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $agencies = $em->getRepository('AppBundle:Agency')->findAll();
         // replace this example code with whatever you need
-        return $this->render('AppBundle:xml:agencies.html.twig', [
+        return $this->render('AppBundle:xml:xml-agencies.html.twig', [
             "agencies"=>$agencies
         ]);
     }
