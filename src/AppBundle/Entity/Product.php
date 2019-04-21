@@ -1075,6 +1075,22 @@ class Product implements Translatable
         $this->agency = $agency;
     }
 
-
+    /**
+     * @param $user User
+     * @return bool
+     */
+    public function getAccess($user)
+    {
+        if($user->hasRole("ROLE_ADMIN")){
+            return true;
+        }
+        if($agency = $this->getAgency()){
+            $ua = $agency->getUser();
+            if($ua==$user){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

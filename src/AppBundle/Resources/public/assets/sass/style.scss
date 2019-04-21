@@ -111,9 +111,7 @@ body {
   padding-top: 86px;
   background-color: #fff;
 }
-top-product-details{
 
-}
 .breadcrumb {
   margin-bottom: 0px;
   background-color: #EFEFEF;
@@ -123,15 +121,43 @@ top-product-details{
     color: #b9b9b9;
   }
 }
-.home-slider {
-  margin-bottom: 10px;
-  padding: 5px;
-  padding-bottom: 20px;
-  background-color: #fff;
-  border-bottom: solid 1px #E4E4E4;
-  box-shadow: 0px 1px 2px rgba(224, 224, 224, 0.63);
-  height: 400px;
+.container-slider{
+  background-color: #000;
   position: relative;
+  overflow: hidden;
+  span.blur-bg{
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+    background-size: cover;
+    background-position: center center;
+  }
+  span.blur-bg-darken{
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    background-color: rgba(#000,0.5);
+  }
+}
+.home-slider {
+  margin-bottom: 0;
+  padding: 0;
+  height: 440px;
+  position: relative;
+  z-index: 3;
   .mc-cycle {
     position: absolute;
     z-index: 1;
@@ -201,7 +227,33 @@ top-product-details{
 
   }
 }
-
+.product-section.product-presentation{
+  padding: 20px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: lighter;
+  h3{
+    margin: 0;
+    padding: 0;
+    font-size: 22px;
+    color: #999;
+  }
+  h2{
+    color: $primary-color;
+    margin: 0;
+    padding: 0;
+    padding-top: 5px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: solid 1px #E3E3E3;
+    font-size: 26px;
+    font-weight: normal;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #EFEFEF;
+    margin-top: 20px;
+  }
+}
 .light-text {
   color: #ddd;
   text-shadow: 0 1px 0 #666;
@@ -3030,7 +3082,7 @@ body {
 header {
   background: #fff;
   position: fixed;
-  z-index: 3;
+  z-index: 5;
   width: 100%;
   left: 0;
   top: 30px;
@@ -3067,7 +3119,7 @@ header h1 {
 #topbar {
   background: #3c3027;
   position: fixed;
-  z-index: 3;
+  z-index: 5;
   width: 100%;
   left: 0;
   top: 0;

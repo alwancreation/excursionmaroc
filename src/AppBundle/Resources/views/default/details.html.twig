@@ -2,62 +2,68 @@
 {% block metas %}{{ seo_service.metaProduct(product)|raw }}{% endblock %}
 {% block hero %}{% endblock %}
 {% block bodyHeader %}
-<div class="header-article-details">
-    <div class="top-product-details">
-        <ol class="breadcrumb">
-            <li>
-                <a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a>
-            </li>
-            {% if product.category %}
+    <div class="header-article-details">
+        <div class="top-product-details">
+            <ol class="breadcrumb">
                 <li>
-                    <a href="{{ routing_service.categoryUrl(product.category) }}">{{ product.category }}</a>
+                    <a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a>
                 </li>
+                {% if product.category %}
+                    <li>
+                        <a href="{{ routing_service.categoryUrl(product.category) }}">{{ product.category }}</a>
+                    </li>
 
-            {% endif %}
-            <li class="active">{{ product }}</li>
-        </ol>
-        <div class="top-product-section">
-            <h1>{{ product }}</h1>
-            <div class="product-header">
-                {% if product.agency %}
-                    <span>{% trans %}By{% endtrans %} : <a
-                                href="{{ routing_service.agencyUrl(product.agency) }}">{{ product.agency }}</a></span>
                 {% endif %}
-                <span>
-                    {% trans %}Rating{% endtrans %} : <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                <li class="active">{{ product }}</li>
+            </ol>
+            <div class="top-product-section">
+                <h1>{{ product }}</h1>
+                <div class="product-header">
+                    {% if product.agency %}
+                        <span>{% trans %}By{% endtrans %} : <a
+                                    href="{{ routing_service.agencyUrl(product.agency) }}">{{ product.agency }}</a></span>
+                    {% endif %}
+                    <span>
+                    {% trans %}Rating{% endtrans %} : <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
                 </span>
 
 
+                </div>
+
             </div>
-
         </div>
-    </div>
 
-    {% if product.assets|length>0 %}
-    <div class="container-slider">
-        <div class="home-slider">
-            <div class="slider-container">
-                <div id="fullscreen-slider">
-                    {% for key,asset in product.assets %}
-                            <div class="slider-item">
-                                <img src="{{ asset('uploads/originals/'~asset.assetBasepath)|imagine_filter('product_slider') }}" alt="">
-                                <div class="in-slide-content" style="display: none;">
-                                    <h2>{{ asset.assetTitle }}</h2>
-                                    <p>{{ asset.assetDescription|raw }}</p>
-                                    {% if asset.assetLink and asset.assetLinkTitle %}
-                                        <p><a href="{{ asset.assetLink }}" target="_blank" class="btn btn-primary">{{ asset.assetLinkTitle }}</a></p>
-                                    {% endif %}
-                                </div>
-                            </div> <!-- /.slider-item -->
-                        {% endfor %}
+        {% if product.assets|length>0 %}
+            <div class="container-slider">
+                <span class="blur-bg"></span><span class="blur-bg-darken"></span>
+                <div class="container">
+                    <div class="home-slider">
+                        <div class="slider-container">
+                            <div id="fullscreen-slider">
+                                {% for key,asset in product.assets %}
+                                    <div class="slider-item">
+                                        <img src="{{ asset('uploads/originals/'~asset.assetBasepath)|imagine_filter('product_slider') }}"
+                                             alt="">
+                                        <div class="in-slide-content" style="display: none;">
+                                            <h2>{{ asset.assetTitle }}</h2>
+                                            <p>{{ asset.assetDescription|raw }}</p>
+                                            {% if asset.assetLink and asset.assetLinkTitle %}
+                                                <p><a href="{{ asset.assetLink }}" target="_blank"
+                                                      class="btn btn-primary">{{ asset.assetLinkTitle }}</a></p>
+                                            {% endif %}
+                                        </div>
+                                    </div> <!-- /.slider-item -->
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <a href="" id="arrow_left"><i class="fa fa-angle-left"></i> </a>
+                        <a href="" id="arrow_right"><i class="fa fa-angle-right"></i> </a>
+                    </div>
                 </div>
             </div>
-            <a href="" id="arrow_left"><i class="fa fa-angle-left"></i> </a>
-            <a href="" id="arrow_right"><i class="fa fa-angle-right"></i> </a>
-        </div>
+        {% endif %}
     </div>
-    {% endif %}
-</div>
 {% endblock %}
 {% block body %}
 
@@ -70,8 +76,8 @@
                         <div class="row">
                             {% for month in months %}
                                 <div class="col-xs-1"><span class="{{ (month in product.months)?'active':'' }}"
-                                                            data-toggle="tooltip"
-                                                            title="{{ (month in product.months)?'Feasible in'|trans:'Not feasible in'|trans }} {{ month.monthName|trans }}">{{ month.monthCode|trans }}</span>
+                                data-toggle="tooltip"
+                                title="{{ (month in product.months)?'Feasible in'|trans:'Not feasible in'|trans }} {{ month.monthName|trans }}">{{ month.monthCode|trans }}</span>
                                 </div>
                             {% endfor %}
                         </div>
@@ -105,7 +111,8 @@
                         <div class="title-under"></div>
                     </h3>
                     <div class="presentation-content">
-                        <meta itemprop="description" content="{{ product.productLongDescription|striptags|slice(0,300) }}">
+                        <meta itemprop="description"
+                              content="{{ product.productLongDescription|striptags|slice(0,300) }}">
                         {{ product.productLongDescription|raw }}
                     </div>
                 </div>

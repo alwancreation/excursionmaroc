@@ -154,7 +154,7 @@ $(document).ready(function(e) {
 				next: '#arrow_right',
 				pause: 0,
 				before: function(last,current){
-					// $(".animate").remove("animated") ;
+                    $("span.blur-bg").css("background-image",$(current).css('background-image'));
 				},
 
 				after: function(last,current){
