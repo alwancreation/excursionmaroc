@@ -1,9 +1,16 @@
 {% extends '@App/base.html.twig' %}
 
 {% block metas %}
-    <title>{{ agency }}</title>
+    <title>{{ agency }} agence de d'excursion au Maroc - Excursion Maroc</title>
+    <meta name="description" content="Présentation de {{ agency }} : agence d'organisation de voyages et d'excursions partout au Maroc ... ">
 {% endblock %}
-
+{% block hero %}
+    <section class="agency-header">
+        <div class="container">
+            <h1>{{ agency }}</h1>
+        </div>
+    </section>
+{% endblock %}
 {% block body %}
     <div class="container">
         <ol class="breadcrumb">
@@ -32,10 +39,10 @@
                              class="img-responsive" alt="{{ agency }}">
                     </div>
                 {% endif %}
-                    <h1><a href="{{ routing_service.agencyUrl(agency) }}">
+                    <h2><a href="{{ routing_service.agencyUrl(agency) }}">
                     {{ agency }}
                     </a>
-                    </h1>
+                    </h2>
                     <p>
                         {{ agency.longDescription }}
                     </p>
@@ -63,6 +70,9 @@
                 </div>
             </div>
             <div class="col-sm-8">
+                <p>
+                    Présentation de {{ agency }} : agence d'organisation de voyages et d'excursions au Maroc
+                </p>
                 <div class="products-list content-grid">
                     <div class="row">
                         {% for product in agency.products %}

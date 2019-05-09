@@ -26,8 +26,6 @@ class AgencyController extends Controller
         $em = $this->getDoctrine()->getManager();
         $agencies = $em->getRepository('AppBundle:Agency')->findAllGranted($this->getUser());
 
-
-
         return $this->render('AdminBundle:agency:index.html.twig', array(
             'agencies' => $agencies,
         ));

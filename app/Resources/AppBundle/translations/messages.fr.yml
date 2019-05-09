@@ -198,8 +198,23 @@ Booking: Booking
 'Which give': Total
 'In Total': ''
 'Product Duration': Duree
-'Product Share Type': 'Product Share Type'
+'Product Share Type': 'Type de produit'
 'Product Difficulty': 'Niveau Dificulte'
-'To confirm your order you can pay a percentage of %paymentPercent%% via your credit card (%amountToPay%)': 'To confirm your order you can pay a percentage of %paymentPercent%% via your credit card (%amountToPay%)'
-'Related And Similar Products': 'Related And Similar Products'
-'Discover Our Related And Similar Products': 'Discover Our Related And Similar Products'
+'To confirm your order you can pay a percentage of %paymentPercent%% via your credit card (%amountToPay%)': 'Pour confirmer votre commande, vous pouvez payer un pourcentage de %paymentPercent%% via votre carte de crédit (%amountToPay%)'
+'Related And Similar Products': 'Produits connexes et similaires'
+'Discover Our Related And Similar Products': 'Découvrez nos produits connexes et similaires'
+Agencies: Agences
+Address: Adresse
+Site: Site
+'Agencies list': 'Liste des agences de voyage au Maroc'
+Product(s): Produits
+'SignIn New Agency': 'Inscription agence de voyage'
+'Sign in': 'Inscription'
+'Subscribe for new agency': 'Inscription agence de voyage'
+'Sign In': 'Connexion'
+By: Par
+Rating: Avis
+'Whats included ?': 'Ce qui est inclut ?'
+BOOK: 'Réserver'
+'Max persons': 'Max personnes'
+'DETAILS & BOOK': 'Détails'

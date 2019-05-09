@@ -7,6 +7,13 @@
         {{ page.meta.metaKeywords|raw }}
     {% endblock %}
 {% endif %}
+{% block hero %}
+    <section class="agency-header">
+        <div class="container">
+            <h1>{% trans %}Agencies list{% endtrans %}</h1>
+        </div>
+    </section>
+{% endblock %}
 {% block body %}
     <section class="agencies-list">
         <div class="container">
