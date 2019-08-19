@@ -19,6 +19,15 @@
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="{{ asset(" bundles/app/assets/css/leaflet.ie.css") }}"/>
     <![endif]-->
+    {% if app.environment=='prod' %}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-7450352411164809",
+                enable_page_level_ads: true
+            });
+        </script>
+    {% endif %}
 </head>
 <body>
 <div id="wrap">
