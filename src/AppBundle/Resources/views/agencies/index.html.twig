@@ -18,43 +18,74 @@
     <section class="agencies-list">
         <div class="container">
             <h2 class="page-title">{% trans %}Agencies list{% endtrans %}</h2>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form action="" method="post" class="form-inline" role="form">
+                        <div class="form-group">
+                            <label class="sr-only" for="">Search</label>
+                            <input type="email" class="form-control" name="" id="" placeholder="Keyword">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+            </div>
             <div class="row-agencies">
-                {% for agency in agencies %}
-                    <div class="one-agency">
-                        <div class="one-agency-inner">
-                            <a href="{{ routing_service.agencyUrl(agency) }}" class="img-name">
-                                {% if agency.logo %}
-                                    <img src="{{ asset('uploads/agencies/'~agency.logo)|imagine_filter('agency_400_300') }}"
-                                         class="img-responsive" alt="{{ agency }}">
-                                {% else %}
-                                    <img src="{{ asset('uploads/agencies/no-logo.jpg')|imagine_filter('agency_400_300') }}"
-                                         class="img-responsive" alt="{{ agency }}">
-                                {% endif %}
-                            </a>
-                            <div class="agency-info">
-                                <h3>
-                                    <a href="{{ routing_service.agencyUrl(agency) }}">{{ agency }}</a>
-                                    <span class="rating">
+                <div class="row">
+                    <div class="col-sm-8">
+                        {% for agency in agencies %}
+                            <div class="one-agency">
+                                <div class="one-agency-inner">
+                                    <a href="{{ routing_service.agencyUrl(agency) }}" class="img-name">
+                                        {% if agency.logo %}
+                                            <img src="{{ asset('uploads/agencies/'~agency.logo)|imagine_filter('agency_400_300') }}"
+                                                 class="img-responsive" alt="{{ agency }}">
+                                        {% else %}
+                                            <img src="{{ asset('uploads/agencies/no-logo.jpg')|imagine_filter('agency_400_300') }}"
+                                                 class="img-responsive" alt="{{ agency }}">
+                                        {% endif %}
+                                    </a>
+                                    <div class="agency-info">
+                                        <h3>
+                                            <a href="{{ routing_service.agencyUrl(agency) }}">{{ agency }}</a>
+                                            <span class="rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                     </span>
-                                </h3>
-                                <p>
-                                    Une agence de voyage au Maroc qui vous offre des opportunités de voyage originals, pour vous aider a mieux choisir vos destination nationnal et internationnal avec un bon prix. des offres de voyage et excursions partout dans le monde qui s'adaptent mieux a votre budget.
-                                </p>
-                                <div class="more-info">
-                                    {% if agency.city %}
-                                        <a href="#">{{ agency.city }}</a>
-                                    {% endif %}
-                                    <a href="{{ routing_service.agencyUrl(agency) }}">{{ agency.products.count }} {% trans %}Product(s){% endtrans %}</a>
+                                        </h3>
+                                        <p>
+                                            Une agence de voyage au Maroc qui vous offre des opportunités de voyage originals, pour vous aider a mieux choisir vos destination nationnal et internationnal avec un bon prix. des offres de voyage et excursions partout dans le monde qui s'adaptent mieux a votre budget.
+                                        </p>
+                                        <div class="more-info">
+                                            {% if agency.city %}
+                                                <a href="#">{{ agency.city }}</a>
+                                            {% endif %}
+                                            <a href="{{ routing_service.agencyUrl(agency) }}">{{ agency.products.count }} {% trans %}Product(s){% endtrans %}</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                    <div class="col-sm-4">
+                        {% if app.environment=='prod' %}
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                            <!-- Renty Responsive -->
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-7450352411164809"
+                                 data-ad-slot="5900297123"
+                                 data-ad-format="auto"
+                                 data-full-width-responsive="true"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        {% endif %}
+                    </div>
+                </div>
+
             </div>
         </div>
 
