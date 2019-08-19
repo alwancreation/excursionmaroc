@@ -23,7 +23,7 @@
                     <form action="" method="post" class="form-inline" role="form" style="margin: 0px;">
                         <div class="form-group">
                             <label class="sr-only" for="">{% trans %}Search{% endtrans %}</label>
-                            <input type="email" class="form-control" name="" id="" placeholder="Keyword">
+                            <input type="email" class="form-control" name="q" id="querys" placeholder="Keyword" style="margin-bottom: 0;">
                         </div>
                         <button type="submit" class="btn btn-primary">{% trans %}Search{% endtrans %}</button>
                     </form>
@@ -31,7 +31,7 @@
             </div>
             <div class="row-agencies">
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-9">
                         {% for agency in agencies %}
                             <div class="one-agency">
                                 <div class="one-agency-inner">
@@ -69,7 +69,7 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         {% if app.environment=='prod' %}
                             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                             <!-- Renty Responsive -->
