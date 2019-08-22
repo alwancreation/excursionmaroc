@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="agency-left-sidebar">
-                {% if false and agency.logo %}
+                {% if agency.logo %}
                     <div class="img-agency">
                     <img src="{{ asset('uploads/agencies/'~agency.logo)|imagine_filter('agency_400_300') }}"
                          class="img-responsive" alt="{{ agency }}">
