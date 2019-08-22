@@ -33,11 +33,10 @@
                 <div class="row">
                     <div class="col-sm-9">
                         {% for key,agency in agencies %}
-                            {% if key==2 or  key==10 %}
+                            {% if key==2 or key==10 %}
                             {% if app.environment=='prod' %}
                                 <div class="panel panel-default">
                                     <div class="panel-body" style="height: 120px">
-                                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                                         <!-- Renty Responsive -->
                                         <ins class="adsbygoogle"
                                              style="display:block"
@@ -75,7 +74,7 @@
                                     </span>
                                         </h3>
                                         <p>
-                                            Une agence de voyage au Maroc qui vous offre des opportunités de voyage originals, pour vous aider a mieux choisir vos destination nationnal et internationnal avec un bon prix. des offres de voyage et excursions partout dans le monde qui s'adaptent mieux a votre budget.
+                                            {{ agency.shortDescription }}
                                         </p>
                                         <div class="more-info">
                                             {% if agency.city %}
@@ -95,7 +94,6 @@
                     </div>
                     <div class="col-sm-3">
                         {% if app.environment=='prod' %}
-                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                             <!-- Renty Responsive -->
                             <ins class="adsbygoogle"
                                  style="display:block"
@@ -117,5 +115,11 @@
             <a href="{{ url('agency_sign_in') }}" class="btn btn-primary">{% trans %}SignIn New Agency{% endtrans %}</a>
         </div>
     </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% if app.environment=='prod' %}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    {% endif %}
 {% endblock %}
 
