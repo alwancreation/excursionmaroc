@@ -32,7 +32,26 @@
             <div class="row-agencies">
                 <div class="row">
                     <div class="col-sm-9">
-                        {% for agency in agencies %}
+                        {% for key,agency in agencies %}
+                            {% if key==2 or  key==10 %}
+                            {% if app.environment=='prod' %}
+                                <div class="panel panel-default">
+                                    <div class="panel-body" style="height: 120px">
+                                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                        <!-- Renty Responsive -->
+                                        <ins class="adsbygoogle"
+                                             style="display:block"
+                                             data-ad-client="ca-pub-7450352411164809"
+                                             data-ad-slot="5900297123"
+                                             data-ad-format="auto"
+                                             data-full-width-responsive="true"></ins>
+                                        <script>
+                                            (adsbygoogle = window.adsbygoogle || []).push({});
+                                        </script>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% endif %}
                             <div class="one-agency">
                                 <div class="one-agency-inner">
                                     <a href="{{ routing_service.agencyUrl(agency) }}" class="img-name">
@@ -68,6 +87,11 @@
                                 </div>
                             </div>
                         {% endfor %}
+                        {# display navigation #}
+                        <hr>
+                        <div class="navigation">
+                            {{ knp_pagination_render(pagination) }}
+                        </div>
                     </div>
                     <div class="col-sm-3">
                         {% if app.environment=='prod' %}

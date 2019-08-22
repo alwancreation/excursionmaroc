@@ -20,9 +20,18 @@ class AgenciesController extends Controller
     {
         $agencies = $this->getDoctrine()->getRepository("AppBundle:Agency")->findBy(array("valid"=>true));
         $page = $this->getDoctrine()->getRepository("AppBundle:Page")->findOneBy(array("pageId"=>6));
+
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $agencies, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            20 /*limit per page*/
+        );
+
         // replace this example code with whatever you need
         return $this->render('AppBundle:agencies:index.html.twig', [
-            "agencies"=> $agencies,
+            "agencies"=> $pagination,
             "page"=> $page,
 
         ]);
