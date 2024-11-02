@@ -1,7 +1,7 @@
 {% extends '@App/base.html.twig' %}
-{% if page is defined and page.meta %}
-    {% block metas %}{{ seo_service.metaPage(page)|raw }}{% endblock %}
-{% endif %}
+
+{% block metas %}{{ seo_service.metaPage(page)|raw }}{% endblock %}
+
 {% block body %}
     {% include "@App/inc/sections.html.twig" with {sections:page.sections} %}
 {% endblock %}

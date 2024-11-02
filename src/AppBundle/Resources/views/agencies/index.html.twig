@@ -1,12 +1,5 @@
 {% extends '@App/base.html.twig' %}
-{% if page is defined and page.meta %}
-    {% block metas %}
-        <title>{{ page.meta.metaTitle }}</title>
-        <meta name="description" content="{{ page.meta.metaDescription }}">
-        <meta name="keywords" content="{{ page.meta.metaKeywords }}">
-        {{ page.meta.metaKeywords|raw }}
-    {% endblock %}
-{% endif %}
+{% block metas %}{{ seo_service.metaPage(page)|raw }}{% endblock %}
 {% block hero %}
     <section class="agency-header">
         <div class="container">
