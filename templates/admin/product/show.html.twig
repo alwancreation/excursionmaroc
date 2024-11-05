@@ -1,0 +1,59 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block page_title %}Show Product{% endblock %}
+
+{% block body %}
+<div class="row gy-5 g-xl-8">
+    <div class="col-xxl-4">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Show Product{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>{% trans %}Id{% endtrans %}</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Price{% endtrans %}</th>
+                <td>{{ product.price }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Type{% endtrans %}</th>
+                <td>{{ product.type }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Description{% endtrans %}</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Image{% endtrans %}</th>
+                <td>{{ product.image }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Category{% endtrans %}</th>
+                <td>{{ product.category }}</td>
+            </tr>
+        </tbody>
+    </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-8">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Show Product{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

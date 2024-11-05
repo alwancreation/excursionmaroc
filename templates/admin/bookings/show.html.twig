@@ -1,0 +1,185 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Booking{% endblock %}
+{% block body %}
+    <div class="card">
+        <div class="card-body p-lg-20">
+            <div class="d-flex flex-column flex-xl-row">
+                <div class="flex-lg-row-fluid me-xl-18 mb-10 mb-xl-0">
+                    <div class="mt-n1">
+                        <div class="d-flex flex-stack pb-10">
+                            {% if app_settings.application_logo %}
+                                <img alt="Logo" src="{{ asset('uploads/settings/'~app_settings.application_logo) }}" class="h-50px" />
+                            {% else %}
+                                <img alt="Logo" src="{{ asset('assets/images/logo.png') }}" class="h-50px" />
+                            {% endif %}
+                            <div class="d-flex">
+                                <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="btn btn-sm btn-success"><i class="fa fa-pen"></i> {% trans %}Edit{% endtrans %}</a>
+                                <div class=" ms-1">
+                                    <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{% trans %}Status{% endtrans %}
+                                        <span class="svg-icon svg-icon-5 m-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black" />
+                                            </svg>
+                                        </span>
+                                    </a>
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-auto py-4" data-kt-menu="true">
+                                        <div class="menu-item px-3"><a href="{{ path('bookings_set_state', {'id': booking.id, 'state':'pending'}) }}" class="menu-link px-3 text-nowrap">{% trans %}Set as pending{% endtrans %}</a></div>
+                                        <div class="menu-item px-3"><a href="{{ path('bookings_set_state', {'id': booking.id, 'state':'confirmed'}) }}" class="menu-link px-3 text-nowrap">{% trans %}Set as confirmed{% endtrans %}</a></div>
+                                        <div class="menu-item px-3"><a href="{{ path('bookings_set_state', {'id': booking.id, 'state':'cancelled'}) }}" class="menu-link px-3 text-nowrap">{% trans %}Set as cancelled{% endtrans %}</a></div>
+                                    </div>
+                                </div>
+
+                                <div class=" ms-1">
+                                    <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{% trans %}Actions{% endtrans %}
+                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                                        <span class="svg-icon svg-icon-5 m-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black" />
+                                            </svg>
+                                        </span>
+                                    </a>
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-auto py-4" data-kt-menu="true">
+
+                                        <div class="menu-item px-3"><a href="{{ path('booking_export', {'id': booking.id}) }}" class="menu-link px-3 text-nowrap">{% trans %}Export{% endtrans %}</a></div>
+{#                                        <div class="menu-item px-3"><a href="{{ path('booking_export_invoice', {'id': booking.id}) }}" class="menu-link px-3 text-nowrap">{% trans %}Export invoice{% endtrans %}</a></div>#}
+                                        <div class="menu-item px-3"><a href="{{ path('booking_delete', {'id': booking.id}) }}" class="menu-link px-3 text-nowrap" onclick="return confirm('Confirm delete')">{% trans %}Delete{% endtrans %}</a></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-0">
+                            <div class="fw-bolder fs-3 text-gray-800 mb-8">{% trans %}Booking No{% endtrans %} : {{ booking.id }}</div>
+                            <div class="row g-5 mb-11">
+
+                                <div class="col-sm-6">
+                                    <div class="fw-bold fs-7 text-gray-600 mb-1">{% trans %}Booking Dates{% endtrans %} :</div>
+                                    <div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center flex-wrap">
+                                        <span class="me-2">{% trans %}From{% endtrans %} : {{ booking.dateStart|date('d/m/Y') }}</span>
+                                        <span class="me-2">{% trans %}To{% endtrans %} : {{ booking.dateEnd|date('d/m/Y') }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="fw-bold fs-7 text-gray-600 mb-1">{% trans %}Booking date create{% endtrans %} :</div>
+                                    <div class="fw-bolder fs-6 text-gray-800">{{ booking.dateCreate|date('d/m/Y H:i') }}</div>
+                                </div>
+                            </div>
+                            <div class="row g-5 mb-12">
+                                <div class="col-sm-6">
+                                    <div class="fw-bold fs-7 text-gray-600 mb-1">{% trans %}Client{% endtrans %} :</div>
+                                    <div class="fw-bolder fs-6 text-gray-800">{{ booking.client }}</div>
+                                    <div class="fw-bold fs-7 text-gray-600">
+                                        {{ booking.client.address }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="fw-bold fs-7 text-gray-600 mb-1">{% trans %}Final Client{% endtrans %}:</div>
+                                    <div class="fw-bolder fs-6 text-gray-800">{{ booking.clientName }}</div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="table-responsive border-bottom mb-9">
+                                    <table class="table mb-3">
+                                        <thead>
+                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
+                                            <th class="min-w-175px pb-2">{% trans %}Description{% endtrans %}</th>
+                                            <th class="min-w-70px text-end pb-2">{% trans %}Date From{% endtrans %}</th>
+                                            <th class="min-w-70px text-end pb-2">{% trans %}Date To{% endtrans %}</th>
+                                            <th class="min-w-80px text-end pb-2"></th>
+                                            <th class="min-w-100px text-end pb-2">{% trans %}Amount{% endtrans %}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for productLine in booking.products %}
+                                            <tr class="fw-bolder text-gray-700 fs-5 text-end">
+                                                <td class="d-flex align-items-center"><i class="fa fa-genderless text-primary fs-2 me-2"></i>{{ productLine.product }}</td>
+                                                <td>{{ productLine.dateStart?productLine.dateStart|date('d/m/Y') }}</td>
+                                                <td>{{ productLine.dateEnd?productLine.dateEnd|date('d/m/Y') }}</td>
+                                                <td>-</td>
+                                                <td class="fs-5 text-dark fw-boldest">{{ productLine.totalPrice|priceFormat }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <div class="mw-300px">
+                                        <div class="d-flex flex-stack mb-3">
+                                            <div class="fw-bold pe-10 text-gray-600 fs-7">{% trans %}Subtotal{% endtrans %}:</div>
+                                            <div class="text-end fw-bolder fs-6 text-gray-800">{{ booking.totalPrice|priceFormat }}</div>
+                                        </div>
+                                        <div class="d-flex flex-stack mb-3">
+                                            <div class="fw-bold pe-10 text-gray-600 fs-7">TVA 20%</div>
+                                            <div class="text-end fw-bolder fs-6 text-gray-800">{{ booking.getTotalTva|priceFormat }}</div>
+                                        </div>
+                                        <div class="d-flex flex-stack">
+                                            <div class="fw-bold pe-10 text-gray-600 fs-7">{% trans %}Total{% endtrans %}</div>
+                                            <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                {{ booking.totalPriceTtc|priceFormat }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-0">
+                    <div class="d-print-none border border-dashed border-gray-300 card-rounded h-lg-100 min-w-md-350px p-9 bg-lighten">
+                        <div class="mb-8">
+                            {% trans %}Status{% endtrans %} : <span class="badge {{ booking.statusClass }} me-2">{{ booking.statusString|trans }}</span>
+                        </div>
+{#                        <!--end::Labels-->#}
+{#                        <!--begin::Title-->#}
+{#                        <h6 class="mb-8 fw-boldest text-gray-600 text-hover-primary">PAYMENT DETAILS</h6>#}
+{#                        <!--end::Title-->#}
+{#                        <!--begin::Item-->#}
+{#                        <div class="mb-6">#}
+{#                            <div class="fw-bold text-gray-600 fs-7">Paypal:</div>#}
+{#                            <div class="fw-bolder text-gray-800 fs-6">codelabpay@codelab.co</div>#}
+{#                        </div>#}
+{#                        <!--end::Item-->#}
+{#                        <!--begin::Item-->#}
+{#                        <div class="mb-6">#}
+{#                            <div class="fw-bold text-gray-600 fs-7">Account:</div>#}
+{#                            <div class="fw-bolder text-gray-800 fs-6">Nl24IBAN34553477847370033#}
+{#                                <br>AMB NLANBZTC</div>#}
+{#                        </div>#}
+{#                        <!--end::Item-->#}
+{#                        <!--begin::Item-->#}
+{#                        <div class="mb-15">#}
+{#                            <div class="fw-bold text-gray-600 fs-7">Payment Term:</div>#}
+{#                            <div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center">14 days#}
+{#                                <span class="fs-7 text-danger d-flex align-items-center">#}
+{#														<span class="bullet bullet-dot bg-danger mx-2"></span>Due in 7 days</span></div>#}
+{#                        </div>#}
+{#                        <!--end::Item-->#}
+{#                        <!--begin::Title-->#}
+{#                        <h6 class="mb-8 fw-boldest text-gray-600 text-hover-primary">PROJECT OVERVIEW</h6>#}
+{#                        <!--end::Title-->#}
+{#                        <!--begin::Item-->#}
+{#                        <div class="mb-6">#}
+{#                            <div class="fw-bold text-gray-600 fs-7">Project Name</div>#}
+{#                            <div class="fw-bolder fs-6 text-gray-800">SaaS App Quickstarter#}
+{#                                <a href="#" class="link-primary ps-1">View Project</a></div>#}
+{#                        </div>#}
+{#                        <!--end::Item-->#}
+{#                        <!--begin::Item-->#}
+{#                        <div class="mb-6">#}
+{#                            <div class="fw-bold text-gray-600 fs-7">Completed By:</div>#}
+{#                            <div class="fw-bolder text-gray-800 fs-6">Mr. Dewonte Paul</div>#}
+{#                        </div>#}
+{#                        <!--end::Item-->#}
+{#                        <!--begin::Item-->#}
+{#                        <div class="m-0">#}
+{#                            <div class="fw-bold text-gray-600 fs-7">Time Spent:</div>#}
+{#                            <div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center">230 Hours#}
+{#                                <span class="fs-7 text-success d-flex align-items-center">#}
+{#														<span class="bullet bullet-dot bg-success mx-2"></span>35$/h Rate</span></div>#}
+{#                        </div>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

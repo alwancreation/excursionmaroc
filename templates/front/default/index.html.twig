@@ -1,0 +1,8 @@
+{% extends 'front/base.html.twig' %}
+
+{% block metas %}{{ seo_service.metaPage(page)|raw }}{% endblock %}
+
+{% block body %}
+    {% include "front/inc/sections.html.twig" with {sections:page.sections} %}
+{% endblock %}
+

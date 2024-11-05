@@ -1,0 +1,47 @@
+# Documentation on how to configure the bundle can be found at: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+    # valid drivers options include "gd" or "gmagick" or "imagick"
+liip_imagine:
+    driver: "gd"
+    resolvers:
+        default:
+            web_path:
+                cache_prefix: "uploads/cache"
+    filter_sets:
+        cache: ~
+        home_slider:
+            quality: 100
+            filters:
+                thumbnail: { size: [1900, 400], mode: outbound, allow_upscale: true }
+        product_slider:
+            quality: 100
+            filters:
+                thumbnail: { size: [960, 440], mode: outbound, allow_upscale: true }
+        product_400_250:
+            quality: 100
+            filters:
+                thumbnail: { size: [400, 250], mode: outbound, allow_upscale: true }
+        product_400_400:
+            quality: 100
+            filters:
+                thumbnail: { size: [400, 400], mode: outbound, allow_upscale: true }
+
+        product_800_500:
+            quality: 100
+            filters:
+                thumbnail: { size: [800, 400], mode: outbound, allow_upscale: true }
+        gallery_400_300:
+            quality: 100
+            filters:
+                thumbnail: { size: [400, 300], mode: outbound, allow_upscale: true }
+        agency_400_300:
+            quality: 100
+            filters:
+                thumbnail: { size: [400, 300], mode: outbound, allow_upscale: true }
+        product_200_125:
+            quality: 100
+            filters:
+                thumbnail: { size: [200, 125], mode: outbound, allow_upscale: true }
+        admin_thumb:
+            quality: 100
+            filters:
+                thumbnail: { size: [200, 150], mode: outbound, allow_upscale: true }

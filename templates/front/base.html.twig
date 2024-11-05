@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    {% block metas %}
+        <title>{{ app_settings.application_name }}</title>
+    {% endblock %}
+    <meta property="og:image" content="{{ asset("assets/images/site.png") }}"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,600,700" rel="stylesheet">
+    <link href="{{ asset("assets/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset("assets/css/jquery-ui.min.css") }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset("assets/css/jquery.maximage.min.css") }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset("assets/css/font-awesome.min.css") }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/skeleton.css') }}">
+    <link href="{{ asset("assets/css/style.css") }}" rel="stylesheet" type="text/css"/>
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="{{ asset(" assets/css/leaflet.ie.css") }}"/>
+    <![endif]-->
+    {% if app.environment=='prod' %}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-7450352411164809",
+                enable_page_level_ads: true
+            });
+        </script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112082921-2"></script>
+<meta name="google-site-verification" content="eF8vtL_1N-va2i7kGXhBe2SX1zkiNi_wxuSrfXVpjQ0" />
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112082921-2');
+</script>
+<script data-ad-client="ca-pub-7450352411164809" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    {% endif %}
+</head>
+<body>
+<div id="wrap">
+    <div id="topbar">
+        <ul>
+            <li class="menu-item"><a class="" href="/help/">Need Help</a></li>
+            <li class="menu-item"><a class="" href="/renew/">New Excursion</a></li>
+            <li class="menu-item"><a class="" href="/login">Login</a></li>
+        </ul>
+    </div>
+    <header>
+        <h1><a href="/" class="logo" title="Excursion Maroc" data-scroll="">Excursion Maroc</a></h1>
+        <nav class="nav-collapse">
+            <ul>
+                <li><a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a></li>
+                <li><a href="{{ url("excursions_products_list") }}">{% trans %}Excursions{% endtrans %}</a></li>
+                <li><a href="{{ url("destinations_index") }}">{% trans %}Destinations{% endtrans %}</a></li>
+                <li><a href="{{ url("agencies_index") }}">{% trans %}Agencies{% endtrans %}</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    {% block hero %}
+        <section id="home" class="section hero-tools">
+            <div class="container">
+                <div class="row">
+                    <div class="two-thirds column">
+                        <h2>Search Excursions In Morocco</h2>
+                        <h6>About Morocco excursion and trips from diffirent cities and locations.</h6>
+                        <form method="get" action="" id="">
+                    <span class="input">
+                    <input name="query" id="query" value="" class="input-search required blk" type="text" placeholder="Try Name Or Destination">
+                    <button style="width:104px" id="searchSubmit" class="button button-m button-red" type="submit">OK</button>
+
+                    </span>
+                        </form>
+                    </div>
+                    <div class="one-third column">
+                        <img class="u-max-full-width" src="{{ asset('assets/images/438knife.png') }}" alt="Morocco Excursion">
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endblock %}
+</div>
+{% block bodyHeader %}{% endblock %}
+{% block body %}{% endblock %}
+    <footer id="footer">
+        <div class="home-site-description text-center">
+            <h2>{{ app_settings.application_name }}</h2>
+            {#<p>#}
+                {#Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad aperiam cum deleniti ex exercitationem#}
+                {#hic incidunt libero, magnam maiores nihil nobis obcaecati, praesentium, quo recusandae similique tempora#}
+                {#temporibus totam?#}
+                {#Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad aperiam cum deleniti ex exercitationem#}
+                {#hic incidunt libero, magnam maiores nihil nobis obcaecati, praesentium, quo recusandae similique tempora#}
+                {#temporibus totam?#}
+            {#</p>#}
+        </div>
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="about-us">
+                    <h3>{% trans %}Abouts us{% endtrans %}</h3>
+                    <p>
+                        {{ app_settings.application_description|nl2br|raw }}
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="nav-footer">
+                    <h3>{% trans %}Navigation{% endtrans %}</h3>
+                    <ul>
+                        <li><a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a></li>
+                        <li><a href="{{ url("excursions_products_list") }}">{% trans %}Excursions{% endtrans %}</a></li>
+                        <li><a href="{{ url("excursions_products_list") }}">{% trans %}Circuits{% endtrans %}</a></li>
+                        <li><a href="{{ url("excursions_products_list") }}">{% trans %}Transfers{% endtrans %}</a></li>
+                        <li><a href="{{ url("contact") }}">{% trans %}Contacts Us{% endtrans %}</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="col-sm-4">
+                <div class="social-media">
+                    <h3>{% trans %}Follow us{% endtrans %}</h3>
+
+
+                    <a href="" target="_blank"><i class="social-facebook"></i></a>
+
+
+                    <a href="" target="_blank"><i class="social-twitter"></i></a>
+
+
+                    <a href="" target="_blank"><i class="social-googleplus"></i></a>
+
+
+                    <a href="" target="_blank"><i class="social-linkedin"></i></a>
+
+
+                    <a href="" target="_blank"><i class="social-youtube"></i></a>
+
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="copyrights">
+            Copyrights &copy; 2017
+        </div>
+    </footer>
+
+
+
+{% block javascripts %}
+    <script language="javascript" src="{{ asset("assets/js/jquery-2.1.0.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/bootstrap.min.js") }}"></script>
+    <script language="javascript" src="{{ asset("assets/js/ui/jquery-ui.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/jquery.form.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/jquery.cycle.all.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/jquery.maximage.min.js") }}"></script>
+    {#<script type="text/javascript" src="{{ asset("assets/js/jquery.min.js") }}"></script>#}
+    <script type="text/javascript" src="{{ asset("assets/js/responsive-nav.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/fixed-responsive-nav.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/script.js") }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(function () {
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 100) {
+                        $('.navbar-site').addClass("nav-bar-min");
+                    } else {
+                        $('.navbar-site').removeClass("nav-bar-min");
+                    }
+                });
+
+            });
+
+        });
+    </script>
+{% endblock %}
+</body>
+</html>

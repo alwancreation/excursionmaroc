@@ -1,0 +1,67 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Model
+ *
+ * @ORM\Table(name="model", indexes={@ORM\Index(name="model_icon_id", columns={"model_icon_id"}), @ORM\Index(name="brand_id", columns={"brand_id"})})
+ * @ORM\Entity
+ */
+class Model
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="model_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $modelId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="model_name", type="string", length=255, nullable=true)
+     */
+    private $modelName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="model_long_description", type="text", length=65535, nullable=true)
+     */
+    private $modelLongDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="model_short_description", type="text", length=65535, nullable=true)
+     */
+    private $modelShortDescription;
+
+    /**
+     * @var \App\Entity\Asset
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Asset")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="model_icon_id", referencedColumnName="asset_id")
+     * })
+     */
+    private $modelIcon;
+
+    /**
+     * @var \App\Entity\Brand
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Brand")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="brand_id", referencedColumnName="brand_id")
+     * })
+     */
+    private $brand;
+
+
+}
+

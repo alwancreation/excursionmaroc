@@ -21,11 +21,14 @@ services:
     seo_service:
         class: AppBundle\Helper\SeoService
         arguments: ["@router","@doctrine.orm.entity_manager",'@service_container']
-    gedmo.listener.translatable:
-        class: Gedmo\Translatable\TranslatableListener
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-        calls:
-            - [ setAnnotationReader,    ['@annotation_reader']]
-            - [ setDefaultLocale,       [%locale%]]
-            - [ setTranslationFallback, [false]]
+    app_settings:
+        class: AppBundle\Helper\AppSettings
+        arguments: ["@router","@doctrine.orm.entity_manager",'@service_container']
+    # gedmo.listener.translatable:
+    #     class: Gedmo\Translatable\TranslatableListener
+    #     tags:
+    #         - { name: doctrine.event_subscriber, connection: default }
+    #     calls:
+    #         - [ setAnnotationReader,    ['@annotation_reader']]
+    #         - [ setDefaultLocale,       [%locale%]]
+    #         - [ setTranslationFallback, [false]]

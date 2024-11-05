@@ -1,0 +1,74 @@
+{% extends "admin/base.html.twig" %}
+{% block page_title %}{% trans %}Agency Settings{% endtrans %}{% endblock %}
+{% block body %}
+
+    <div class="row gy-5 g-xl-8">
+        <div class="col-md-4">
+            <div class="card card-xl-stretch mb-5 mb-xl-8">
+                <div class="card-header">
+                    <h3 class="card-title fw-bolder text-dark">{% trans %}Agency Info{% endtrans %}</h3>
+                </div>
+                <div class="card-body">
+                        <form action="{{ url('agency_update') }}" method="post" role="form" enctype="multipart/form-data">
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">{% trans %}Agency name{% endtrans %}</label>
+                                <input type="text" class="form-control" name="application_agency_name" value="{{ app_settings.application_agency_name }}" id="application_agency_name" placeholder="" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">{% trans %}Agency Phone{% endtrans %}</label>
+                                <input type="text" class="form-control" name="application_agency_phone" value="{{ app_settings.application_agency_phone }}" id="application_agency_phone" placeholder="" />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">{% trans %}Agency Gsm{% endtrans %}</label>
+                                <input type="text" class="form-control" name="application_agency_gsm" value="{{ app_settings.application_agency_gsm }}" id="application_agency_gsm" placeholder="" />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">{% trans %}Agency Email{% endtrans %}</label>
+                                <input type="text" class="form-control" name="application_agency_email" value="{{ app_settings.application_agency_email }}" id="application_agency_email" placeholder="" />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">{% trans %}Agency Address{% endtrans %}</label>
+                                <input type="text" class="form-control" name="application_agency_address" value="{{ app_settings.application_agency_address }}" id="application_agency_address" placeholder="" />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Update{% endtrans %}</button>
+                        </form>
+                    </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-xl-stretch mb-5 mb-xl-8">
+                <div class="card-header">
+                    <h3 class="card-title fw-bolder text-dark">{% trans %}Agency Juridic{% endtrans %}</h3>
+                </div>
+                <div class="card-body">
+                        <form action="{{ url('agency_update') }}" method="post" role="form" enctype="multipart/form-data">
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">{% trans %}Agency IF{% endtrans %}</label>
+                                <input type="text" class="form-control" name="application_agency_if" value="{{ app_settings.application_agency_if }}" id="application_agency_if" placeholder="" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">{% trans %}Agency ICE{% endtrans %}</label>
+                                <input type="text" class="form-control" name="application_agency_ice" value="{{ app_settings.application_agency_ice }}" id="application_agency_ice" placeholder="" />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">{% trans %}Agency RC{% endtrans %}</label>
+                                <input type="text" class="form-control" name="application_agency_rc" value="{{ app_settings.application_agency_rc }}" id="application_agency_rc" placeholder="" />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">{% trans %}Agency ICE{% endtrans %}</label>
+                                <input type="text" class="form-control" name="application_agency_patente" value="{{ app_settings.application_agency_patente }}" id="application_agency_patente" placeholder="" />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Update{% endtrans %}</button>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

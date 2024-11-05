@@ -1,0 +1,27 @@
+{% extends "admin/base.html.twig" %}
+{% block page_title %}{% trans %}Edit guide{% endtrans %}{% endblock %}
+{% block body %}
+
+    <div class="row gy-5 g-xl-8">
+        <div class="col-xxl-4">
+            <div class="card card-xl-stretch mb-5 mb-xl-8">
+                <div class="card-header">
+                    <h3 class="card-title fw-bolder text-dark">{% trans %}Edit guide{% endtrans %}</h3>
+                </div>
+                <div class="card-body">
+                    {{ form_start(edit_form) }}
+                    {{ form_errors(edit_form) }}
+
+                    {{ form_widget(edit_form) }}
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Update{% endtrans %}</button>
+                    </div>
+
+                    {{ form_end(edit_form) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

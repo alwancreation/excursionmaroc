@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Category
+ *
+ * @ORM\Table(name="category", indexes={@ORM\Index(name="category_icon_id", columns={"category_icon_id"})})
+ * @ORM\Entity
+ */
+class Category
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="category_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $categoryId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category_name", type="string", length=255, nullable=true)
+     */
+    private $categoryName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category_long_description", type="text", length=65535, nullable=true)
+     */
+    private $categoryLongDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category_short_description", type="text", length=65535, nullable=true)
+     */
+    private $categoryShortDescription;
+
+    /**
+     * @var \App\Entity\Asset
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Asset")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="category_icon_id", referencedColumnName="asset_id")
+     * })
+     */
+    private $categoryIcon;
+
+
+}
+

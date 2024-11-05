@@ -1,0 +1,61 @@
+
+//* BOOTSTRAP CUSTUM	**/
+
+.form-control{
+	height: 34px;
+	border: solid 1px #999999;
+	border-radius: 0;
+	box-shadow: none;
+}
+.btn{
+	border-radius: 3px;
+	&.large-btn{
+		height: 45px;
+		padding: 1px 15px;
+	}
+}
+
+.panel{
+	border-color: #E7E7E7;
+	box-shadow: 0 1px 0 #cfcfcf;
+	border-radius: 0px;
+}
+.panel-default{
+	margin-bottom: 10px;
+	//border-radius:0;
+	//border:solid 1px $second_site_color;
+	.panel-heading{
+		h2{
+			margin: 0;
+		    padding: 0;
+		    font-size: 12px;
+		    line-height: 2;
+		    font-weight: normal;
+		    color: #A7A7A7;
+		}
+	}
+}
+.panel-default>.panel-heading{
+	color:#8e8e8e;
+	font-family: 'Roboto', sans-serif;
+	background-color: #FFFFFF;
+    border-color: #EEE;
+    padding: 5px 10px;
+}
+@media screen and (max-width: 740px) {
+	.annonce-details{
+
+		.carousel{
+			margin-left: -20px;
+			margin-right: -20px;
+
+		}
+	}
+}
+
+pre {
+    font-size: 6px;
+	  color: #000;
+	  font-weight: bold;
+}
+

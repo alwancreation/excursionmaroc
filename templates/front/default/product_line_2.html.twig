@@ -1,0 +1,72 @@
+
+<div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="grid-item grid-item-product">
+        <div class="animated-content">
+        <a href="{{ routing_service.url(product) }}" class="item-thumbnail to-hover">
+            {% if product.mainAsset %}
+                <img src="{{ asset("uploads/originals/"~product.mainAsset.assetBasePath)|imagine_filter("product_400_400") }}" alt="Photo {{ product }}" />
+            {% else %}
+                <img src="http://placehold.it/400x250/999999/E3E3E3" alt="Photo {{ product }}" />
+            {% endif %}
+            <span class="on-hover"></span>
+        </a>
+        <div class="item-content">
+            <div class="item-title">
+                <h3 class="item-title-title"><a href="{{ routing_service.url(product) }}"> {{ product }} </a>  </h3>
+                {% if product.productPrice %}
+                    <div class="item-price">
+                        <div class="price-label">{% trans %}start from{% endtrans %}
+                            <span class="price-number">{{ (product.productPrice|my_price)|raw }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="clearfix"></div>
+
+            </div>
+
+        </div>
+        <div class="item-footer">
+            <div class="product-actions">
+                <a href="{{ routing_service.url(product) }}" class="product-more">+ MORE INFOS</a>
+                <a href="{{ routing_service.url(product) }}" class="product-book"><i class="icon-cart"></i> BOOK</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        </div>
+        <div class="footer-item-content">
+            <h2><a href="{{ routing_service.url(product) }}">{{ product }}</a></h2>
+            <div class="item-about">
+                {{ product.productShortDescription|slice(0,200) }}
+            </div>
+            <div class="properties">
+                {% if product.duration %}
+                    <span class="duration" title="{% trans %}Duration{% endtrans %}">
+                    <i class="fa fa-clock-o"></i>
+                    <b>{{ product.duration|trans }}</b>
+                </span>
+                {% endif %}
+                {% if product.private %}
+                <span class="private" title="{% trans %}Private{% endtrans %}">
+                    <i class="fa fa-lock"></i>
+                    <b>{% trans %}Private{% endtrans %}</b>
+                </span>
+                {% endif %}
+
+                {% if product.difficulty %}
+                <span class="difficulty" title="{% trans %}Difficulty{% endtrans %}">
+                    <i class="fa fa-heartbeat"></i>
+                    <b>{{ product.difficulty|trans }}</b>
+                </span>
+                {% endif %}
+                {% if product.maxPersons %}
+                    <span class="max" title="{% trans %}Max persons{% endtrans %}">
+                    <i class="fa fa-users"></i>
+                    <b>{{ product.maxPersons }}</b>
+                </span>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+</div>

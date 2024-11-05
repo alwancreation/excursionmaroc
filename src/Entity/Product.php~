@@ -1,0 +1,84 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Product
+ *
+ * @ORM\Table(name="product", indexes={@ORM\Index(name="model_id", columns={"model_id"}), @ORM\Index(name="brand_id", columns={"brand_id"}), @ORM\Index(name="cateory_id", columns={"cateory_id"})})
+ * @ORM\Entity
+ */
+class Product
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="product_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $productId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="product_name", type="string", length=255, nullable=true)
+     */
+    private $productName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="product_short_description", type="text", length=65535, nullable=true)
+     */
+    private $productShortDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="product_long_description", type="text", length=65535, nullable=true)
+     */
+    private $productLongDescription;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="year", type="integer", nullable=true)
+     */
+    private $year;
+
+    /**
+     * @var \App\Entity\Category
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cateory_id", referencedColumnName="category_id")
+     * })
+     */
+    private $cateory;
+
+    /**
+     * @var \App\Entity\Brand
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Brand")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="brand_id", referencedColumnName="brand_id")
+     * })
+     */
+    private $brand;
+
+    /**
+     * @var \App\Entity\Model
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Model")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="model_id", referencedColumnName="model_id")
+     * })
+     */
+    private $model;
+
+
+}
+

@@ -1,0 +1,623 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Edit Package{% endblock %}
+{% block page_title %}Edit Package{% endblock %}
+{% block page_sub_title %}Edit Package{% endblock %}
+
+
+{% block body %}
+<div class="row gy-5 g-xl-8">
+    <div class="col-xxl-4">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Packages Information{% endtrans %}</h3>
+            </div>
+            <div class="card-body pt-5">
+                {{ include('admin/packages/_form.html.twig', {'button_label': 'Update'}) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-8">
+        <div class="card mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Package Accommodations{% endtrans %}</h3>
+                <div class="card-toolbar">
+                    <a href="#" onclick="App.getProductPrice($('#package_product_product'))" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#add_accommodation_modal">
+                        <i class="bi bi-plus"></i>
+                        {% trans %}Add Accommodation{% endtrans %}
+                    </a>
+                </div>
+            </div>
+            <div class="card-body pt-5">
+                <div class="table-responsive">
+                    <!--begin::Table-->
+                    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                        <thead>
+                        <tr>
+                            <th>{% trans %}Name{% endtrans %}</th>
+                            <th>{% trans %}Price Per Adult{% endtrans %}</th>
+                            <th>{% trans %}Price Per Child{% endtrans %}</th>
+                            <th class="text-end">{% trans %}actions{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in package.accommodationProducts %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <a href="{{ path('product_show', { 'id': product.id }) }}">
+                                                <div class="symbol-label fs-3 bg-light-success text-success">{{ product.product.letterName }}</div>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <b>{{ product.product.name }}</b>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ product.pricePerAdult|priceFormat }}</td>
+                                <td>{{ product.pricePerChild|priceFormat }}</td>
+
+                                <td class="text-end">
+                                    <a href="" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
+                                                <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </a>
+                                    <a href="" onclick="return confirm('Confirm !')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black"></path>
+                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black"></path>
+                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black"></path>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+
+                <div class="modal fade" id="add_accommodation_modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered mw-900px">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>{% trans %}Add Accommodation{% endtrans %}</h2>
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal-body py-lg-10 px-lg-10">
+                                {{ form_start(product_form) }}
+                                    {{ form_widget(product_form) }}
+                                    <button class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Add{% endtrans %}</button>
+                                {{ form_end(product_form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="card mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Package Transfers{% endtrans %}</h3>
+                <div class="card-toolbar">
+                    <a href="#" onclick="App.getTransferPrice($('#package_transfer_product'))" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#add_transfer_modal">
+                        <i class="bi bi-plus"></i>
+                        {% trans %}Add Transfer{% endtrans %}
+                    </a>
+                </div>
+            </div>
+            <div class="card-body pt-5">
+
+                <div class="table-responsive">
+                    <!--begin::Table-->
+                    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                        <thead>
+                        <tr>
+                            <th>{% trans %}Name{% endtrans %}</th>
+                            <th>{% trans %}Price Per adults{% endtrans %}</th>
+                            <th>{% trans %}Price Per Child{% endtrans %}</th>
+                            <th class="text-end">{% trans %}actions{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in package.transferProducts %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <a href="{{ path('product_show', { 'id': product.id }) }}">
+                                                <div class="symbol-label fs-3 bg-light-success text-success">{{ product.letterName }}</div>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <b>{{ product.product.name }}</b>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ product.pricePerAdult|priceFormat }}</td>
+                                <td>{{ product.pricePerChild|priceFormat }}</td>
+
+
+                                <td class="text-end">
+                                    <a href="" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
+                                                <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
+                                            </svg>
+                                        </span>
+                                    </a>
+                                    <a href="{{ path('package_delete_product', {'id': product.id}) }}" onclick="return confirm('Confirm !')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black"></path>
+                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black"></path>
+                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black"></path>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="modal fade" id="add_transfer_modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered mw-900px">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>{% trans %}Add Transfer{% endtrans %}</h2>
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal-body py-lg-10 px-lg-10">
+                                {{ form_start(transfer_form) }}
+                                {{ form_widget(transfer_form) }}
+                                <button class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Add{% endtrans %}</button>
+                                {{ form_end(transfer_form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Package Transports{% endtrans %}</h3>
+                <div class="card-toolbar">
+                    <a href="#" onclick="App.getTransportPrice($('#package_transport_product'))" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#add_transport_modal">
+                        <i class="bi bi-plus"></i>
+                        {% trans %}Add Transport{% endtrans %}
+                    </a>
+                </div>
+            </div>
+            <div class="card-body pt-5">
+
+                <div class="table-responsive">
+                    <!--begin::Table-->
+                    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                        <thead>
+                        <tr>
+                            <th>{% trans %}Name{% endtrans %}</th>
+                            <th>{% trans %}Price per adults{% endtrans %}</th>
+                            <th>{% trans %}Price per child{% endtrans %}</th>
+                            <th class="text-end">{% trans %}actions{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in package.transportProducts %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <a href="{{ path('product_show', { 'id': product.id }) }}">
+                                                <div class="symbol-label fs-3 bg-light-success text-success">{{ product.letterName }}</div>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <b>{{ product.product.name }}</b>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>{{ product.pricePerAdult|priceFormat }}</td>
+                                <td>{{ product.pricePerChild|priceFormat }}</td>
+
+                                <td class="text-end">
+                                    <a href="" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
+                                                <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </a>
+                                    <a href="{{ path('package_delete_product', {'id': product.id}) }}" onclick="return confirm('Confirm !')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black"></path>
+                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black"></path>
+                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black"></path>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="modal fade" id="add_transport_modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered mw-900px">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>{% trans %}Add Transport{% endtrans %}</h2>
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal-body py-lg-10 px-lg-10">
+                                {{ form_start(transport_form) }}
+                                {{ form_widget(transport_form) }}
+                                <button class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Add{% endtrans %}</button>
+                                {{ form_end(transport_form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Package Guides{% endtrans %}</h3>
+                <div class="card-toolbar">
+                    <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#add_guide_modal">
+                        <i class="bi bi-plus"></i>
+                        {% trans %}Add Guide{% endtrans %}
+                    </a>
+                </div>
+            </div>
+            <div class="card-body pt-5">
+                <div class="table-responsive">
+                    <!--begin::Table-->
+                    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                        <thead>
+                        <tr>
+                            <th>{% trans %}Name{% endtrans %}</th>
+                            <th>{% trans %}Price{% endtrans %}</th>
+                            <th class="text-end">{% trans %}actions{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for guideRel in package.guides %}
+                            {% set guide = guideRel.guide %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <a href="{{ path('guides_edit', { 'id': guide.id }) }}">
+                                                <div class="symbol-label fs-3 bg-light-success text-success">{{ guide.letterName }}</div>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <b>{{ guide }}</b>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ guideRel.price|priceFormat }}</td>
+
+                                <td class="text-end">
+                                    <a href="" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
+                                                <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </a>
+                                    <a href="" onclick="return confirm('Confirm !')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black"></path>
+                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black"></path>
+                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black"></path>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+                <div class="modal fade" id="add_guide_modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered mw-900px">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>{% trans %}Add Guide{% endtrans %}</h2>
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal-body py-lg-10 px-lg-10">
+                                {{ form_start(guide_form) }}
+                                {{ form_widget(guide_form) }}
+                                <button class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Add{% endtrans %}</button>
+                                {{ form_end(guide_form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Package Monuments{% endtrans %}</h3>
+                <div class="card-toolbar">
+                    <a href="#" onclick="App.getMonumentPrice('#package_monument_product')" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#add_monument_modal">
+                        <i class="bi bi-plus"></i>{% trans %}Add Monument{% endtrans %}
+                    </a>
+                </div>
+            </div>
+            <div class="card-body pt-5">
+                <div class="table-responsive">
+                    <!--begin::Table-->
+                    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                        <thead>
+                        <tr>
+                            <th>{% trans %}Name{% endtrans %}</th>
+                            <th>{% trans %}Price per adults{% endtrans %}</th>
+                            <th>{% trans %}Price per child{% endtrans %}</th>
+                            <th class="text-end">{% trans %}actions{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in package.monumentProducts %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <a href="{{ path('product_show', { 'id': product.id }) }}">
+                                                <div class="symbol-label fs-3 bg-light-success text-success">{{ product.letterName }}</div>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <b>{{ product.product.name }}</b>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>{{ product.pricePerAdult|priceFormat }}</td>
+                                <td>{{ product.pricePerChild|priceFormat }}</td>
+
+                                <td class="text-end">
+                                    <a href="" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
+                                                <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </a>
+                                    <a href="" onclick="return confirm('Confirm !')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black"></path>
+                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black"></path>
+                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black"></path>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="modal fade" id="add_monument_modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered mw-900px">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>{% trans %}Add Monument{% endtrans %}</h2>
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal-body py-lg-10 px-lg-10">
+                                {{ form_start(monument_form) }}
+                                {{ form_widget(monument_form) }}
+                                <button class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Add{% endtrans %}</button>
+                                {{ form_end(monument_form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Package More Services{% endtrans %}</h3>
+                <div class="card-toolbar">
+                    <a href="#" onclick="App.getOtherPrice('#package_other_product')" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#add_other_modal">
+                        <i class="bi bi-plus"></i>{% trans %}Add{% endtrans %}
+                    </a>
+                </div>
+            </div>
+            <div class="card-body pt-5">
+                <div class="table-responsive">
+                    <!--begin::Table-->
+                    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                        <thead>
+                        <tr>
+                            <th>{% trans %}Name{% endtrans %}</th>
+                            <th>{% trans %}Price per adults{% endtrans %}</th>
+                            <th>{% trans %}Price per child{% endtrans %}</th>
+                            <th class="text-end">{% trans %}actions{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in package.otherProducts %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <a href="{{ path('product_show', { 'id': product.id }) }}">
+                                                <div class="symbol-label fs-3 bg-light-success text-success">{{ product.letterName }}</div>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <b>{{ product.product.name }}</b>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ product.pricePerAdult|priceFormat }}</td>
+                                <td>{{ product.pricePerChild|priceFormat }}</td>
+                                <td class="text-end">
+                                    <a href="" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
+                                                <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </a>
+                                    <a href="" onclick="return confirm('Confirm !')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black"></path>
+                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black"></path>
+                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black"></path>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="modal fade" id="add_other_modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered mw-900px">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>{% trans %}Add{% endtrans %}</h2>
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal-body py-lg-10 px-lg-10">
+                                {{ form_start(other_form) }}
+                                {{ form_widget(other_form) }}
+                                <button class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Add{% endtrans %}</button>
+                                {{ form_end(other_form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

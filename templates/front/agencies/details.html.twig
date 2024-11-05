@@ -1,0 +1,128 @@
+{% extends 'front/base.html.twig' %}
+
+{% block metas %}
+    <title>{{ agency }} agence de d'excursion au Maroc - Excursion Maroc</title>
+    <meta name="description" content="Présentation de {{ agency }} : agence d'organisation de voyages et d'excursions partout au Maroc ... ">
+{% endblock %}
+{% block hero %}
+    <section class="agency-header">
+        <div class="container">
+            <h1>{{ agency }}</h1>
+        </div>
+    </section>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a>
+            </li>
+            <li>
+                <a href="{{ url("agencies_index") }}">{% trans %}Agencies{% endtrans %}</a>
+            </li>
+            <li class="active">{{ agency }}</li>
+        </ol>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="agency-left-sidebar">
+                {% if agency.logo %}
+                    <div class="img-agency">
+                    <img src="{{ asset('uploads/agencies/'~agency.logo)|imagine_filter('agency_400_300') }}"
+                         class="img-responsive" alt="{{ agency }}">
+                    </div>
+                {% else %}
+                    <div class="img-agency">
+                        <img src="{{ asset('uploads/agencies/no-logo.jpg')|imagine_filter('agency_400_300') }}"
+                             class="img-responsive" alt="{{ agency }}">
+                    </div>
+                {% endif %}
+                    <h2><a href="{{ routing_service.agencyUrl(agency) }}">
+                    {{ agency }}
+                    </a>
+                    </h2>
+                    <p>
+                        {{ agency.longDescription }}
+                    </p>
+                <ul>
+                    {% if agency.phone %}
+                        <li><b>{% trans %}Phone{% endtrans %} : </b> <a href="">{{ agency.phone }}</a></li>
+                    {% endif %}
+
+                    {% if agency.email %}
+                        <li><b>{% trans %}Email{% endtrans %} : </b> <a href="mailto:{{ agency.email }}">{{ agency.email }}</a></li>
+                    {% endif %}
+
+                    {% if agency.address %}
+                        <li><b>{% trans %}Address{% endtrans %} : </b> {{ agency.address }}</li>
+                    {% endif %}
+
+                    {% if agency.site %}
+                        <li><b>{% trans %}Site{% endtrans %} : </b> <a href="{{ agency.site }}">{{ agency.site }}</a></li>
+                    {% endif %}
+                    {% if agency.city %}
+                        <li><b>{% trans %}City{% endtrans %} : </b> <a href="#">{{ agency.city }}</a></li>
+                    {% endif %}
+
+                </ul>
+                </div>
+                <hr>
+                {% if app.environment=='prod' %}
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- Renty Responsive -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-7450352411164809"
+                         data-ad-slot="5900297123"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                {% endif %}
+
+            </div>
+            <div class="col-sm-8">
+                <p>
+                    <b>
+                        Présentation de {{ agency }} : agence d'organisation de voyages et d'excursions au Maroc
+                    </b>
+                </p>
+                <div style="padding: 15px 0;">
+                {% if app.environment=='prod' %}
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- Renty Responsive -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-7450352411164809"
+                         data-ad-slot="5900297123"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                {% endif %}
+                </div>
+                <div>
+                    {{ agency.longDescription|raw }}
+                </div>
+                <div class="products-list content-grid">
+                    <div class="row">
+                        {% for product in agency.products %}
+                            {{ include('front/default/product_line_3.html.twig',{product:product}) }}
+                        {% endfor %}
+                    </div>
+                </div>
+                {# display navigation #}
+                <div class="navigation">
+                    {#{{ knp_pagination_render(products) }}#}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+

@@ -38,6 +38,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        seo_service: "@seo_service"
+        app_settings: "@app_settings"
 
 # Doctrine Configuration
 doctrine:

@@ -1,0 +1,119 @@
+{% extends 'front/base.html.twig' %}
+{% block metas %}{{ seo_service.metaPage(page)|raw }}{% endblock %}
+{% block hero %}
+    <section class="agency-header">
+        <div class="container">
+            <h1>{% trans %}Agencies list{% endtrans %}</h1>
+        </div>
+    </section>
+{% endblock %}
+{% block body %}
+    <section class="agencies-list">
+        <div class="container">
+            <h2 class="page-title">{% trans %}Agencies list{% endtrans %}</h2>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form action="" method="post" class="form-inline" role="form" style="margin: 0px;">
+                        <div class="form-group">
+                            <label class="sr-only" for="">{% trans %}Search{% endtrans %}</label>
+                            <input type="email" class="form-control" name="q" id="querys" placeholder="Keyword" style="margin-bottom: 0;">
+                        </div>
+                        <button type="submit" class="btn btn-primary">{% trans %}Search{% endtrans %}</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row-agencies">
+                <div class="row">
+                    <div class="col-sm-9">
+                        {% for key,agency in agencies %}
+                            {% if key==2 or key==10 %}
+                            {% if app.environment=='prod' %}
+                                <div class="panel panel-default">
+                                    <div class="panel-body" style="height: 120px">
+                                        <!-- Renty Responsive -->
+                                        <ins class="adsbygoogle"
+                                             style="display:block"
+                                             data-ad-client="ca-pub-7450352411164809"
+                                             data-ad-slot="5900297123"
+                                             data-ad-format="auto"
+                                             data-full-width-responsive="true"></ins>
+                                        <script>
+                                            (adsbygoogle = window.adsbygoogle || []).push({});
+                                        </script>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% endif %}
+                            <div class="one-agency">
+                                <div class="one-agency-inner">
+                                    <a href="{{ routing_service.agencyUrl(agency) }}" class="img-name">
+                                        {% if agency.logo %}
+                                            <img src="{{ asset('uploads/agencies/'~agency.logo)|imagine_filter('agency_400_300') }}"
+                                                 class="img-responsive" alt="{{ agency }}">
+                                        {% else %}
+                                            <img src="{{ asset('uploads/agencies/no-logo.jpg')|imagine_filter('agency_400_300') }}"
+                                                 class="img-responsive" alt="{{ agency }}">
+                                        {% endif %}
+                                    </a>
+                                    <div class="agency-info">
+                                        <h3>
+                                            <a href="{{ routing_service.agencyUrl(agency) }}">{{ agency }}</a>
+                                            <span class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </span>
+                                        </h3>
+                                        <p>
+                                            {{ agency.shortDescription }}
+                                        </p>
+                                        <div class="more-info">
+                                            {% if agency.city %}
+                                                <a href="#">{{ agency.city }}</a>
+                                            {% endif %}
+                                            <a href="{{ routing_service.agencyUrl(agency) }}">{{ agency.products.count }} {% trans %}Product(s){% endtrans %}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {# display navigation #}
+                        <hr>
+                        <div class="navigation">
+                            {{ knp_pagination_render(agencies) }}
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        {% if app.environment=='prod' %}
+                            <!-- Renty Responsive -->
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-7450352411164809"
+                                 data-ad-slot="5900297123"
+                                 data-ad-format="auto"
+                                 data-full-width-responsive="true"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="agency-sign-in-btn">
+            <a href="{{ url('agency_sign_in') }}" class="btn btn-primary">{% trans %}SignIn New Agency{% endtrans %}</a>
+        </div>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% if app.environment=='prod' %}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    {% endif %}
+
+{% endblock %}
+

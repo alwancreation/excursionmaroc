@@ -1,0 +1,58 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block page_title %}Show Guide{% endblock %}
+
+{% block body %}
+    <div class="row gy-5 g-xl-8">
+        <div class="col-xxl-4">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Show Guide{% endtrans %}</h3>
+
+            </div>
+            <div class="card-body pt-5">
+                    {% if user.asset %}
+                        <div class="thumbnail">
+                            <div class="thumb">
+                                <img src="{{ asset('uploads/users/'~user.asset.assetBasePath) }}" class="img-responsive" alt="">
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="caption">
+                        <h4>{{ user }}</h4>
+                    </div>
+                    <table class="table table-hover table-striped">
+                        <tbody>
+                        <tr>
+                            <td>{% trans %}Email{% endtrans %} : {{ user.email }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans %}Phone{% endtrans %} : {{ user.userPhone }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans %}Address{% endtrans %} : {{ user.userAddress }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans %}Enabled{% endtrans %} : {{ user.enabled?'Yes':'No' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xxl-8">
+            <div class="card card-xl-stretch mb-5 mb-xl-8">
+                <div class="card-header">
+                    <h3 class="card-title fw-bolder text-dark">{% trans %}Guide Bookings{% endtrans %}</h3>
+
+                </div>
+                <div class="card-body pt-0">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

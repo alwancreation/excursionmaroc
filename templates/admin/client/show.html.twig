@@ -1,0 +1,70 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block page_title %}Show Client{% endblock %}
+
+{% block body %}
+<div class="row gy-5 g-xl-8">
+    <div class="col-xxl-4">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Show Client{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+
+    <table class="table table-striped w-auto">
+        <tbody>
+        {% if client.logo %}
+            <tr>
+                <td colspan="2"><img src="{{ asset("uploads/clients/"~client.logo) }}" alt="{{ client.name }}" class="img-fluid" style="max-width: 200px; max-height: 200px;"></td>
+            </tr>
+        {% endif %}
+            <tr>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <td><b>{{ client.name }} ({{ client.id }})</b></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ client.email }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ client.phone }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ client.address }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ client.country }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ client.city }}</td>
+            </tr>
+            <tr>
+                <th>Website</th>
+                <td>{{ client.website }}</td>
+            </tr>
+            <tr>
+                <th>Logo</th>
+                <td>{{ client.logo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('client_edit', {'id': client.id}) }}">{% trans %}edit{% endtrans %}</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-8">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Show Client{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

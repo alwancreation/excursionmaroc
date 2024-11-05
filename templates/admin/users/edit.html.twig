@@ -1,0 +1,54 @@
+{% extends "admin/base.html.twig" %}
+{% block body %}
+
+<div class="row gy-5 g-xl-8">
+    <div class="col-xxl-4">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Information{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+                {{ form_start(edit_form) }}
+                {{ form_errors(edit_form) }}
+                {{ form_widget(edit_form) }}
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Save{% endtrans %}</button>
+                {{ form_end(edit_form) }}
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xxl-4">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Password{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+                {{ form_start(edit_form_password) }}
+                {{ form_errors(edit_form_password) }}
+                {{ form_widget(edit_form_password) }}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Update{% endtrans %}</button>
+                </div>
+                {{ form_end(edit_form_password) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-4">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Roles{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+                {{ form_start(edit_form_role) }}
+                {{ form_errors(edit_form_role) }}
+                {{ form_widget(edit_form_role) }}
+                {{ form_end(edit_form_role) }}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+{% endblock %}

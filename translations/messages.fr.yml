@@ -1,0 +1,171 @@
+'Total Revenue :': 'Total des revenus :'
+'Invoice Number : ': 'Numéro de facture : '
+'Date : ': 'Date : '
+'Booking dates :': 'Dates de réservation :'
+'Group reference:': 'Référence de groupe :'
+'Number of pax :': 'Nombre de personnes :'
+'Tarif convenu': 'Tarif convenu'
+'Nbre de pax': 'Nbre de personnes'
+'Total à régler': 'Total à régler'
+Devis: Devis
+Date: Date
+'Total en Dhs': 'Total en Dhs'
+'Date de règlement': 'Date de règlement'
+'Mode de règlement': 'Mode de règlement'
+Product: Produit
+Adults: Adultes
+Price/Adult: Prix/Adulte
+Children: Enfants
+Price/Child: Prix/Enfant
+Pax: Personnes
+'Total Price': 'Prix total'
+'Total Disbursements :': 'Total des décaissements :'
+'Result including tax :': 'Résultat incluant la taxe :'
+'Commission excluding tax :': 'Commission hors taxe :'
+Dashboard: 'Tableau de bord'
+Bookings: Réservations
+Packages: Forfaits
+Products: Produits
+Clients: Clients
+Employees: Employés
+Guides: Guides
+Users: Utilisateurs
+Configuration: Configuration
+'Application Settings': 'Paramètres de l''application'
+Agency: Agence
+'Sign Out': 'Se déconnecter'
+Home: Accueil
+'Show details': 'Afficher les détails'
+'Add Accommodation': 'Ajouter un hébergement'
+Name: Nom
+Dates: Dates
+Price: Prix
+actions: actions
+From: De
+To: À
+Add: Ajouter
+'Add Transfer': 'Ajouter un transfert'
+'Add Transport': 'Ajouter un transport'
+'Add Guide': 'Ajouter un guide'
+Duration: Durée
+'Add Monument': 'Ajouter un monument'
+'Edit guide': 'Modifier le guide'
+Update: 'Mettre à jour'
+New: Nouveau
+Ref: Réf
+Client: Client
+'Date Create': 'Date de création'
+'Date Start': 'Date de début'
+'Date End': 'Date de fin'
+Status: Statut
+Actions: Actions
+Show: Afficher
+Edit: Modifier
+Delete: Supprimer
+'Set as pending': 'Définir comme en attente'
+'Set as confirmed': 'Définir comme confirmé'
+'Set as cancelled': 'Définir comme annulé'
+Export: Exporter
+'Booking No': 'Numéro de réservation'
+'Booking Dates': 'Dates de réservation'
+'Booking date create': 'Date de création de la réservation'
+'Final Client': 'Client final'
+Description: Description
+'Date From': 'Date de début'
+'Date To': 'Date de fin'
+Amount: Montant
+Subtotal: Sous-total
+Total: Total
+Logo: Logo
+Type: Type
+Email: Email
+Phone: Téléphone
+Address: Adresse
+Country: Pays
+City: Ville
+edit: modifier
+'Latest Bookings': 'Dernières réservations'
+User: Utilisateur
+'Edit driver info': 'Modifier les informations du conducteur'
+Back: Retour
+'Guides List': 'Liste des guides'
+'New Guide': 'Nouveau guide'
+'Guide Id': 'ID du guide'
+'Day Price': 'Prix par jour'
+Create: Créer
+'Price Per Adult': 'Prix par adulte'
+'Price Per Child': 'Prix par enfant'
+'Price Per adults': 'Prix par adultes'
+'Price per adults': 'Prix par adultes'
+'Price per child': 'Prix par enfant'
+Id: ID
+'Package No': 'Numéro de forfait'
+'Package Dates': 'Dates du forfait'
+'Package date create': 'Date de création du forfait'
+Image: Image
+Category: Catégorie
+Information: Informations
+Save: Enregistrer
+Password: 'Mot de passe'
+Roles: Rôles
+'Users List': 'Liste des utilisateurs'
+'New User': 'Nouvel utilisateur'
+'User Id': 'ID de l''utilisateur'
+Enabled: Activé
+'Last Login': 'Dernière connexion'
+Role: Rôle
+'Bookings Information': 'Informations sur les réservations'
+'Booking Accommodations': 'Hébergements réservés'
+'Booking Transfers': 'Transferts réservés'
+'Booking Transports': 'Transports réservés'
+'Booking Guides': 'Guides réservés'
+'Booking Monuments': 'Monuments réservés'
+'Booking More Services': 'Autres services réservés'
+'Edit Client': 'Modifier le client'
+'Clients List': 'Liste des clients'
+'New Client': 'Nouveau client'
+'Show Client': 'Afficher le client'
+'Add new guide': 'Ajouter un nouveau guide'
+'Show Guide': 'Afficher le guide'
+'Guide Bookings': 'Réservations du guide'
+'Packages Information': 'Informations sur les forfaits'
+'Package Accommodations': 'Hébergements du forfait'
+'Package Transfers': 'Transferts du forfait'
+'Package Transports': 'Transports du forfait'
+'Package Guides': 'Guides du forfait'
+'Package Monuments': 'Monuments du forfait'
+'Package More Services': 'Autres services du forfait'
+'Edit Product': 'Modifier le produit'
+'Products List': 'Liste des produits'
+'All Products List': 'Liste de tous les produits'
+'New Product': 'Nouveau produit'
+'Show Product': 'Afficher le produit'
+'Agency Settings': 'Paramètres de l''agence'
+'Agency Info': 'Informations sur l''agence'
+'Agency name': 'Nom de l''agence'
+'Agency Phone': 'Téléphone de l''agence'
+'Agency Gsm': 'Gsm de l''agence'
+'Agency Email': 'Email de l''agence'
+'Agency Address': 'Adresse de l''agence'
+'Agency Juridic': 'Juridique de l''agence'
+'Agency IF': 'IF de l''agence'
+'Agency ICE': 'ICE de l''agence'
+'Agency RC': 'RC de l''agence'
+'Application name': 'Nom de l''application'
+'Application email': 'Email de l''application'
+'Application currency': 'Devise de l''application'
+'Application logo': 'Logo de l''application'
+'Yes': Oui
+'No': Non
+Administrator: Administrateur
+Driver: Conducteur
+'Booking Manager': 'Gestionnaire des réservations'
+'Add new user': 'Ajouter un nouvel utilisateur'
+English: English
+French: French
+Spanish: Spanish
+German: German
+'Show all': 'Afficher tout'
+'Quick Links': 'Liens rapides'
+Reports: Rapports
+'All bookings': 'Toutes les réservations'

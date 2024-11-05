@@ -1,0 +1,50 @@
+{% extends "admin/base.html.twig" %}
+{% block page_title %}{% trans %}Application Settings{% endtrans %}{% endblock %}
+{% block body %}
+
+    <div class="row gy-5 g-xl-8">
+        <div class="col-xxl-4">
+            <div class="card card-xl-stretch mb-5 mb-xl-8">
+                <div class="card-header">
+                    <h3 class="card-title fw-bolder text-dark">{% trans %}Application Settings{% endtrans %}</h3>
+                </div>
+                <div class="card-body">
+                        <form action="{{ url('settings_update') }}" method="post" role="form" enctype="multipart/form-data">
+                            <div class="form-group mb-3">
+                                <label for="">{% trans %}Application name{% endtrans %}</label>
+                                <input type="text" class="form-control" name="application_name" value="{{ app_settings.application_name }}" id="application_name" placeholder="">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="">{% trans %}Application email{% endtrans %}</label>
+                                <input type="text" class="form-control" name="application_email" value="{{ app_settings.application_email }}" id="application_email" placeholder="">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="">{% trans %}Application currency{% endtrans %}</label>
+
+                                <select class="form-control" name="application_currency">
+                                    <option value="USD" {{ app_settings.application_currency == 'USD' ? 'selected' : '' }}>USD</option>
+                                    <option value="MAD" {{ app_settings.application_currency == 'MAD' ? 'selected' : '' }}>MAD</option>
+                                    <option value="EUR" {{ app_settings.application_currency == 'EUR' ? 'selected' : '' }}>EUR</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group mb-3">
+                                {% if app_settings.application_logo %}
+                                    <img src="{{ asset("uploads/settings/"~app_settings.application_logo) }}" alt="" style="max-width: 200px">
+                                    <hr>
+                                {% endif %}
+                                <label for="">{% trans %}Application logo{% endtrans %}</label>
+                                <input type="file"  name="application_logo" id="application_logo" >
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {% trans %}Update{% endtrans %}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+{% endblock %}
