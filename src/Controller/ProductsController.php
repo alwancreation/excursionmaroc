@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\AppSettings;
 use App\Entity\Destination;
 use App\Entity\Message;
 use App\Entity\Product;
@@ -10,6 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class ProductsController extends AbstractController
 {
@@ -162,7 +165,7 @@ class ProductsController extends AbstractController
     /**
      * @Route("/product/contact/request/{id}", name="product_book_request")
      */
-    public function formQuoteAction(Request $request,Product $product)
+    public function formQuoteAction(Request $request,Product $product, MailerInterface $mailer)
     {
         $message = new Message();
         $form_message = $this->createForm('App\Form\MessageType', $message,array(
@@ -176,40 +179,29 @@ class ProductsController extends AbstractController
             $message->setProduct($product);
             $em->persist($message);
             $em->flush($message);
-            $this->sendMessage($message);
+            $this->sendMessage($message, $mailer);
         }
         $request->getSession()->getFlashBag()->add('success', true);
         return $this->redirect($this->get('routing_service')->getUrl($product));
     }
 
-    public function sendMessage(Message $message){
-        $mailer = $this->get('mailer');
-        $settings = $this->getDoctrine()->getRepository('App\Entity\Settings')->findAll();
+    public function sendMessage(Message $message, MailerInterface $mailer){
+        $settings = $this->getDoctrine()->getRepository(AppSettings::class)->findAll();
         $settingsObject = new \stdClass();
         foreach ($settings as $setting){
-            $settingsObject->{$setting->getSettingKey()} = $setting->getSettingValue();
+            $settingsObject->{$setting->getKey()} = $setting->getValue();
         }
         $content =  $this->renderView(
         // templates/emails/registration.html.twig
             '@App/emails/email.html.twig',
             array('message' => $message)
         );
-        $message = (new \Swift_Message('Product form'))
-            ->setFrom($message->getEmail(),$message->getFirstName().' '.$message->getLastName())
-            ->setTo($settingsObject->application_email,$settingsObject->application_name)
-            ->setBody($content,'text/html')
-            /*
-             * If you also want to include a plaintext version of the message
-            ->addPart(
-                $this->renderView(
-                    'emails/registration.txt.twig',
-                    array('name' => $name)
-                ),
-                'text/plain'
-            )
-            */
-        ;
-        $mailer->send($message);
+        $email = (new Email())
+            ->subject('Product form')
+            ->from($message->getEmail())
+            ->to($settingsObject->application_email ?? '')
+            ->html($content);
+        $mailer->send($email);
     }
 
 

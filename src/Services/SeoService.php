@@ -1,9 +1,9 @@
 <?php
 namespace App\Services;
 
+use App\Entity\AppSettings;
 use App\Entity\Page;
 use App\Entity\Product;
-use App\Entity\Settings;
 use App\Entity\Vehicle;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
@@ -22,11 +22,11 @@ class SeoService{
         $this->container = $container;
     }
     public function getMeta(){
-        $settings = $this->em->getRepository(Settings::class)->findAll();
+        $settings = $this->em->getRepository(AppSettings::class)->findAll();
         $settingsObject = new \stdClass();
-        /** @var Settings $setting */
+        /** @var AppSettings $setting */
         foreach ($settings as $setting){
-            $settingsObject->{$setting->getSettingKey()} = $setting->getSettingValue();
+            $settingsObject->{$setting->getKey()} = $setting->getValue();
         }
 
         return '
@@ -40,11 +40,11 @@ class SeoService{
     }
 
     public function metaProduct(Product $product){
-        $settings = $this->em->getRepository(Settings::class)->findAll();
+        $settings = $this->em->getRepository(AppSettings::class)->findAll();
         $settingsObject = new \stdClass();
-        /** @var Settings $setting */
+        /** @var AppSettings $setting */
         foreach ($settings as $setting){
-            $settingsObject->{$setting->getSettingKey()} = $setting->getSettingValue();
+            $settingsObject->{$setting->getKey()} = $setting->getValue();
         }
 
         return '
@@ -69,11 +69,11 @@ class SeoService{
             <meta property="og:description" content="'.$meta->getMetaDescription().'"/> 
             '.$meta->getMetaPlus();
         }
-        $settings = $this->em->getRepository(Settings::class)->findAll();
+        $settings = $this->em->getRepository(AppSettings::class)->findAll();
         $settingsObject = new \stdClass();
-        /** @var Settings $setting */
+        /** @var AppSettings $setting */
         foreach ($settings as $setting){
-            $settingsObject->{$setting->getSettingKey()} = $setting->getSettingValue();
+            $settingsObject->{$setting->getKey()} = $setting->getValue();
         }
 
         return '

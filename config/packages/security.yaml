@@ -3,7 +3,9 @@ security:
     enable_authenticator_manager: true
     password_hashers:
         App\Entity\User:
-            algorithm: plaintext
+            algorithm: auto
+            migrate_from:
+                - plaintext
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:

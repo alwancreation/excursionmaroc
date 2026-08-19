@@ -253,7 +253,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $startDate;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\UserAgency", mappedBy="user")
+     */
+    private $agencies;
 
+    public function __construct()
+    {
+        $this->agencies = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAgencies()
+    {
+        return $this->agencies;
+    }
 
     public function getId(): ?int
     {

@@ -1052,7 +1052,7 @@ class Product implements Translatable
     /**
      * @var \App\Entity\Agency
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Agency")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Agency", inversedBy="products")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="agency", referencedColumnName="id", onDelete="cascade")
      * })

@@ -23,7 +23,7 @@ class CustomProperty
     /**
      * @var \App\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="customProperties")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product_id", referencedColumnName="product_id")
      * })
