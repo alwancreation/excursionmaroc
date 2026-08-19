@@ -735,6 +735,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return array(
             'ROLE_ADMIN' => 'ADMIN',
+            'ROLE_AGENCY' => 'AGENCY',
             'ROLE_GUIDE' => 'GUIDE',
             'ROLE_MANAGER' => 'MANAGER',
 

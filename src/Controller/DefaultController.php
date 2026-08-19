@@ -49,6 +49,25 @@ class DefaultController extends AbstractController
     }
 
     /**
+     * @Route("/switch-language/{locale}", name="app_switch_language")
+     */
+    public function switchLanguageAction(Request $request, string $locale)
+    {
+        // Keep in sync with the app_languages Twig global in config/packages/twig.yaml
+        $availableLocales = ['en', 'fr', 'de'];
+        if (\in_array($locale, $availableLocales, true)) {
+            $request->getSession()->set('_locale', $locale);
+        }
+
+        $referer = $request->headers->get('referer');
+        if ($referer && parse_url($referer, PHP_URL_HOST) === $request->getHost()) {
+            return $this->redirect($referer);
+        }
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
      * @Route("/quote.html", name="free_quote")
      */
     public function quoteAction(Request $request)
