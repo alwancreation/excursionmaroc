@@ -1,0 +1,50 @@
+{% extends 'admin/base.html.twig' %}
+{% block page_title %}{% trans %}Itinerary{% endtrans %} — {{ excursion.productName }}{% endblock %}
+{% block body %}
+    <a href="{{ path('agency_excursion_edit', {id: excursion.productId}) }}" class="mb-5 d-inline-block">{% trans %}Back to excursion{% endtrans %}</a>
+
+    <div class="card mb-5">
+        <div class="card-body">
+            <table class="table table-row-dashed">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{% trans %}Time{% endtrans %}</th>
+                        <th>{% trans %}Title{% endtrans %}</th>
+                        <th>{% trans %}Duration{% endtrans %}</th>
+                        <th>{% trans %}Location{% endtrans %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for step in excursion.itinerarySteps %}
+                        <tr>
+                            <td>{{ step.position }}</td>
+                            <td>{{ step.time }}</td>
+                            <td>{{ step.title }}</td>
+                            <td>{{ step.duration }}</td>
+                            <td>{{ step.location }}</td>
+                            <td>
+                                <form method="post" action="{{ path('agency_excursion_itinerary_delete', {id: excursion.productId, stepId: step.id}) }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('excursion_step_delete_' ~ step.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-light-danger">{% trans %}Delete{% endtrans %}</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="6">{% trans %}No step yet.{% endtrans %}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary mt-5">{% trans %}Add step{% endtrans %}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

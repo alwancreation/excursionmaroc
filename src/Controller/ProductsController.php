@@ -41,32 +41,28 @@ class ProductsController extends AbstractController
     public function searchFunction(Request $request){
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $dql   = "SELECT p FROM App\Entity\Product p";
+        $dql   = "SELECT p FROM App\Entity\Product p where p.status=:status";
 
         $cid = $request->query->get('cid',0);
         $q = $request->query->get('q','');
 
         $category = $em->getRepository("App\Entity\Category")->find($cid);
-        $where = ' where ';
-        $and = ' ';
+        $and = ' and ';
         if ($category){
-            $dql   .= $where.$and." p.category=:category";
-            $where = '';
-            $and= ' and ';
+            $dql   .= $and." p.category=:category";
         }
 
         $destination = $request->query->get('destination',0);
         $destination = $em->getRepository("App\Entity\Destination")->find($destination);
         if ($destination){
-            $dql   .= $where.$and." p.destination=:destination";
-            $where = '';
-            $and= ' and ';
+            $dql   .= $and." p.destination=:destination";
         }
 
         if ($q!=''){
-            $dql   .= $where.$and." (p.productName like :query)";
+            $dql   .= $and." (p.productName like :query)";
         }
         $query = $em->createQuery($dql);
+        $query = $query->setParameter("status", Product::STATUS_PUBLISHED);
         if ($destination){
             $query = $query->setParameter("destination",$destination);
         }
@@ -92,10 +88,11 @@ class ProductsController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $category = $em->getRepository("App\Entity\Category")->find(1);
-        $dql   = "SELECT p FROM App\Entity\Product p where p.category=:category";
+        $dql   = "SELECT p FROM App\Entity\Product p where p.category=:category and p.status=:status";
         $query = $em->createQuery($dql)
         ->setParameters(array(
-            'category'=>$category
+            'category'=>$category,
+            'status'=>Product::STATUS_PUBLISHED
         ));
 
         $pagination = $paginator->paginate(
@@ -120,10 +117,11 @@ class ProductsController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $category = $em->getRepository("App\Entity\Category")->find(1);
-        $dql   = "SELECT p FROM App\Entity\Product p where p.category=:category";
+        $dql   = "SELECT p FROM App\Entity\Product p where p.category=:category and p.status=:status";
         $query = $em->createQuery($dql)
         ->setParameters(array(
-            'category'=>$category
+            'category'=>$category,
+            'status'=>Product::STATUS_PUBLISHED
         ));
 
         $pagination = $paginator->paginate(
@@ -147,6 +145,12 @@ class ProductsController extends AbstractController
      */
     public function detailsAction(Request $request,Product $product)
     {
+        if ($product->getStatus() !== Product::STATUS_PUBLISHED
+            && !$this->isGranted('EXCURSION_VIEW', $product)
+        ) {
+            throw $this->createNotFoundException('Excursion not found.');
+        }
+
         $message = new Message();
         $form_message = $this->createForm('App\Form\MessageType', $message,array(
             'action' => $this->generateUrl('product_book_request',array("id"=>$product->getProductId())),

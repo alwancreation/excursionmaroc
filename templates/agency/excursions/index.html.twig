@@ -1,0 +1,44 @@
+{% extends 'admin/base.html.twig' %}
+{% block page_title %}{% trans %}My excursions{% endtrans %}{% endblock %}
+{% block body %}
+    <a href="{{ path('agency_excursion_new') }}" class="btn btn-primary mb-5">{% trans %}New excursion{% endtrans %}</a>
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-row-dashed">
+                <thead>
+                    <tr>
+                        <th>{% trans %}Title{% endtrans %}</th>
+                        <th>{% trans %}Status{% endtrans %}</th>
+                        <th>{% trans %}Price{% endtrans %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for excursion in excursions %}
+                        <tr>
+                            <td>{{ excursion.productName }}</td>
+                            <td>
+                                {% set status = excursion.status %}
+                                <span class="badge
+                                    {% if status == 'PUBLISHED' %}badge-light-success
+                                    {% elseif status == 'PENDING_REVIEW' %}badge-light-warning
+                                    {% elseif status == 'REJECTED' %}badge-light-danger
+                                    {% elseif status == 'ARCHIVED' %}badge-light
+                                    {% else %}badge-light-info{% endif %}">
+                                    {{ status }}
+                                </span>
+                            </td>
+                            <td>{{ excursion.productPrice }}</td>
+                            <td>
+                                <a href="{{ path('agency_excursion_edit', {id: excursion.productId}) }}" class="btn btn-sm btn-light-primary">{% trans %}Edit{% endtrans %}</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="4">{% trans %}No excursion yet.{% endtrans %}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -2,17 +2,14 @@
 
 namespace App\Controller\Agency;
 
-use App\Entity\Agency;
-use App\Entity\UserAgency;
 use App\Form\AgencyProfileType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/agency")
  */
-class AgencyController extends AbstractController
+class AgencyController extends AbstractAgencyController
 {
     /**
      * @Route("/dashboard", name="agency_dashboard")
@@ -66,20 +63,5 @@ class AgencyController extends AbstractController
             'agency' => $agency,
             'form' => $form->createView(),
         ]);
-    }
-
-    private function getCurrentAgency(): Agency
-    {
-        $user = $this->getUser();
-        $userAgency = $this->getDoctrine()->getRepository(UserAgency::class)->findOneBy(['user' => $user]);
-
-        if (!$userAgency) {
-            throw $this->createNotFoundException('Aucune agence associée à ce compte.');
-        }
-
-        $agency = $userAgency->getAgency();
-        $this->denyAccessUnlessGranted('AGENCY_VIEW', $agency);
-
-        return $agency;
     }
 }
