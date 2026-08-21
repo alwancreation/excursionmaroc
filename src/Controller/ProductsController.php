@@ -6,6 +6,7 @@ use App\Entity\AppSettings;
 use App\Entity\Destination;
 use App\Entity\Message;
 use App\Entity\Product;
+use App\Services\SearchService;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,13 +17,19 @@ use Symfony\Component\Mime\Email;
 
 class ProductsController extends AbstractController
 {
+    private SearchService $searchService;
+
+    public function __construct(SearchService $searchService)
+    {
+        $this->searchService = $searchService;
+    }
 
     /**
      * @Route("/search", name="all_products_list")
      */
     public function searchAction(Request $request, PaginatorInterface $paginator)
     {
-        $search = $this->searchFunction($request);
+        $search = $this->searchService->search($request);
         $pagination = $paginator->paginate(
             $search['query'], /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
@@ -33,51 +40,10 @@ class ProductsController extends AbstractController
             "products" => $pagination,
             "category" => $search['category'],
             "destination" => $search['destination'],
-            "q" => $search['q'],
+            "criteria" => $search['criteria'],
+            "q" => $search['criteria']['q'],
             "page"=>null
         ]);
-    }
-
-    public function searchFunction(Request $request){
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $dql   = "SELECT p FROM App\Entity\Product p where p.status=:status";
-
-        $cid = $request->query->get('cid',0);
-        $q = $request->query->get('q','');
-
-        $category = $em->getRepository("App\Entity\Category")->find($cid);
-        $and = ' and ';
-        if ($category){
-            $dql   .= $and." p.category=:category";
-        }
-
-        $destination = $request->query->get('destination',0);
-        $destination = $em->getRepository("App\Entity\Destination")->find($destination);
-        if ($destination){
-            $dql   .= $and." p.destination=:destination";
-        }
-
-        if ($q!=''){
-            $dql   .= $and." (p.productName like :query)";
-        }
-        $query = $em->createQuery($dql);
-        $query = $query->setParameter("status", Product::STATUS_PUBLISHED);
-        if ($destination){
-            $query = $query->setParameter("destination",$destination);
-        }
-        if ($category){
-            $query = $query->setParameter("category",$category);
-        }
-        if ($q!=''){
-            $query = $query->setParameter("query","%".$q."%");
-        }
-        return array(
-            'q'        =>$q,
-            'query'        =>$query,
-            'category'     =>$category,
-            'destination'  =>$destination
-        );
     }
 
     /**
@@ -85,25 +51,19 @@ class ProductsController extends AbstractController
      */
     public function excursionsAction(Request $request, PaginatorInterface $paginator)
     {
-
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository("App\Entity\Category")->find(1);
-        $dql   = "SELECT p FROM App\Entity\Product p where p.category=:category and p.status=:status";
-        $query = $em->createQuery($dql)
-        ->setParameters(array(
-            'category'=>$category,
-            'status'=>Product::STATUS_PUBLISHED
-        ));
+        $search = $this->searchService->search($request, ['category' => 1]);
 
         $pagination = $paginator->paginate(
-            $query, /* query NOT result */
+            $search['query'], /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             12/*limit per page*/
         );
-        // replace this example code with whatever you need
         return $this->render('front/default/products.html.twig', [
             "products" => $pagination,
-            'category'=>$category,
+            'category'=>$search['category'],
+            'destination'=>$search['destination'],
+            'criteria'=>$search['criteria'],
             "page" => $em->getRepository("App\Entity\Page")->find(3),
         ]);
     }
@@ -114,25 +74,19 @@ class ProductsController extends AbstractController
      */
     public function circuitsAction(Request $request, PaginatorInterface $paginator)
     {
-
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository("App\Entity\Category")->find(1);
-        $dql   = "SELECT p FROM App\Entity\Product p where p.category=:category and p.status=:status";
-        $query = $em->createQuery($dql)
-        ->setParameters(array(
-            'category'=>$category,
-            'status'=>Product::STATUS_PUBLISHED
-        ));
+        $search = $this->searchService->search($request, ['category' => 1]);
 
         $pagination = $paginator->paginate(
-            $query, /* query NOT result */
+            $search['query'], /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             12/*limit per page*/
         );
-        // replace this example code with whatever you need
         return $this->render('front/default/products.html.twig', [
             "products" => $pagination,
-            'category'=>$category,
+            'category'=>$search['category'],
+            'destination'=>$search['destination'],
+            'criteria'=>$search['criteria'],
             "page" => $em->getRepository("App\Entity\Page")->find(2),
         ]);
     }
@@ -215,10 +169,12 @@ class ProductsController extends AbstractController
         /** @var Destination $destination */
         $destination = $em->getRepository("App\Entity\Destination")->findOneBy(array("destinationName"=>$name));
 
-        $request->query->add(array('destination',$destination->getDestinationId()));
-        $search = $this->searchFunction($request);
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
+        if (!$destination) {
+            throw $this->createNotFoundException('Destination not found.');
+        }
+
+        $search = $this->searchService->search($request, ['destination' => $destination->getDestinationId()]);
+        $pagination = $this->get('knp_paginator')->paginate(
             $search['query'], /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             12/*limit per page*/
@@ -228,7 +184,8 @@ class ProductsController extends AbstractController
             "products" => $pagination,
             "category" => $search['category'],
             "destination" => $destination,
-            "q" => $search['q'],
+            "criteria" => $search['criteria'],
+            "q" => $search['criteria']['q'],
             "page"=>null
         ]);
 

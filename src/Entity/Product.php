@@ -26,6 +26,28 @@ class Product implements Translatable
     private $productId;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(name="date_create", type="datetime", nullable=true)
+     */
+    private $dateCreate;
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateCreate()
+    {
+        return $this->dateCreate;
+    }
+
+    /**
+     * @param \DateTime $dateCreate
+     */
+    public function setDateCreate($dateCreate)
+    {
+        $this->dateCreate = $dateCreate;
+    }
+
+    /**
      * @return string
      */
     public function getProductTitle()
@@ -694,6 +716,7 @@ class Product implements Translatable
 
     public function __construct()
     {
+        $this->dateCreate = new \DateTime();
         $this->destinations = new ArrayCollection();
         $this->themes = new ArrayCollection();
         $this->months = new ArrayCollection();

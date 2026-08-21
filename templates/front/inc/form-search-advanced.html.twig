@@ -1,0 +1,59 @@
+<details class="search-filters-advanced" {% if criteria is defined and (criteria.price_min or criteria.price_max or criteria.participants or criteria.type or criteria.transport or criteria.guide or criteria.date) %}open{% endif %}>
+    <summary>{% trans %}More filters{% endtrans %}</summary>
+    <form method="get" action="{{ app.request.pathInfo }}" class="row" style="margin-top:15px;">
+        {% if q is defined and q %}<input type="hidden" name="q" value="{{ q }}">{% endif %}
+        {% if category is defined and category %}<input type="hidden" name="category" value="{{ category.categoryId }}">{% endif %}
+        {% if destination is defined and destination %}<input type="hidden" name="destination" value="{{ destination.destinationId }}">{% endif %}
+
+        <div class="col-sm-2 col-xs-6">
+            <label>{% trans %}Date{% endtrans %}</label>
+            <input type="date" class="form-control" name="date" value="{{ criteria is defined ? criteria.date : '' }}">
+        </div>
+        <div class="col-sm-2 col-xs-6">
+            <label>{% trans %}Participants{% endtrans %}</label>
+            <input type="number" min="1" class="form-control" name="participants" value="{{ criteria is defined ? criteria.participants : '' }}">
+        </div>
+        <div class="col-sm-2 col-xs-6">
+            <label>{% trans %}Min price{% endtrans %}</label>
+            <input type="number" min="0" class="form-control" name="price_min" value="{{ criteria is defined ? criteria.price_min : '' }}">
+        </div>
+        <div class="col-sm-2 col-xs-6">
+            <label>{% trans %}Max price{% endtrans %}</label>
+            <input type="number" min="0" class="form-control" name="price_max" value="{{ criteria is defined ? criteria.price_max : '' }}">
+        </div>
+        <div class="col-sm-2 col-xs-6">
+            <label>{% trans %}Type{% endtrans %}</label>
+            <select class="form-control" name="type">
+                <option value="">{% trans %}Group or private{% endtrans %}</option>
+                <option value="group" {% if criteria is defined and criteria.type == 'group' %}selected{% endif %}>{% trans %}Group{% endtrans %}</option>
+                <option value="private" {% if criteria is defined and criteria.type == 'private' %}selected{% endif %}>{% trans %}Private{% endtrans %}</option>
+            </select>
+        </div>
+        <div class="col-sm-2 col-xs-6">
+            <label>{% trans %}Sort by{% endtrans %}</label>
+            <select class="form-control" name="sort_by">
+                <option value="recommended" {% if criteria is not defined or criteria.sort == 'recommended' %}selected{% endif %}>{% trans %}Recommended{% endtrans %}</option>
+                <option value="price_asc" {% if criteria is defined and criteria.sort == 'price_asc' %}selected{% endif %}>{% trans %}Price: low to high{% endtrans %}</option>
+                <option value="price_desc" {% if criteria is defined and criteria.sort == 'price_desc' %}selected{% endif %}>{% trans %}Price: high to low{% endtrans %}</option>
+                <option value="newest" {% if criteria is defined and criteria.sort == 'newest' %}selected{% endif %}>{% trans %}Newest{% endtrans %}</option>
+            </select>
+        </div>
+
+        <div class="col-sm-3 col-xs-6" style="margin-top:10px;">
+            <label>
+                <input type="checkbox" name="transport" value="1" {% if criteria is defined and criteria.transport %}checked{% endif %}>
+                {% trans %}Transport included{% endtrans %}
+            </label>
+        </div>
+        <div class="col-sm-3 col-xs-6" style="margin-top:10px;">
+            <label>
+                <input type="checkbox" name="guide" value="1" {% if criteria is defined and criteria.guide %}checked{% endif %}>
+                {% trans %}Guide included{% endtrans %}
+            </label>
+        </div>
+        <div class="col-sm-3 col-xs-12" style="margin-top:10px;">
+            <button type="submit" class="btn btn-success">{% trans %}Apply filters{% endtrans %}</button>
+            <a href="{{ app.request.pathInfo }}">{% trans %}Reset{% endtrans %}</a>
+        </div>
+    </form>
+</details>
