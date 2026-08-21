@@ -95,7 +95,7 @@ class AgenciesController extends AbstractController
             $em->persist($user);
 
             $agency->setUser($user);
-            $agency->setSlug($utils->slugify($agency->getName()));
+            $agency->setSlug($utils->slugify($agency->getName(), ['transliterate' => true]));
             $em->persist($agency);
 
             $userAgency = new UserAgency();

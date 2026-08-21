@@ -195,6 +195,33 @@ public function setAssetFile($assetFile)
      * })
      */
     private $mainAsset;
+
+    /**
+     * @var \App\Entity\Meta
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Meta", cascade={"persist"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="meta_id", referencedColumnName="meta_id")
+     * })
+     */
+    private $meta;
+
+    /**
+     * @return Meta
+     */
+    public function getMeta()
+    {
+        return $this->meta ?: new Meta();
+    }
+
+    /**
+     * @param Meta $meta
+     */
+    public function setMeta($meta)
+    {
+        $this->meta = $meta;
+    }
+
     /**
      * @return Asset
      */

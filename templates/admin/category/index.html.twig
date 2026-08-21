@@ -1,0 +1,48 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block page_title %}{% trans %}Categories{% endtrans %}{% endblock %}
+
+{% block body %}
+{% for message in app.flashes('error') %}
+    <div class="alert alert-danger">{{ message }}</div>
+{% endfor %}
+<div class="row gy-5 g-xl-8">
+    <div class="col-xxl-12">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Categories{% endtrans %}</h3>
+                <div class="card-toolbar">
+                    <a href="{{ path('category_new') }}" class="btn btn-sm btn-primary">{% trans %}New{% endtrans %}</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                        <thead>
+                            <tr>
+                                <th>{% trans %}Name{% endtrans %}</th>
+                                <th>{% trans %}Slug{% endtrans %}</th>
+                                <th class="text-end">{% trans %}Actions{% endtrans %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for category in categories %}
+                            <tr>
+                                <td>{{ category.categoryName }}</td>
+                                <td>{{ category.categorySlug }}</td>
+                                <td class="text-end">
+                                    <a href="{{ path('category_edit', {'id': category.categoryId}) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">{% trans %}Edit{% endtrans %}</a>
+                                    {{ include('admin/category/_delete_form.html.twig') }}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="3">{% trans %}No records found{% endtrans %}</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
