@@ -1,0 +1,23 @@
+{% form_theme bookingForm "bootstrap_3_layout.html.twig" %}
+
+<div class="product-right-sidebar">
+    <div class="panel panel-default">
+        <div class="panel-heading">{% trans %}Request a booking{% endtrans %}</div>
+        <div class="panel-body">
+            {% if product.productPrice %}
+                <p class="booking-base-price">
+                    {% trans %}From{% endtrans %}
+                    <strong>{{ (product.productPrice|my_price)|raw }}</strong>
+                    {% trans %}per person{% endtrans %}
+                </p>
+            {% endif %}
+            {{ form_start(bookingForm, {action: path('excursion_booking_request', {id: product.productId}), method: 'POST'}) }}
+                {{ form_widget(bookingForm) }}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-primary large-btn">{% trans %}REQUEST A BOOKING{% endtrans %}</button>
+                </div>
+                <p class="booking-disclaimer">{% trans %}The final price is confirmed by the agency and is never taken from your browser.{% endtrans %}</p>
+            {{ form_end(bookingForm) }}
+        </div>
+    </div>
+</div>

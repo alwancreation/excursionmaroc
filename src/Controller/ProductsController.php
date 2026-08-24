@@ -6,6 +6,8 @@ use App\Entity\AppSettings;
 use App\Entity\Destination;
 use App\Entity\Message;
 use App\Entity\Product;
+use App\Form\BookingRequestType;
+use App\Services\BookingService;
 use App\Services\SearchService;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -110,11 +112,77 @@ class ProductsController extends AbstractController
             'action' => $this->generateUrl('product_book_request',array("id"=>$product->getProductId())),
             'method' => 'POST',
         ));
+
+        $bookingForm = $this->createForm(BookingRequestType::class, null, [
+            'product' => $product,
+            'action' => $this->generateUrl('excursion_booking_request', ['id' => $product->getProductId()]),
+            'method' => 'POST',
+        ]);
+
+        $similarExcursions = [];
+        if ($product->getCategory()) {
+            $similarExcursions = $this->getDoctrine()->getManager()->createQueryBuilder()
+                ->select('p')
+                ->from(Product::class, 'p')
+                ->andWhere('p.category = :category')
+                ->andWhere('p.status = :status')
+                ->andWhere('p.productId != :id')
+                ->setParameter('category', $product->getCategory())
+                ->setParameter('status', Product::STATUS_PUBLISHED)
+                ->setParameter('id', $product->getProductId())
+                ->setMaxResults(4)
+                ->getQuery()
+                ->getResult();
+        }
+
         // replace this example code with whatever you need
         return $this->render('front/default/details.html.twig', [
             "product" => $product,
             'form' => $form_message->createView(),
+            'bookingForm' => $bookingForm->createView(),
+            'similarExcursions' => $similarExcursions,
         ]);
+    }
+
+    /**
+     * @Route("/excursions/{id}/reserver", name="excursion_booking_request", requirements={"id"="\d+"})
+     */
+    public function bookRequestAction(Request $request, Product $product, BookingService $bookingService, \App\Services\RoutingService $routingService)
+    {
+        if ($product->getStatus() !== Product::STATUS_PUBLISHED) {
+            throw $this->createNotFoundException('Excursion not found.');
+        }
+
+        $form = $this->createForm(BookingRequestType::class, null, ['product' => $product]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $schedule = $data['schedule'] ?? null;
+            $date = $data['date'] ?? ($schedule ? $schedule->getDate() : new \DateTime());
+
+            try {
+                $booking = $bookingService->createBookingRequest(
+                    $product,
+                    $schedule,
+                    $date,
+                    (int) $data['adults'],
+                    (int) ($data['children'] ?? 0),
+                    $data['customerName'],
+                    $data['customerPhone'],
+                    $data['customerEmail'],
+                    $data['comments'] ?? null,
+                    $this->getUser()
+                );
+                $this->addFlash('success', sprintf('Votre demande de réservation a été envoyée. Référence : %s', $booking->getReference()));
+            } catch (\InvalidArgumentException $e) {
+                $this->addFlash('error', $e->getMessage());
+            }
+        } else {
+            $this->addFlash('error', 'Veuillez vérifier les informations saisies.');
+        }
+
+        return $this->redirect($routingService->getUrl($product));
     }
 
 
@@ -123,7 +191,7 @@ class ProductsController extends AbstractController
     /**
      * @Route("/product/contact/request/{id}", name="product_book_request")
      */
-    public function formQuoteAction(Request $request,Product $product, MailerInterface $mailer)
+    public function formQuoteAction(Request $request,Product $product, MailerInterface $mailer, \App\Services\RoutingService $routingService)
     {
         $message = new Message();
         $form_message = $this->createForm('App\Form\MessageType', $message,array(
@@ -140,7 +208,7 @@ class ProductsController extends AbstractController
             $this->sendMessage($message, $mailer);
         }
         $request->getSession()->getFlashBag()->add('success', true);
-        return $this->redirect($this->get('routing_service')->getUrl($product));
+        return $this->redirect($routingService->getUrl($product));
     }
 
     public function sendMessage(Message $message, MailerInterface $mailer){
