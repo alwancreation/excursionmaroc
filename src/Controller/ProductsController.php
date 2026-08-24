@@ -135,12 +135,19 @@ class ProductsController extends AbstractController
                 ->getResult();
         }
 
+        $isFavorite = false;
+        if ($this->getUser()) {
+            $isFavorite = (bool) $this->getDoctrine()->getRepository(\App\Entity\Favorite::class)
+                ->findOneBy(['user' => $this->getUser(), 'product' => $product]);
+        }
+
         // replace this example code with whatever you need
         return $this->render('front/default/details.html.twig', [
             "product" => $product,
             'form' => $form_message->createView(),
             'bookingForm' => $bookingForm->createView(),
             'similarExcursions' => $similarExcursions,
+            'isFavorite' => $isFavorite,
         ]);
     }
 

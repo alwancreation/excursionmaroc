@@ -168,6 +168,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $user_address;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_country", type="string", length=100, nullable=true)
+     */
+    private $user_country;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_language", type="string", length=10, nullable=true)
+     */
+    private $user_language;
+
+    /**
+     * @return string|null
+     */
+    public function getUserCountry(): ?string
+    {
+        return $this->user_country;
+    }
+
+    /**
+     * @param string|null $user_country
+     */
+    public function setUserCountry(?string $user_country): void
+    {
+        $this->user_country = $user_country;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUserLanguage(): ?string
+    {
+        return $this->user_language;
+    }
+
+    /**
+     * @param string|null $user_language
+     */
+    public function setUserLanguage(?string $user_language): void
+    {
+        $this->user_language = $user_language;
+    }
+
 
     /**
      * @var \App\Entity\Asset

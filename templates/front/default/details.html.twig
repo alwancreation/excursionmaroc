@@ -28,6 +28,20 @@
                     <span class="no-reviews-yet">{% trans %}No reviews yet{% endtrans %}</span>
                 </span>
 
+                    {% if app.user %}
+                        <form method="post" action="{{ path('account_favorite_toggle', {id: product.productId}) }}" class="favorite-form">
+                            <input type="hidden" name="_token" value="{{ csrf_token('favorite_toggle_' ~ product.productId) }}">
+                            <button type="submit" class="btn btn-default btn-sm">
+                                {% if isFavorite %}
+                                    <i class="fa fa-heart"></i> {% trans %}Remove from favorites{% endtrans %}
+                                {% else %}
+                                    <i class="fa fa-heart-o"></i> {% trans %}Add to favorites{% endtrans %}
+                                {% endif %}
+                            </button>
+                        </form>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-default btn-sm"><i class="fa fa-heart-o"></i> {% trans %}Add to favorites{% endtrans %}</a>
+                    {% endif %}
 
                 </div>
 
