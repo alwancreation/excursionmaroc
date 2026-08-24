@@ -2,6 +2,7 @@
 
 namespace App\Controller\Agency;
 
+use App\Entity\MarketplaceBooking;
 use App\Form\AgencyProfileType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,8 +19,14 @@ class AgencyController extends AbstractAgencyController
     {
         $agency = $this->getCurrentAgency();
 
+        $pendingBookings = $this->getDoctrine()->getRepository(MarketplaceBooking::class)->count([
+            'agency' => $agency,
+            'status' => MarketplaceBooking::STATUS_PENDING,
+        ]);
+
         return $this->render('agency/dashboard.html.twig', [
             'agency' => $agency,
+            'pendingBookings' => $pendingBookings,
         ]);
     }
 

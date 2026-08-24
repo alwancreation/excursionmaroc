@@ -85,9 +85,8 @@ class BookingService
         $booking->setStatus(MarketplaceBooking::STATUS_PENDING);
 
         if ($schedule) {
-            // Reserve the spots pending the agency's decision. Not yet restored
-            // on rejection/cancellation - that belongs to the agency workflow
-            // phase (accept/reject), not yet built.
+            // Reserve the spots pending the agency's decision; released again
+            // by releaseCapacity() if the agency rejects the request.
             $schedule->setRemainingCapacity($schedule->getRemainingCapacity() - $totalParticipants);
             if ($schedule->getRemainingCapacity() <= 0) {
                 $schedule->setStatus(ExcursionSchedule::STATUS_FULL);
@@ -135,5 +134,48 @@ class BookingService
 
         // Extremely unlikely fallback: fall back to a random suffix to guarantee uniqueness.
         return $prefix . substr(bin2hex(random_bytes(4)), 0, 4);
+    }
+
+    /**
+     * @throws \InvalidArgumentException si la réservation n'est pas dans un état confirmable
+     */
+    public function confirm(MarketplaceBooking $booking): void
+    {
+        if ($booking->getStatus() !== MarketplaceBooking::STATUS_PENDING) {
+            throw new \InvalidArgumentException('Seule une réservation en attente peut être confirmée.');
+        }
+
+        $booking->setStatus(MarketplaceBooking::STATUS_CONFIRMED);
+        $this->em->flush();
+    }
+
+    /**
+     * @throws \InvalidArgumentException si la réservation n'est pas dans un état rejetable
+     */
+    public function reject(MarketplaceBooking $booking): void
+    {
+        if ($booking->getStatus() !== MarketplaceBooking::STATUS_PENDING) {
+            throw new \InvalidArgumentException('Seule une réservation en attente peut être refusée.');
+        }
+
+        $booking->setStatus(MarketplaceBooking::STATUS_REJECTED);
+        $this->releaseCapacity($booking);
+        $this->em->flush();
+    }
+
+    /**
+     * Restitue les places réservées sur la disponibilité, s'il y en a une.
+     */
+    private function releaseCapacity(MarketplaceBooking $booking): void
+    {
+        $schedule = $booking->getSchedule();
+        if (!$schedule) {
+            return;
+        }
+
+        $schedule->setRemainingCapacity($schedule->getRemainingCapacity() + $booking->getTotalParticipants());
+        if ($schedule->getStatus() === ExcursionSchedule::STATUS_FULL && $schedule->getRemainingCapacity() > 0) {
+            $schedule->setStatus(ExcursionSchedule::STATUS_OPEN);
+        }
     }
 }

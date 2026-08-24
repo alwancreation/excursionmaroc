@@ -34,12 +34,12 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card">
+            <a href="{{ path('agency_bookings', {status: 'PENDING'}) }}" class="card text-decoration-none">
                 <div class="card-body">
-                    <div class="fs-2 fw-bolder">0</div>
+                    <div class="fs-2 fw-bolder">{{ pendingBookings }}</div>
                     <div class="text-muted">{% trans %}Pending bookings{% endtrans %}</div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-4">
             <div class="card">
@@ -51,5 +51,7 @@
         </div>
     </div>
 
-    <a href="{{ path('agency_profile') }}" class="btn btn-primary">{% trans %}Edit agency profile{% endtrans %}</a>
+    <a href="{{ path('agency_excursions') }}" class="btn btn-primary me-3">{% trans %}My excursions{% endtrans %}</a>
+    <a href="{{ path('agency_bookings') }}" class="btn btn-primary me-3">{% trans %}Bookings{% endtrans %}</a>
+    <a href="{{ path('agency_profile') }}" class="btn btn-light">{% trans %}Edit agency profile{% endtrans %}</a>
 {% endblock %}
