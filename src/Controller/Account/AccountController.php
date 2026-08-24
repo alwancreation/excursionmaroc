@@ -6,7 +6,9 @@ use App\Entity\Asset;
 use App\Entity\Favorite;
 use App\Entity\MarketplaceBooking;
 use App\Entity\Product;
+use App\Entity\Review;
 use App\Form\ClientProfileType;
+use App\Form\ReviewType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,8 +62,18 @@ class AccountController extends AbstractController
         $bookings = $this->getDoctrine()->getRepository(MarketplaceBooking::class)
             ->findBy(['user' => $this->getUser()], ['dateCreate' => 'DESC']);
 
+        $reviewedBookingIds = [];
+        if ($bookings) {
+            $reviews = $this->getDoctrine()->getRepository(Review::class)
+                ->findBy(['user' => $this->getUser()]);
+            foreach ($reviews as $review) {
+                $reviewedBookingIds[] = $review->getBooking()->getId();
+            }
+        }
+
         return $this->render('front/account/bookings.html.twig', [
             'bookings' => $bookings,
+            'reviewedBookingIds' => $reviewedBookingIds,
         ]);
     }
 
@@ -109,5 +121,56 @@ class AccountController extends AbstractController
         }
 
         return $this->redirectToRoute('account_favorites');
+    }
+
+    /**
+     * @Route("/bookings/{id}/review", name="account_booking_review", requirements={"id"="\d+"})
+     */
+    public function reviewAction(Request $request, MarketplaceBooking $booking)
+    {
+        if ($booking->getUser() !== $this->getUser()) {
+            throw $this->createNotFoundException('Réservation introuvable.');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $existing = $em->getRepository(Review::class)->findOneBy(['booking' => $booking]);
+        if ($existing) {
+            $this->addFlash('error', 'Vous avez déjà laissé un avis pour cette réservation.');
+
+            return $this->redirectToRoute('account_bookings');
+        }
+
+        $isPast = $booking->getDate() && $booking->getDate() < new \DateTime();
+        $eligible = $booking->getStatus() === MarketplaceBooking::STATUS_COMPLETED
+            || ($booking->getStatus() === MarketplaceBooking::STATUS_CONFIRMED && $isPast);
+
+        if (!$eligible) {
+            $this->addFlash('error', 'Cette réservation n\'est pas encore éligible à un avis.');
+
+            return $this->redirectToRoute('account_bookings');
+        }
+
+        $review = new Review();
+        $form = $this->createForm(ReviewType::class, $review);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $review->setBooking($booking);
+            $review->setUser($this->getUser());
+            $review->setProduct($booking->getProduct());
+            $review->setAgency($booking->getAgency());
+
+            $em->persist($review);
+            $em->flush();
+
+            $this->addFlash('success', 'Merci pour votre avis !');
+
+            return $this->redirectToRoute('account_bookings');
+        }
+
+        return $this->render('front/account/review_form.html.twig', [
+            'booking' => $booking,
+            'form' => $form->createView(),
+        ]);
     }
 }

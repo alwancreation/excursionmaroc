@@ -24,8 +24,16 @@
                                     href="{{ routing_service.agencyUrl(product.agency) }}">{{ product.agency }}</a></span>
                     {% endif %}
                     <span>
-                    {# Avis clients: en attente de l'entite Review (phase avis) #}
-                    <span class="no-reviews-yet">{% trans %}No reviews yet{% endtrans %}</span>
+                    {% if averageRating is defined and averageRating %}
+                        <span class="rating-summary">
+                            {% for i in 1..5 %}
+                                <i class="fa {{ i <= averageRating|round(0, 'floor') ? 'fa-star' : 'fa-star-o' }}"></i>
+                            {% endfor %}
+                            {{ averageRating|number_format(1) }}/5 ({{ reviews|length }})
+                        </span>
+                    {% else %}
+                        <span class="no-reviews-yet">{% trans %}No reviews yet{% endtrans %}</span>
+                    {% endif %}
                 </span>
 
                     {% if app.user %}
@@ -311,7 +319,27 @@
 
                 <div class="product-section product-reviews">
                     <h3 class="section-title">{% trans %}Reviews{% endtrans %}<div class="title-under"></div></h3>
-                    <p class="no-reviews-yet">{% trans %}This excursion has no reviews yet. Be the first to book and share your experience!{% endtrans %}</p>
+                    {% if reviews is defined and reviews|length > 0 %}
+                        {% for review in reviews %}
+                            <div class="review-item">
+                                <div class="review-rating">
+                                    {% for i in 1..5 %}
+                                        <i class="fa {{ i <= review.rating ? 'fa-star' : 'fa-star-o' }}"></i>
+                                    {% endfor %}
+                                </div>
+                                <p class="review-author"><strong>{{ review.user.userFirstName }} {{ review.user.userLastName }}</strong> — {{ review.dateCreate|date('d/m/Y') }}</p>
+                                <p class="review-comment">{{ review.comment }}</p>
+                                {% if review.agencyReply %}
+                                    <div class="review-agency-reply">
+                                        <strong>{% trans %}Agency reply{% endtrans %}</strong> :
+                                        <p>{{ review.agencyReply }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="no-reviews-yet">{% trans %}This excursion has no reviews yet. Be the first to book and share your experience!{% endtrans %}</p>
+                    {% endif %}
                 </div>
 
                 {% if similarExcursions is defined and similarExcursions|length > 0 %}

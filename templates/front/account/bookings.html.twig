@@ -18,6 +18,7 @@
                     <th>{% trans %}Total price{% endtrans %}</th>
                     <th>{% trans %}Status{% endtrans %}</th>
                     <th>{% trans %}Requested on{% endtrans %}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -43,9 +44,14 @@
                             </span>
                         </td>
                         <td>{{ booking.dateCreate|date('d/m/Y H:i') }}</td>
+                        <td>
+                            {% if (booking.status == 'COMPLETED' or (booking.status == 'CONFIRMED' and booking.date < date())) and booking.id not in reviewedBookingIds %}
+                                <a href="{{ path('account_booking_review', {id: booking.id}) }}" class="btn btn-xs btn-primary">{% trans %}Leave a review{% endtrans %}</a>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% else %}
-                    <tr><td colspan="8">{% trans %}You have no booking yet.{% endtrans %}</td></tr>
+                    <tr><td colspan="9">{% trans %}You have no booking yet.{% endtrans %}</td></tr>
                 {% endfor %}
             </tbody>
         </table>

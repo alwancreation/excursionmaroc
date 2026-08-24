@@ -6,6 +6,7 @@ use App\Entity\AppSettings;
 use App\Entity\Destination;
 use App\Entity\Message;
 use App\Entity\Product;
+use App\Entity\Review;
 use App\Form\BookingRequestType;
 use App\Services\BookingService;
 use App\Services\SearchService;
@@ -141,6 +142,13 @@ class ProductsController extends AbstractController
                 ->findOneBy(['user' => $this->getUser(), 'product' => $product]);
         }
 
+        $reviewRepository = $this->getDoctrine()->getRepository(Review::class);
+        $reviews = $reviewRepository->findBy(
+            ['product' => $product, 'status' => Review::STATUS_PUBLISHED],
+            ['dateCreate' => 'DESC']
+        );
+        $averageRating = $reviewRepository->getAverageRating($product);
+
         // replace this example code with whatever you need
         return $this->render('front/default/details.html.twig', [
             "product" => $product,
@@ -148,6 +156,8 @@ class ProductsController extends AbstractController
             'bookingForm' => $bookingForm->createView(),
             'similarExcursions' => $similarExcursions,
             'isFavorite' => $isFavorite,
+            'reviews' => $reviews,
+            'averageRating' => $averageRating,
         ]);
     }
 

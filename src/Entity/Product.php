@@ -725,6 +725,7 @@ class Product implements Translatable
         $this->images = new ArrayCollection();
         $this->itinerarySteps = new ArrayCollection();
         $this->schedules = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
 
     }
 
@@ -1131,6 +1132,14 @@ class Product implements Translatable
     private $schedules;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="product")
+     * @ORM\OrderBy({"dateCreate": "DESC"})
+     */
+    private $reviews;
+
+    /**
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getImages()
@@ -1152,6 +1161,14 @@ class Product implements Translatable
     public function getSchedules()
     {
         return $this->schedules;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
     }
 
     /**
