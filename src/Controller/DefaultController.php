@@ -68,6 +68,29 @@ class DefaultController extends AbstractController
     }
 
     /**
+     * @Route("/robots.txt", name="robots_txt")
+     */
+    public function robotsAction(Request $request)
+    {
+        $lines = [
+            'User-agent: *',
+            'Disallow: /admin',
+            'Disallow: /agency',
+            'Disallow: /account',
+            'Disallow: /login',
+            'Disallow: /register',
+            '',
+            'Sitemap: ' . $request->getSchemeAndHttpHost() . $this->generateUrl('xml_sitmap_all'),
+        ];
+
+        return new \Symfony\Component\HttpFoundation\Response(
+            implode("\n", $lines) . "\n",
+            200,
+            ['Content-Type' => 'text/plain; charset=UTF-8']
+        );
+    }
+
+    /**
      * @Route("/quote.html", name="free_quote")
      */
     public function quoteAction(Request $request)
