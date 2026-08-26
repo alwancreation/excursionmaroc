@@ -16,10 +16,12 @@ use Doctrine\ORM\EntityManagerInterface;
 class BookingService
 {
     private EntityManagerInterface $em;
+    private NotificationService $notificationService;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, NotificationService $notificationService)
     {
         $this->em = $em;
+        $this->notificationService = $notificationService;
     }
 
     /**
@@ -96,6 +98,9 @@ class BookingService
         $this->em->persist($booking);
         $this->em->flush();
 
+        $this->notificationService->notifyAgencyNewBooking($booking);
+        $this->notificationService->notifyClientBookingReceived($booking);
+
         return $booking;
     }
 
@@ -147,6 +152,8 @@ class BookingService
 
         $booking->setStatus(MarketplaceBooking::STATUS_CONFIRMED);
         $this->em->flush();
+
+        $this->notificationService->notifyClientBookingConfirmed($booking);
     }
 
     /**
@@ -161,6 +168,8 @@ class BookingService
         $booking->setStatus(MarketplaceBooking::STATUS_REJECTED);
         $this->releaseCapacity($booking);
         $this->em->flush();
+
+        $this->notificationService->notifyClientBookingRejected($booking);
     }
 
     /**
