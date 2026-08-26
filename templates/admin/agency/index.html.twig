@@ -1,0 +1,78 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block page_title %}{% trans %}Agencies{% endtrans %}{% endblock %}
+
+{% block body %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">{{ message }}</div>
+{% endfor %}
+<div class="row gy-5 g-xl-8">
+    <div class="col-xxl-12">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Agencies{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                        <thead>
+                            <tr>
+                                <th>{% trans %}Name{% endtrans %}</th>
+                                <th>{% trans %}Email{% endtrans %}</th>
+                                <th>{% trans %}Excursions{% endtrans %}</th>
+                                <th>{% trans %}Registered on{% endtrans %}</th>
+                                <th>{% trans %}Status{% endtrans %}</th>
+                                <th class="text-end">{% trans %}Actions{% endtrans %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for agency in agencies %}
+                            <tr>
+                                <td>{{ agency.name }}</td>
+                                <td>{{ agency.email }}</td>
+                                <td>{{ agency.products|length }}</td>
+                                <td>{{ agency.dateCreate ? agency.dateCreate|date('d/m/Y') : '' }}</td>
+                                <td>
+                                    <span class="badge {{ agency.valid ? 'badge-light-success' : 'badge-light-warning' }} me-1">
+                                        {{ agency.valid ? 'Validée'|trans : 'En attente'|trans }}
+                                    </span>
+                                    {% if agency.verified %}
+                                        <span class="badge badge-light-primary">{% trans %}Verified{% endtrans %}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    {% if agency.valid %}
+                                        <form method="post" action="{{ path('admin_agency_suspend', {id: agency.id}) }}" class="d-inline">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('agency_suspend' ~ agency.id) }}">
+                                            <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-1">{% trans %}Suspend{% endtrans %}</button>
+                                        </form>
+                                    {% else %}
+                                        <form method="post" action="{{ path('admin_agency_approve', {id: agency.id}) }}" class="d-inline">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('agency_approve' ~ agency.id) }}">
+                                            <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1">{% trans %}Approve{% endtrans %}</button>
+                                        </form>
+                                    {% endif %}
+                                    {% if agency.verified %}
+                                        <form method="post" action="{{ path('admin_agency_unverify', {id: agency.id}) }}" class="d-inline">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('agency_unverify' ~ agency.id) }}">
+                                            <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-secondary btn-sm">{% trans %}Unverify{% endtrans %}</button>
+                                        </form>
+                                    {% else %}
+                                        <form method="post" action="{{ path('admin_agency_verify', {id: agency.id}) }}" class="d-inline">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('agency_verify' ~ agency.id) }}">
+                                            <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">{% trans %}Verify{% endtrans %}</button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="6">{% trans %}No records found{% endtrans %}</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

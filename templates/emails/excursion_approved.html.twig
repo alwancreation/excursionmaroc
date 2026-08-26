@@ -1,0 +1,6 @@
+{% extends 'emails/_layout.html.twig' %}
+{% block content %}
+    <p>Bonjour,</p>
+    <p>Bonne nouvelle : votre excursion <strong>{{ product.productName }}</strong> a été validée et est désormais visible publiquement sur {{ app_settings.application_name|default('ExcursionMaroc') }}.</p>
+    <p style="margin-top: 20px;">Connectez-vous à votre espace agence pour la consulter.</p>
+{% endblock %}

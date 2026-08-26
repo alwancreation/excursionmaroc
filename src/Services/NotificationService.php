@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entity\MarketplaceBooking;
+use App\Entity\Product;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -82,6 +83,50 @@ class NotificationService
             sprintf('Réservation refusée — %s', $booking->getReference()),
             'emails/booking_rejected.html.twig',
             ['booking' => $booking]
+        );
+    }
+
+    public function notifyAgencyExcursionApproved(Product $product): void
+    {
+        $agency = $product->getAgency();
+        if (!$agency || !$agency->getEmail()) {
+            return;
+        }
+
+        $this->send(
+            $agency->getEmail(),
+            sprintf('Votre excursion "%s" a été publiée', $product->getProductName()),
+            'emails/excursion_approved.html.twig',
+            ['product' => $product]
+        );
+    }
+
+    public function notifyAgencyExcursionRejected(Product $product): void
+    {
+        $agency = $product->getAgency();
+        if (!$agency || !$agency->getEmail()) {
+            return;
+        }
+
+        $this->send(
+            $agency->getEmail(),
+            sprintf('Votre excursion "%s" nécessite des modifications', $product->getProductName()),
+            'emails/excursion_rejected.html.twig',
+            ['product' => $product]
+        );
+    }
+
+    public function notifyAgencyAccountApproved(\App\Entity\Agency $agency): void
+    {
+        if (!$agency->getEmail()) {
+            return;
+        }
+
+        $this->send(
+            $agency->getEmail(),
+            'Votre agence a été validée',
+            'emails/agency_approved.html.twig',
+            ['agency' => $agency]
         );
     }
 

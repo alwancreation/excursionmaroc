@@ -94,4 +94,53 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * Excursions marketplace en attente de validation avant publication.
+     *
+     * @Route("/moderation/pending", name="admin_excursion_pending", methods={"GET"})
+     */
+    public function pending(): Response
+    {
+        $excursions = $this->getDoctrine()->getRepository(Product::class)
+            ->findBy(['status' => Product::STATUS_PENDING_REVIEW], ['dateCreate' => 'ASC']);
+
+        return $this->render('admin/product/pending.html.twig', [
+            'excursions' => $excursions,
+        ]);
+    }
+
+    /**
+     * @Route("/moderation/{id}/approve", name="admin_excursion_approve", methods={"POST"}, requirements={"id"="\d+"})
+     */
+    public function approve(Request $request, Product $product, \App\Services\NotificationService $notificationService): Response
+    {
+        if ($this->isCsrfTokenValid('excursion_approve' . $product->getProductId(), $request->request->get('_token'))
+            && $product->getStatus() === Product::STATUS_PENDING_REVIEW
+        ) {
+            $product->setStatus(Product::STATUS_PUBLISHED);
+            $this->getDoctrine()->getManager()->flush();
+            $notificationService->notifyAgencyExcursionApproved($product);
+            $this->addFlash('success', 'Excursion publiée.');
+        }
+
+        return $this->redirectToRoute('admin_excursion_pending');
+    }
+
+    /**
+     * @Route("/moderation/{id}/reject", name="admin_excursion_reject", methods={"POST"}, requirements={"id"="\d+"})
+     */
+    public function reject(Request $request, Product $product, \App\Services\NotificationService $notificationService): Response
+    {
+        if ($this->isCsrfTokenValid('excursion_reject' . $product->getProductId(), $request->request->get('_token'))
+            && $product->getStatus() === Product::STATUS_PENDING_REVIEW
+        ) {
+            $product->setStatus(Product::STATUS_REJECTED);
+            $this->getDoctrine()->getManager()->flush();
+            $notificationService->notifyAgencyExcursionRejected($product);
+            $this->addFlash('success', 'Excursion refusée.');
+        }
+
+        return $this->redirectToRoute('admin_excursion_pending');
+    }
 }
