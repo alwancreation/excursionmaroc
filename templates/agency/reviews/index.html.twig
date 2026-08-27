@@ -1,0 +1,44 @@
+{% extends 'admin/base.html.twig' %}
+{% block page_title %}{% trans %}Reviews{% endtrans %}{% endblock %}
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-row-dashed">
+                <thead>
+                    <tr>
+                        <th>{% trans %}Excursion{% endtrans %}</th>
+                        <th>{% trans %}Customer{% endtrans %}</th>
+                        <th>{% trans %}Rating{% endtrans %}</th>
+                        <th>{% trans %}Comment{% endtrans %}</th>
+                        <th>{% trans %}Your reply{% endtrans %}</th>
+                        <th>{% trans %}Date{% endtrans %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for review in reviews %}
+                        <tr>
+                            <td>{{ review.product.productName }}</td>
+                            <td>{{ review.user.userFirstName }} {{ review.user.userLastName }}</td>
+                            <td>{{ review.rating }}/5</td>
+                            <td>{{ review.comment }}</td>
+                            <td>{{ review.agencyReply|default('') }}</td>
+                            <td>{{ review.dateCreate|date('d/m/Y') }}</td>
+                            <td>
+                                <a href="{{ path('agency_review_reply', {id: review.id}) }}" class="btn btn-sm btn-light-primary">
+                                    {{ review.agencyReply ? 'Modifier la réponse'|trans : 'Répondre'|trans }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="7">{% trans %}No reviews yet.{% endtrans %}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

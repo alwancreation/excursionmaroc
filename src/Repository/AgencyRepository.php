@@ -35,4 +35,21 @@ class AgencyRepository extends EntityRepository
         }
         return $q->getQuery()->getResult();
     }
+
+    /**
+     * Toutes les agences avec leur nombre d'excursions, en une seule
+     * requête (évite un COUNT par agence dans le template admin).
+     *
+     * @return array<int, array{0: \App\Entity\Agency, productCount: int}>
+     */
+    public function findAllWithProductCounts(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a', 'COUNT(p.productId) as productCount')
+            ->leftJoin('a.products', 'p')
+            ->groupBy('a.id')
+            ->orderBy('a.dateCreate', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

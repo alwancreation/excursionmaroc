@@ -68,7 +68,7 @@ class BookingGuide
 
     // booking
     /**
-     * @ORM\ManyToOne(targetEntity="Booking")
+     * @ORM\ManyToOne(targetEntity="Booking", inversedBy="guides")
      * @ORM\JoinColumn(name="booking_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $booking;

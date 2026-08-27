@@ -1,0 +1,33 @@
+{% extends 'admin/base.html.twig' %}
+{% block page_title %}{% trans %}Gallery{% endtrans %} — {{ excursion.productName }}{% endblock %}
+{% block body %}
+    <a href="{{ path('agency_excursion_edit', {id: excursion.productId}) }}" class="mb-5 d-inline-block">{% trans %}Back to excursion{% endtrans %}</a>
+
+    <div class="row mb-5">
+        {% for image in excursion.images %}
+            <div class="col-md-3 mb-5">
+                <div class="card">
+                    <img src="{{ asset('uploads/excursions/' ~ image.path) }}" class="card-img-top" style="height:150px;object-fit:cover;" alt="{{ image.altText }}">
+                    <div class="card-body">
+                        {% if image.isMain %}<span class="badge badge-light-primary mb-2">{% trans %}Main{% endtrans %}</span>{% endif %}
+                        <form method="post" action="{{ path('agency_excursion_gallery_delete', {id: excursion.productId, imageId: image.id}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('excursion_image_delete_' ~ image.id) }}">
+                            <button type="submit" class="btn btn-sm btn-light-danger w-100">{% trans %}Delete{% endtrans %}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">{% trans %}No image yet.{% endtrans %}</div>
+        {% endfor %}
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            {{ form_start(form, {attr: {enctype: 'multipart/form-data'}}) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary mt-5">{% trans %}Add image{% endtrans %}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

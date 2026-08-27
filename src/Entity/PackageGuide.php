@@ -68,7 +68,7 @@ class PackageGuide
 
     // package
     /**
-     * @ORM\ManyToOne(targetEntity="Package")
+     * @ORM\ManyToOne(targetEntity="Package", inversedBy="guides")
      * @ORM\JoinColumn(name="package_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $package;

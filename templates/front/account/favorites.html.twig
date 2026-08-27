@@ -1,0 +1,20 @@
+{% extends 'front/base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans %}My favorites{% endtrans %}</li>
+        </ol>
+        {{ include('front/account/_nav.html.twig') }}
+
+        <div class="row">
+            {% for favorite in favorites %}
+                {{ include('front/default/product_line_2.html.twig',{product: favorite.product}) }}
+            {% else %}
+                <div class="col-xs-12">
+                    <p>{% trans %}You have no favorite excursion yet.{% endtrans %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

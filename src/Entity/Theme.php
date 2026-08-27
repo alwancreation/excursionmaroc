@@ -68,6 +68,27 @@ class Theme
     private $assets;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Product", mappedBy="themes")
+     */
+    private $products;
+
+    public function __construct()
+    {
+        $this->assets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getAssets()

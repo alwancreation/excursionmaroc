@@ -1,0 +1,56 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block page_title %}{% trans %}Excursions to review{% endtrans %}{% endblock %}
+
+{% block body %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">{{ message }}</div>
+{% endfor %}
+<div class="row gy-5 g-xl-8">
+    <div class="col-xxl-12">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Excursions awaiting validation{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                        <thead>
+                            <tr>
+                                <th>{% trans %}Name{% endtrans %}</th>
+                                <th>{% trans %}Agency{% endtrans %}</th>
+                                <th>{% trans %}Price{% endtrans %}</th>
+                                <th>{% trans %}Submitted on{% endtrans %}</th>
+                                <th class="text-end">{% trans %}Actions{% endtrans %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for excursion in excursions %}
+                            <tr>
+                                <td>{{ excursion.productName }}</td>
+                                <td>{{ excursion.agency }}</td>
+                                <td>{{ excursion.productPrice }}</td>
+                                <td>{{ excursion.dateCreate ? excursion.dateCreate|date('d/m/Y') : '' }}</td>
+                                <td class="text-end">
+                                    <a href="{{ path('product_show', {id: excursion.productId}) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">{% trans %}View{% endtrans %}</a>
+                                    <form method="post" action="{{ path('admin_excursion_approve', {id: excursion.productId}) }}" class="d-inline">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('excursion_approve' ~ excursion.productId) }}">
+                                        <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1">{% trans %}Approve{% endtrans %}</button>
+                                    </form>
+                                    <form method="post" action="{{ path('admin_excursion_reject', {id: excursion.productId}) }}" class="d-inline">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('excursion_reject' ~ excursion.productId) }}">
+                                        <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">{% trans %}Reject{% endtrans %}</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="5">{% trans %}No excursions awaiting validation{% endtrans %}</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

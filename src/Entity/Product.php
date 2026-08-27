@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Product
  *
- * @ORM\Table(name="product", indexes={@ORM\Index(name="destination_id", columns={"destination_id"}), @ORM\Index(name="category_id", columns={"category_id"})})
+ * @ORM\Table(name="product", indexes={@ORM\Index(name="destination_id", columns={"destination_id"}), @ORM\Index(name="category_id", columns={"category_id"}), @ORM\Index(name="idx_product_status", columns={"status"})})
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @Gedmo\TranslationEntity(class="App\Entity\Translation\ElementTranslation")
  */
@@ -24,6 +24,28 @@ class Product implements Translatable
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $productId;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="date_create", type="datetime", nullable=true)
+     */
+    private $dateCreate;
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateCreate()
+    {
+        return $this->dateCreate;
+    }
+
+    /**
+     * @param \DateTime $dateCreate
+     */
+    public function setDateCreate($dateCreate)
+    {
+        $this->dateCreate = $dateCreate;
+    }
 
     /**
      * @return string
@@ -107,6 +129,322 @@ class Product implements Translatable
      * @ORM\Column(name="max_persons", type="integer", nullable=true)
      */
     private $maxPersons;
+
+    const STATUS_DRAFT = 'DRAFT';
+    const STATUS_PENDING_REVIEW = 'PENDING_REVIEW';
+    const STATUS_PUBLISHED = 'PUBLISHED';
+    const STATUS_REJECTED = 'REJECTED';
+    const STATUS_ARCHIVED = 'ARCHIVED';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=30, nullable=false, options={"default": "DRAFT"})
+     */
+    private $status = self::STATUS_DRAFT;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="min_persons", type="integer", nullable=true)
+     */
+    private $minPersons;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="min_age", type="integer", nullable=true)
+     */
+    private $minAge;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="transport_included", type="boolean", nullable=true)
+     */
+    private $transportIncluded;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="guide_included", type="boolean", nullable=true)
+     */
+    private $guideIncluded;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="meals_included", type="boolean", nullable=true)
+     */
+    private $mealsIncluded;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="inclusions", type="text", nullable=true)
+     */
+    private $inclusions;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="exclusions", type="text", nullable=true)
+     */
+    private $exclusions;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meeting_point", type="string", length=255, nullable=true)
+     */
+    private $meetingPoint;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="departure_time", type="string", length=20, nullable=true)
+     */
+    private $departureTime;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="return_time", type="string", length=20, nullable=true)
+     */
+    private $returnTime;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="terms", type="text", nullable=true)
+     */
+    private $terms;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cancellation_policy", type="text", nullable=true)
+     */
+    private $cancellationPolicy;
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public static function getStatuses(): array
+    {
+        return [
+            self::STATUS_DRAFT,
+            self::STATUS_PENDING_REVIEW,
+            self::STATUS_PUBLISHED,
+            self::STATUS_REJECTED,
+            self::STATUS_ARCHIVED,
+        ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinPersons()
+    {
+        return $this->minPersons;
+    }
+
+    /**
+     * @param int $minPersons
+     */
+    public function setMinPersons($minPersons)
+    {
+        $this->minPersons = $minPersons;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinAge()
+    {
+        return $this->minAge;
+    }
+
+    /**
+     * @param int $minAge
+     */
+    public function setMinAge($minAge)
+    {
+        $this->minAge = $minAge;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTransportIncluded()
+    {
+        return $this->transportIncluded;
+    }
+
+    /**
+     * @param bool $transportIncluded
+     */
+    public function setTransportIncluded($transportIncluded)
+    {
+        $this->transportIncluded = $transportIncluded;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGuideIncluded()
+    {
+        return $this->guideIncluded;
+    }
+
+    /**
+     * @param bool $guideIncluded
+     */
+    public function setGuideIncluded($guideIncluded)
+    {
+        $this->guideIncluded = $guideIncluded;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMealsIncluded()
+    {
+        return $this->mealsIncluded;
+    }
+
+    /**
+     * @param bool $mealsIncluded
+     */
+    public function setMealsIncluded($mealsIncluded)
+    {
+        $this->mealsIncluded = $mealsIncluded;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInclusions()
+    {
+        return $this->inclusions;
+    }
+
+    /**
+     * @param string $inclusions
+     */
+    public function setInclusions($inclusions)
+    {
+        $this->inclusions = $inclusions;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExclusions()
+    {
+        return $this->exclusions;
+    }
+
+    /**
+     * @param string $exclusions
+     */
+    public function setExclusions($exclusions)
+    {
+        $this->exclusions = $exclusions;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMeetingPoint()
+    {
+        return $this->meetingPoint;
+    }
+
+    /**
+     * @param string $meetingPoint
+     */
+    public function setMeetingPoint($meetingPoint)
+    {
+        $this->meetingPoint = $meetingPoint;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDepartureTime()
+    {
+        return $this->departureTime;
+    }
+
+    /**
+     * @param string $departureTime
+     */
+    public function setDepartureTime($departureTime)
+    {
+        $this->departureTime = $departureTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReturnTime()
+    {
+        return $this->returnTime;
+    }
+
+    /**
+     * @param string $returnTime
+     */
+    public function setReturnTime($returnTime)
+    {
+        $this->returnTime = $returnTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTerms()
+    {
+        return $this->terms;
+    }
+
+    /**
+     * @param string $terms
+     */
+    public function setTerms($terms)
+    {
+        $this->terms = $terms;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCancellationPolicy()
+    {
+        return $this->cancellationPolicy;
+    }
+
+    /**
+     * @param string $cancellationPolicy
+     */
+    public function setCancellationPolicy($cancellationPolicy)
+    {
+        $this->cancellationPolicy = $cancellationPolicy;
+    }
 
     /**
      * @return string
@@ -378,11 +716,16 @@ class Product implements Translatable
 
     public function __construct()
     {
+        $this->dateCreate = new \DateTime();
         $this->destinations = new ArrayCollection();
         $this->themes = new ArrayCollection();
         $this->months = new ArrayCollection();
         $this->assets = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->itinerarySteps = new ArrayCollection();
+        $this->schedules = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
 
     }
 
@@ -765,6 +1108,70 @@ class Product implements Translatable
     private $mainAsset;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\ExcursionImage", mappedBy="product")
+     * @ORM\OrderBy({"position": "ASC"})
+     */
+    private $images;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\ExcursionItinerary", mappedBy="product")
+     * @ORM\OrderBy({"position": "ASC"})
+     */
+    private $itinerarySteps;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\ExcursionSchedule", mappedBy="product")
+     * @ORM\OrderBy({"date": "ASC"})
+     */
+    private $schedules;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="product")
+     * @ORM\OrderBy({"dateCreate": "DESC"})
+     */
+    private $reviews;
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItinerarySteps()
+    {
+        return $this->itinerarySteps;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSchedules()
+    {
+        return $this->schedules;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
      * @return mixed
      */
     public function getMainAsset()
@@ -1052,7 +1459,7 @@ class Product implements Translatable
     /**
      * @var \App\Entity\Agency
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Agency")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Agency", inversedBy="products")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="agency", referencedColumnName="id", onDelete="cascade")
      * })

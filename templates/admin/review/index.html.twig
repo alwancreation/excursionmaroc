@@ -1,0 +1,72 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block page_title %}{% trans %}Reviews{% endtrans %}{% endblock %}
+
+{% block body %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">{{ message }}</div>
+{% endfor %}
+<div class="row gy-5 g-xl-8">
+    <div class="col-xxl-12">
+        <div class="card card-xl-stretch mb-5 mb-xl-8">
+            <div class="card-header">
+                <h3 class="card-title fw-bolder text-dark">{% trans %}Reviews{% endtrans %}</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                        <thead>
+                            <tr>
+                                <th>{% trans %}Excursion{% endtrans %}</th>
+                                <th>{% trans %}Agency{% endtrans %}</th>
+                                <th>{% trans %}Customer{% endtrans %}</th>
+                                <th>{% trans %}Rating{% endtrans %}</th>
+                                <th>{% trans %}Comment{% endtrans %}</th>
+                                <th>{% trans %}Status{% endtrans %}</th>
+                                <th>{% trans %}Date{% endtrans %}</th>
+                                <th class="text-end">{% trans %}Actions{% endtrans %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for review in reviews %}
+                            <tr>
+                                <td>{{ review.product.productName }}</td>
+                                <td>{{ review.agency }}</td>
+                                <td>{{ review.user.userFirstName }} {{ review.user.userLastName }}</td>
+                                <td>{{ review.rating }}/5</td>
+                                <td>{{ review.comment|length > 80 ? review.comment|slice(0, 80) ~ '…' : review.comment }}</td>
+                                <td>
+                                    <span class="badge {{ review.status == 'PUBLISHED' ? 'badge-light-success' : 'badge-light-warning' }}">
+                                        {{ review.status }}
+                                    </span>
+                                </td>
+                                <td>{{ review.dateCreate|date('d/m/Y') }}</td>
+                                <td class="text-end">
+                                    {% if review.status == 'PUBLISHED' %}
+                                        <form method="post" action="{{ path('admin_review_hide', {id: review.id}) }}" class="d-inline">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('review_hide' ~ review.id) }}">
+                                            <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-1">{% trans %}Hide{% endtrans %}</button>
+                                        </form>
+                                    {% else %}
+                                        <form method="post" action="{{ path('admin_review_publish', {id: review.id}) }}" class="d-inline">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('review_publish' ~ review.id) }}">
+                                            <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1">{% trans %}Publish{% endtrans %}</button>
+                                        </form>
+                                    {% endif %}
+                                    <form method="post" action="{{ path('admin_review_delete', {id: review.id}) }}" class="d-inline" onsubmit="return confirm('{% trans %}Are you sure?{% endtrans %}');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('review_delete' ~ review.id) }}">
+                                        <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">{% trans %}Delete{% endtrans %}</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="8">{% trans %}No records found{% endtrans %}</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

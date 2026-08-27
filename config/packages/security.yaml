@@ -3,7 +3,9 @@ security:
     enable_authenticator_manager: true
     password_hashers:
         App\Entity\User:
-            algorithm: plaintext
+            algorithm: auto
+            migrate_from:
+                - plaintext
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -34,10 +36,14 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     role_hierarchy:
+        ROLE_AGENCY:      ROLE_USER
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
     access_control:
-        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # Specific rules MUST come before the generic "^/" catch-all below,
+        # since Symfony only applies the first matching rule.
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/agency, roles: ROLE_AGENCY }
+        - { path: ^/account, roles: ROLE_USER }
         - { path: ^/profile, roles: ROLE_USER }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -1,0 +1,6 @@
+{% extends 'emails/_layout.html.twig' %}
+{% block content %}
+    <p>Bonjour {{ booking.customerName }},</p>
+    <p>Nous sommes désolés de vous informer que votre demande de réservation pour <strong>{{ booking.product.productName }}</strong> (référence {{ booking.reference }}) a été <strong style="color: #c0392b;">refusée</strong> par l'agence.</p>
+    <p>Cela peut arriver en cas d'indisponibilité sur la date demandée. N'hésitez pas à consulter d'autres dates ou excursions similaires sur {{ app_settings.application_name|default('ExcursionMaroc') }}.</p>
+{% endblock %}

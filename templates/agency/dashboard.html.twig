@@ -1,0 +1,57 @@
+{% extends 'admin/base.html.twig' %}
+{% block page_title %}{% trans %}Agency dashboard{% endtrans %}{% endblock %}
+{% block body %}
+    <div class="card mb-5">
+        <div class="card-body d-flex align-items-center">
+            {% if agency.logo %}
+                <img src="{{ asset('uploads/agencies/' ~ agency.logo) }}" class="rounded me-5" style="width:80px;height:80px;object-fit:cover;" alt="{{ agency.name }}">
+            {% endif %}
+            <div>
+                <h2 class="mb-1">{{ agency.name }}</h2>
+                <div>
+                    {% if agency.isValid %}
+                        <span class="badge badge-light-success">{% trans %}Active{% endtrans %}</span>
+                    {% else %}
+                        <span class="badge badge-light-warning">{% trans %}Inactive{% endtrans %}</span>
+                    {% endif %}
+                    {% if agency.isVerified %}
+                        <span class="badge badge-light-primary">{% trans %}Verified{% endtrans %}</span>
+                    {% else %}
+                        <span class="badge badge-light">{% trans %}Not verified yet{% endtrans %}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-5 mb-5">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="fs-2 fw-bolder">{{ agency.products|length }}</div>
+                    <div class="text-muted">{% trans %}Excursions{% endtrans %}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ path('agency_bookings', {status: 'PENDING'}) }}" class="card text-decoration-none">
+                <div class="card-body">
+                    <div class="fs-2 fw-bolder">{{ pendingBookings }}</div>
+                    <div class="text-muted">{% trans %}Pending bookings{% endtrans %}</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="fs-2 fw-bolder">-</div>
+                    <div class="text-muted">{% trans %}Average rating{% endtrans %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ path('agency_excursions') }}" class="btn btn-primary me-3">{% trans %}My excursions{% endtrans %}</a>
+    <a href="{{ path('agency_bookings') }}" class="btn btn-primary me-3">{% trans %}Bookings{% endtrans %}</a>
+    <a href="{{ path('agency_profile') }}" class="btn btn-light">{% trans %}Edit agency profile{% endtrans %}</a>
+{% endblock %}

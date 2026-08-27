@@ -1,0 +1,74 @@
+{% extends 'admin/base.html.twig' %}
+{% block page_title %}{% trans %}Bookings{% endtrans %}{% endblock %}
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    <div class="mb-5">
+        <a href="{{ path('agency_bookings') }}" class="btn btn-sm {{ currentStatus is null ? 'btn-primary' : 'btn-light' }} me-2">{% trans %}All{% endtrans %}</a>
+        {% for status in statuses %}
+            <a href="{{ path('agency_bookings', {status: status}) }}" class="btn btn-sm {{ currentStatus == status ? 'btn-primary' : 'btn-light' }} me-2">{{ status }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-row-dashed">
+                <thead>
+                    <tr>
+                        <th>{% trans %}Reference{% endtrans %}</th>
+                        <th>{% trans %}Excursion{% endtrans %}</th>
+                        <th>{% trans %}Date{% endtrans %}</th>
+                        <th>{% trans %}Participants{% endtrans %}</th>
+                        <th>{% trans %}Total price{% endtrans %}</th>
+                        <th>{% trans %}Customer{% endtrans %}</th>
+                        <th>{% trans %}Status{% endtrans %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.reference }}</td>
+                            <td>{{ booking.product.productName }}</td>
+                            <td>{{ booking.date|date('d/m/Y') }}</td>
+                            <td>{{ booking.adults }} {% trans %}adults{% endtrans %}, {{ booking.children }} {% trans %}children{% endtrans %}</td>
+                            <td>{{ booking.totalPrice }} {{ booking.currency }}</td>
+                            <td>
+                                {{ booking.customerName }}<br>
+                                <small>{{ booking.customerPhone }} - {{ booking.customerEmail }}</small>
+                            </td>
+                            <td>
+                                <span class="badge
+                                    {% if booking.status == 'CONFIRMED' %}badge-light-success
+                                    {% elseif booking.status == 'REJECTED' or booking.status == 'CANCELLED' %}badge-light-danger
+                                    {% elseif booking.status == 'COMPLETED' %}badge-light
+                                    {% else %}badge-light-warning{% endif %}">
+                                    {{ booking.status }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if booking.status == 'PENDING' %}
+                                    <form method="post" action="{{ path('agency_booking_confirm', {id: booking.id}) }}" class="d-inline">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('booking_confirm_' ~ booking.id) }}">
+                                        <button type="submit" class="btn btn-sm btn-light-success">{% trans %}Confirm{% endtrans %}</button>
+                                    </form>
+                                    <form method="post" action="{{ path('agency_booking_reject', {id: booking.id}) }}" class="d-inline">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('booking_reject_' ~ booking.id) }}">
+                                        <button type="submit" class="btn btn-sm btn-light-danger">{% trans %}Reject{% endtrans %}</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="8">{% trans %}No bookings.{% endtrans %}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

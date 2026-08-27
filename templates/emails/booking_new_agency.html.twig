@@ -1,0 +1,34 @@
+{% extends 'emails/_layout.html.twig' %}
+{% block content %}
+    <p>Bonjour,</p>
+    <p>Vous avez reçu une nouvelle demande de réservation pour <strong>{{ booking.product.productName }}</strong>.</p>
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <th style="text-align:left; padding: 5px; width: 150px; background-color: #EFEFEF; border: solid 1px #E3E3E3;">Référence</th>
+            <td style="padding: 5px; border: solid 1px #E3E3E3;">{{ booking.reference }}</td>
+        </tr>
+        <tr>
+            <th style="text-align:left; padding: 5px; background-color: #EFEFEF; border: solid 1px #E3E3E3;">Date</th>
+            <td style="padding: 5px; border: solid 1px #E3E3E3;">{{ booking.date|date('d/m/Y') }}</td>
+        </tr>
+        <tr>
+            <th style="text-align:left; padding: 5px; background-color: #EFEFEF; border: solid 1px #E3E3E3;">Participants</th>
+            <td style="padding: 5px; border: solid 1px #E3E3E3;">{{ booking.adults }} adulte(s), {{ booking.children }} enfant(s)</td>
+        </tr>
+        <tr>
+            <th style="text-align:left; padding: 5px; background-color: #EFEFEF; border: solid 1px #E3E3E3;">Montant</th>
+            <td style="padding: 5px; border: solid 1px #E3E3E3;">{{ booking.totalPrice }} {{ booking.currency }}</td>
+        </tr>
+        <tr>
+            <th style="text-align:left; padding: 5px; background-color: #EFEFEF; border: solid 1px #E3E3E3;">Client</th>
+            <td style="padding: 5px; border: solid 1px #E3E3E3;">{{ booking.customerName }} — {{ booking.customerPhone }} — {{ booking.customerEmail }}</td>
+        </tr>
+        {% if booking.comments %}
+        <tr>
+            <th style="text-align:left; padding: 5px; background-color: #EFEFEF; border: solid 1px #E3E3E3;">Commentaires</th>
+            <td style="padding: 5px; border: solid 1px #E3E3E3;">{{ booking.comments }}</td>
+        </tr>
+        {% endif %}
+    </table>
+    <p style="margin-top: 20px;">Connectez-vous à votre espace agence pour accepter ou refuser cette demande.</p>
+{% endblock %}

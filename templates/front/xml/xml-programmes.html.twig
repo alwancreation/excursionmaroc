@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     {% for product in products %}
         <url>
-            <loc>http://www.excursionmaroc.net{{ routing_service.url(product) }}</loc>
+            <loc>{{ app.request.schemeAndHttpHost }}{{ routing_service.url(product) }}</loc>
         </url>
     {% endfor %}
 </urlset>

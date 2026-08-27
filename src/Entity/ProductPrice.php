@@ -24,7 +24,7 @@ class ProductPrice
     /**
      * @var \App\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Product")
+     * @ORM\OneToOne(targetEntity="App\Entity\Product", inversedBy="prices")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product_id", referencedColumnName="product_id")
      * })

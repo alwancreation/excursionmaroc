@@ -46,7 +46,13 @@
         <ul>
             <li class="menu-item"><a class="" href="/help/">Need Help</a></li>
             <li class="menu-item"><a class="" href="/renew/">New Excursion</a></li>
-            <li class="menu-item"><a class="" href="/login">Login</a></li>
+            {% if app.user %}
+                <li class="menu-item"><a class="" href="{{ path('account_profile') }}">{{ app.user.userFirstName ?: app.user.email }}</a></li>
+                <li class="menu-item"><a class="" href="{{ path('app_logout') }}">{% trans %}Logout{% endtrans %}</a></li>
+            {% else %}
+                <li class="menu-item"><a class="" href="{{ path('app_login') }}">{% trans %}Login{% endtrans %}</a></li>
+                <li class="menu-item"><a class="" href="{{ path('app_register') }}">{% trans %}Sign up{% endtrans %}</a></li>
+            {% endif %}
         </ul>
     </div>
     <header>
@@ -104,7 +110,7 @@
                 <div class="about-us">
                     <h3>{% trans %}Abouts us{% endtrans %}</h3>
                     <p>
-                        {{ app_settings.application_description|nl2br|raw }}
+                        {{ app_settings.application_about|nl2br|raw }}
                     </p>
                 </div>
             </div>

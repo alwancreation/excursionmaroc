@@ -1,0 +1,21 @@
+{% extends 'admin/base.html.twig' %}
+{% block page_title %}{% trans %}Reply to review{% endtrans %}{% endblock %}
+{% block body %}
+    <a href="{{ path('agency_reviews') }}" class="mb-5 d-inline-block">{% trans %}Back to reviews{% endtrans %}</a>
+
+    <div class="card mb-5">
+        <div class="card-body">
+            <p><strong>{{ review.user.userFirstName }} {{ review.user.userLastName }}</strong> — {{ review.rating }}/5</p>
+            <p>{{ review.comment }}</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary mt-5">{% trans %}Publish reply{% endtrans %}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -39,7 +39,7 @@ class BookingProduct
     // product
     /**
      * @ORM\ManyToOne(targetEntity="Product")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="product_id", onDelete="CASCADE")
      */
     private $product;
 
@@ -93,7 +93,7 @@ class BookingProduct
 
     // booking
     /**
-     * @ORM\ManyToOne(targetEntity="Booking")
+     * @ORM\ManyToOne(targetEntity="Booking", inversedBy="products")
      * @ORM\JoinColumn(name="booking_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $booking;

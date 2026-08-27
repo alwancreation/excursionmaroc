@@ -1,0 +1,61 @@
+{% extends 'front/base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans %}My bookings{% endtrans %}</li>
+        </ol>
+        {{ include('front/account/_nav.html.twig') }}
+
+        <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{% trans %}Reference{% endtrans %}</th>
+                    <th>{% trans %}Excursion{% endtrans %}</th>
+                    <th>{% trans %}Agency{% endtrans %}</th>
+                    <th>{% trans %}Date{% endtrans %}</th>
+                    <th>{% trans %}Participants{% endtrans %}</th>
+                    <th>{% trans %}Total price{% endtrans %}</th>
+                    <th>{% trans %}Status{% endtrans %}</th>
+                    <th>{% trans %}Requested on{% endtrans %}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.reference }}</td>
+                        <td>
+                            {% if booking.product %}
+                                <a href="{{ routing_service.url(booking.product) }}">{{ booking.product.productName }}</a>
+                            {% endif %}
+                        </td>
+                        <td>{{ booking.agency }}</td>
+                        <td>{{ booking.date|date('d/m/Y') }}</td>
+                        <td>{{ booking.adults }} {% trans %}adults{% endtrans %}, {{ booking.children }} {% trans %}children{% endtrans %}</td>
+                        <td>{{ booking.totalPrice }} {{ booking.currency }}</td>
+                        <td>
+                            <span class="label
+                                {% if booking.status == 'CONFIRMED' %}label-success
+                                {% elseif booking.status == 'REJECTED' or booking.status == 'CANCELLED' %}label-danger
+                                {% elseif booking.status == 'COMPLETED' %}label-default
+                                {% else %}label-warning{% endif %}">
+                                {{ booking.status }}
+                            </span>
+                        </td>
+                        <td>{{ booking.dateCreate|date('d/m/Y H:i') }}</td>
+                        <td>
+                            {% if (booking.status == 'COMPLETED' or (booking.status == 'CONFIRMED' and booking.date < date())) and booking.id not in reviewedBookingIds %}
+                                <a href="{{ path('account_booking_review', {id: booking.id}) }}" class="btn btn-xs btn-primary">{% trans %}Leave a review{% endtrans %}</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="9">{% trans %}You have no booking yet.{% endtrans %}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+{% endblock %}

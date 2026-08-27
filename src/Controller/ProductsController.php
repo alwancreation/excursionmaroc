@@ -2,24 +2,37 @@
 
 namespace App\Controller;
 
+use App\Entity\AppSettings;
 use App\Entity\Destination;
 use App\Entity\Message;
 use App\Entity\Product;
+use App\Entity\Review;
+use App\Form\BookingRequestType;
+use App\Services\BookingService;
+use App\Services\SearchService;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class ProductsController extends AbstractController
 {
+    private SearchService $searchService;
+
+    public function __construct(SearchService $searchService)
+    {
+        $this->searchService = $searchService;
+    }
 
     /**
      * @Route("/search", name="all_products_list")
      */
     public function searchAction(Request $request, PaginatorInterface $paginator)
     {
-        $search = $this->searchFunction($request);
+        $search = $this->searchService->search($request);
         $pagination = $paginator->paginate(
             $search['query'], /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
@@ -30,55 +43,10 @@ class ProductsController extends AbstractController
             "products" => $pagination,
             "category" => $search['category'],
             "destination" => $search['destination'],
-            "q" => $search['q'],
+            "criteria" => $search['criteria'],
+            "q" => $search['criteria']['q'],
             "page"=>null
         ]);
-    }
-
-    public function searchFunction(Request $request){
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $dql   = "SELECT p FROM App\Entity\Product p";
-
-        $cid = $request->query->get('cid',0);
-        $q = $request->query->get('q','');
-
-        $category = $em->getRepository("App\Entity\Category")->find($cid);
-        $where = ' where ';
-        $and = ' ';
-        if ($category){
-            $dql   .= $where.$and." p.category=:category";
-            $where = '';
-            $and= ' and ';
-        }
-
-        $destination = $request->query->get('destination',0);
-        $destination = $em->getRepository("App\Entity\Destination")->find($destination);
-        if ($destination){
-            $dql   .= $where.$and." p.destination=:destination";
-            $where = '';
-            $and= ' and ';
-        }
-
-        if ($q!=''){
-            $dql   .= $where.$and." (p.productName like :query)";
-        }
-        $query = $em->createQuery($dql);
-        if ($destination){
-            $query = $query->setParameter("destination",$destination);
-        }
-        if ($category){
-            $query = $query->setParameter("category",$category);
-        }
-        if ($q!=''){
-            $query = $query->setParameter("query","%".$q."%");
-        }
-        return array(
-            'q'        =>$q,
-            'query'        =>$query,
-            'category'     =>$category,
-            'destination'  =>$destination
-        );
     }
 
     /**
@@ -86,24 +54,19 @@ class ProductsController extends AbstractController
      */
     public function excursionsAction(Request $request, PaginatorInterface $paginator)
     {
-
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository("App\Entity\Category")->find(1);
-        $dql   = "SELECT p FROM App\Entity\Product p where p.category=:category";
-        $query = $em->createQuery($dql)
-        ->setParameters(array(
-            'category'=>$category
-        ));
+        $search = $this->searchService->search($request, ['category' => 1]);
 
         $pagination = $paginator->paginate(
-            $query, /* query NOT result */
+            $search['query'], /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             12/*limit per page*/
         );
-        // replace this example code with whatever you need
         return $this->render('front/default/products.html.twig', [
             "products" => $pagination,
-            'category'=>$category,
+            'category'=>$search['category'],
+            'destination'=>$search['destination'],
+            'criteria'=>$search['criteria'],
             "page" => $em->getRepository("App\Entity\Page")->find(3),
         ]);
     }
@@ -114,24 +77,19 @@ class ProductsController extends AbstractController
      */
     public function circuitsAction(Request $request, PaginatorInterface $paginator)
     {
-
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository("App\Entity\Category")->find(1);
-        $dql   = "SELECT p FROM App\Entity\Product p where p.category=:category";
-        $query = $em->createQuery($dql)
-        ->setParameters(array(
-            'category'=>$category
-        ));
+        $search = $this->searchService->search($request, ['category' => 1]);
 
         $pagination = $paginator->paginate(
-            $query, /* query NOT result */
+            $search['query'], /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             12/*limit per page*/
         );
-        // replace this example code with whatever you need
         return $this->render('front/default/products.html.twig', [
             "products" => $pagination,
-            'category'=>$category,
+            'category'=>$search['category'],
+            'destination'=>$search['destination'],
+            'criteria'=>$search['criteria'],
             "page" => $em->getRepository("App\Entity\Page")->find(2),
         ]);
     }
@@ -144,16 +102,105 @@ class ProductsController extends AbstractController
      */
     public function detailsAction(Request $request,Product $product)
     {
+        if ($product->getStatus() !== Product::STATUS_PUBLISHED
+            && !$this->isGranted('EXCURSION_VIEW', $product)
+        ) {
+            throw $this->createNotFoundException('Excursion not found.');
+        }
+
         $message = new Message();
         $form_message = $this->createForm('App\Form\MessageType', $message,array(
             'action' => $this->generateUrl('product_book_request',array("id"=>$product->getProductId())),
             'method' => 'POST',
         ));
+
+        $bookingForm = $this->createForm(BookingRequestType::class, null, [
+            'product' => $product,
+            'action' => $this->generateUrl('excursion_booking_request', ['id' => $product->getProductId()]),
+            'method' => 'POST',
+        ]);
+
+        $similarExcursions = [];
+        if ($product->getCategory()) {
+            $similarExcursions = $this->getDoctrine()->getManager()->createQueryBuilder()
+                ->select('p')
+                ->addSelect('assets')
+                ->addSelect('pr')
+                ->from(Product::class, 'p')
+                ->leftJoin('p.assets', 'assets')
+                ->leftJoin('p.prices', 'pr')
+                ->andWhere('p.category = :category')
+                ->andWhere('p.status = :status')
+                ->andWhere('p.productId != :id')
+                ->setParameter('category', $product->getCategory())
+                ->setParameter('status', Product::STATUS_PUBLISHED)
+                ->setParameter('id', $product->getProductId())
+                ->setMaxResults(4)
+                ->getQuery()
+                ->getResult();
+        }
+
+        $isFavorite = false;
+        if ($this->getUser()) {
+            $isFavorite = (bool) $this->getDoctrine()->getRepository(\App\Entity\Favorite::class)
+                ->findOneBy(['user' => $this->getUser(), 'product' => $product]);
+        }
+
+        $reviewRepository = $this->getDoctrine()->getRepository(Review::class);
+        $reviews = $reviewRepository->findPublishedForProduct($product);
+        $averageRating = $reviewRepository->getAverageRating($product);
+
         // replace this example code with whatever you need
         return $this->render('front/default/details.html.twig', [
             "product" => $product,
             'form' => $form_message->createView(),
+            'bookingForm' => $bookingForm->createView(),
+            'similarExcursions' => $similarExcursions,
+            'isFavorite' => $isFavorite,
+            'reviews' => $reviews,
+            'averageRating' => $averageRating,
         ]);
+    }
+
+    /**
+     * @Route("/excursions/{id}/reserver", name="excursion_booking_request", requirements={"id"="\d+"})
+     */
+    public function bookRequestAction(Request $request, Product $product, BookingService $bookingService, \App\Services\RoutingService $routingService)
+    {
+        if ($product->getStatus() !== Product::STATUS_PUBLISHED) {
+            throw $this->createNotFoundException('Excursion not found.');
+        }
+
+        $form = $this->createForm(BookingRequestType::class, null, ['product' => $product]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $schedule = $data['schedule'] ?? null;
+            $date = $data['date'] ?? ($schedule ? $schedule->getDate() : new \DateTime());
+
+            try {
+                $booking = $bookingService->createBookingRequest(
+                    $product,
+                    $schedule,
+                    $date,
+                    (int) $data['adults'],
+                    (int) ($data['children'] ?? 0),
+                    $data['customerName'],
+                    $data['customerPhone'],
+                    $data['customerEmail'],
+                    $data['comments'] ?? null,
+                    $this->getUser()
+                );
+                $this->addFlash('success', sprintf('Votre demande de réservation a été envoyée. Référence : %s', $booking->getReference()));
+            } catch (\InvalidArgumentException $e) {
+                $this->addFlash('error', $e->getMessage());
+            }
+        } else {
+            $this->addFlash('error', 'Veuillez vérifier les informations saisies.');
+        }
+
+        return $this->redirect($routingService->getUrl($product));
     }
 
 
@@ -162,7 +209,7 @@ class ProductsController extends AbstractController
     /**
      * @Route("/product/contact/request/{id}", name="product_book_request")
      */
-    public function formQuoteAction(Request $request,Product $product)
+    public function formQuoteAction(Request $request,Product $product, MailerInterface $mailer, \App\Services\RoutingService $routingService)
     {
         $message = new Message();
         $form_message = $this->createForm('App\Form\MessageType', $message,array(
@@ -176,40 +223,29 @@ class ProductsController extends AbstractController
             $message->setProduct($product);
             $em->persist($message);
             $em->flush($message);
-            $this->sendMessage($message);
+            $this->sendMessage($message, $mailer);
         }
         $request->getSession()->getFlashBag()->add('success', true);
-        return $this->redirect($this->get('routing_service')->getUrl($product));
+        return $this->redirect($routingService->getUrl($product));
     }
 
-    public function sendMessage(Message $message){
-        $mailer = $this->get('mailer');
-        $settings = $this->getDoctrine()->getRepository('App\Entity\Settings')->findAll();
+    public function sendMessage(Message $message, MailerInterface $mailer){
+        $settings = $this->getDoctrine()->getRepository(AppSettings::class)->findAll();
         $settingsObject = new \stdClass();
         foreach ($settings as $setting){
-            $settingsObject->{$setting->getSettingKey()} = $setting->getSettingValue();
+            $settingsObject->{$setting->getKey()} = $setting->getValue();
         }
         $content =  $this->renderView(
         // templates/emails/registration.html.twig
             '@App/emails/email.html.twig',
             array('message' => $message)
         );
-        $message = (new \Swift_Message('Product form'))
-            ->setFrom($message->getEmail(),$message->getFirstName().' '.$message->getLastName())
-            ->setTo($settingsObject->application_email,$settingsObject->application_name)
-            ->setBody($content,'text/html')
-            /*
-             * If you also want to include a plaintext version of the message
-            ->addPart(
-                $this->renderView(
-                    'emails/registration.txt.twig',
-                    array('name' => $name)
-                ),
-                'text/plain'
-            )
-            */
-        ;
-        $mailer->send($message);
+        $email = (new Email())
+            ->subject('Product form')
+            ->from($message->getEmail())
+            ->to($settingsObject->application_email ?? '')
+            ->html($content);
+        $mailer->send($email);
     }
 
 
@@ -219,10 +255,12 @@ class ProductsController extends AbstractController
         /** @var Destination $destination */
         $destination = $em->getRepository("App\Entity\Destination")->findOneBy(array("destinationName"=>$name));
 
-        $request->query->add(array('destination',$destination->getDestinationId()));
-        $search = $this->searchFunction($request);
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
+        if (!$destination) {
+            throw $this->createNotFoundException('Destination not found.');
+        }
+
+        $search = $this->searchService->search($request, ['destination' => $destination->getDestinationId()]);
+        $pagination = $this->get('knp_paginator')->paginate(
             $search['query'], /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             12/*limit per page*/
@@ -232,7 +270,8 @@ class ProductsController extends AbstractController
             "products" => $pagination,
             "category" => $search['category'],
             "destination" => $destination,
-            "q" => $search['q'],
+            "criteria" => $search['criteria'],
+            "q" => $search['criteria']['q'],
             "page"=>null
         ]);
 
