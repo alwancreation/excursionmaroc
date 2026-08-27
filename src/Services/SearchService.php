@@ -37,7 +37,14 @@ class SearchService
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')
+            ->addSelect('assets')
+            ->addSelect('pr')
             ->from(Product::class, 'p')
+            ->leftJoin('p.assets', 'assets')
+            // Product.prices is the inverse side of a OneToOne: Doctrine can't
+            // lazy-proxy it, so it issues one extra query per row at hydration
+            // time unless explicitly joined here.
+            ->leftJoin('p.prices', 'pr')
             ->andWhere('p.status = :status')
             ->setParameter('status', Product::STATUS_PUBLISHED);
 

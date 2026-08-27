@@ -18,4 +18,23 @@ class FavoriteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Favorite::class);
     }
+
+    /**
+     * @return Favorite[]
+     */
+    public function findForUser(\App\Entity\User $user): array
+    {
+        return $this->createQueryBuilder('f')
+            ->addSelect('p')
+            ->addSelect('assets')
+            ->addSelect('pr')
+            ->innerJoin('f.product', 'p')
+            ->leftJoin('p.assets', 'assets')
+            ->leftJoin('p.prices', 'pr')
+            ->andWhere('f.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('f.dateCreate', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

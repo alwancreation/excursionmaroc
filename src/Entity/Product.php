@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Product
  *
- * @ORM\Table(name="product", indexes={@ORM\Index(name="destination_id", columns={"destination_id"}), @ORM\Index(name="category_id", columns={"category_id"})})
+ * @ORM\Table(name="product", indexes={@ORM\Index(name="destination_id", columns={"destination_id"}), @ORM\Index(name="category_id", columns={"category_id"}), @ORM\Index(name="idx_product_status", columns={"status"})})
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @Gedmo\TranslationEntity(class="App\Entity\Translation\ElementTranslation")
  */

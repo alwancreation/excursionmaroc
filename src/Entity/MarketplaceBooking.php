@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * fonctionnement interne multi-prestations de l'agence propriétaire de la
  * plateforme) pour ne pas la complexifier ni en modifier le comportement.
  *
- * @ORM\Table(name="marketplace_booking")
+ * @ORM\Table(name="marketplace_booking", indexes={@ORM\Index(name="idx_booking_status", columns={"status"})})
  * @ORM\Entity(repositoryClass="App\Repository\MarketplaceBookingRepository")
  */
 class MarketplaceBooking

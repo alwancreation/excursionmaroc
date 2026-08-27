@@ -60,7 +60,7 @@ class AccountController extends AbstractController
     public function bookingsAction()
     {
         $bookings = $this->getDoctrine()->getRepository(MarketplaceBooking::class)
-            ->findBy(['user' => $this->getUser()], ['dateCreate' => 'DESC']);
+            ->findForUser($this->getUser());
 
         $reviewedBookingIds = [];
         if ($bookings) {
@@ -83,7 +83,7 @@ class AccountController extends AbstractController
     public function favoritesAction()
     {
         $favorites = $this->getDoctrine()->getRepository(Favorite::class)
-            ->findBy(['user' => $this->getUser()], ['dateCreate' => 'DESC']);
+            ->findForUser($this->getUser());
 
         return $this->render('front/account/favorites.html.twig', [
             'favorites' => $favorites,

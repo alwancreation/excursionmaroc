@@ -19,11 +19,11 @@ class AgencyController extends AbstractController
      */
     public function index(): Response
     {
-        $agencies = $this->getDoctrine()->getRepository(Agency::class)
-            ->findBy([], ['dateCreate' => 'DESC']);
+        $rows = $this->getDoctrine()->getRepository(Agency::class)
+            ->findAllWithProductCounts();
 
         return $this->render('admin/agency/index.html.twig', [
-            'agencies' => $agencies,
+            'rows' => $rows,
         ]);
     }
 

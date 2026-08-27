@@ -20,13 +20,12 @@ class BookingController extends AbstractAgencyController
         $agency = $this->getCurrentAgency();
 
         $status = $request->query->get('status');
-        $criteria = ['agency' => $agency];
-        if ($status && \in_array($status, MarketplaceBooking::getStatuses(), true)) {
-            $criteria['status'] = $status;
+        if ($status && !\in_array($status, MarketplaceBooking::getStatuses(), true)) {
+            $status = null;
         }
 
         $bookings = $this->getDoctrine()->getRepository(MarketplaceBooking::class)
-            ->findBy($criteria, ['dateCreate' => 'DESC']);
+            ->findForAgency($agency, $status);
 
         return $this->render('agency/bookings/index.html.twig', [
             'agency' => $agency,

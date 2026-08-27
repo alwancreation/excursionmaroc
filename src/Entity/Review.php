@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * réelle (booking) pour garantir qu'on ne peut noter que ce qu'on a
  * effectivement réservé — un seul avis par réservation.
  *
- * @ORM\Table(name="review")
+ * @ORM\Table(name="review", indexes={@ORM\Index(name="idx_review_status", columns={"status"})})
  * @ORM\Entity(repositoryClass="App\Repository\ReviewRepository")
  */
 class Review

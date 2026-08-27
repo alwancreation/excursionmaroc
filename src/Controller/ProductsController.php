@@ -124,7 +124,11 @@ class ProductsController extends AbstractController
         if ($product->getCategory()) {
             $similarExcursions = $this->getDoctrine()->getManager()->createQueryBuilder()
                 ->select('p')
+                ->addSelect('assets')
+                ->addSelect('pr')
                 ->from(Product::class, 'p')
+                ->leftJoin('p.assets', 'assets')
+                ->leftJoin('p.prices', 'pr')
                 ->andWhere('p.category = :category')
                 ->andWhere('p.status = :status')
                 ->andWhere('p.productId != :id')
@@ -143,10 +147,7 @@ class ProductsController extends AbstractController
         }
 
         $reviewRepository = $this->getDoctrine()->getRepository(Review::class);
-        $reviews = $reviewRepository->findBy(
-            ['product' => $product, 'status' => Review::STATUS_PUBLISHED],
-            ['dateCreate' => 'DESC']
-        );
+        $reviews = $reviewRepository->findPublishedForProduct($product);
         $averageRating = $reviewRepository->getAverageRating($product);
 
         // replace this example code with whatever you need

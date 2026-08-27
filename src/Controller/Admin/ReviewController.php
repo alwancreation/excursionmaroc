@@ -20,7 +20,7 @@ class ReviewController extends AbstractController
     {
         $reviews = $this->getDoctrine()
             ->getRepository(Review::class)
-            ->findBy([], ['dateCreate' => 'DESC']);
+            ->findAllWithRelations();
 
         return $this->render('admin/review/index.html.twig', [
             'reviews' => $reviews,

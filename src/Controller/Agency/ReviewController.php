@@ -20,7 +20,7 @@ class ReviewController extends AbstractAgencyController
         $agency = $this->getCurrentAgency();
 
         $reviews = $this->getDoctrine()->getRepository(Review::class)
-            ->findBy(['agency' => $agency], ['dateCreate' => 'DESC']);
+            ->findForAgency($agency);
 
         return $this->render('agency/reviews/index.html.twig', [
             'agency' => $agency,

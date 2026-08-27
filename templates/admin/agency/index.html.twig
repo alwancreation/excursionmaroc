@@ -26,11 +26,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {% for agency in agencies %}
+                        {% for row in rows %}
+                            {% set agency = row[0] %}
                             <tr>
                                 <td>{{ agency.name }}</td>
                                 <td>{{ agency.email }}</td>
-                                <td>{{ agency.products|length }}</td>
+                                <td>{{ row.productCount }}</td>
                                 <td>{{ agency.dateCreate ? agency.dateCreate|date('d/m/Y') : '' }}</td>
                                 <td>
                                     <span class="badge {{ agency.valid ? 'badge-light-success' : 'badge-light-warning' }} me-1">

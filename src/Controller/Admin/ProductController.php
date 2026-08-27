@@ -102,8 +102,16 @@ class ProductController extends AbstractController
      */
     public function pending(): Response
     {
-        $excursions = $this->getDoctrine()->getRepository(Product::class)
-            ->findBy(['status' => Product::STATUS_PENDING_REVIEW], ['dateCreate' => 'ASC']);
+        $excursions = $this->getDoctrine()->getManager()->createQueryBuilder()
+            ->select('p')
+            ->addSelect('a')
+            ->from(Product::class, 'p')
+            ->leftJoin('p.agency', 'a')
+            ->andWhere('p.status = :status')
+            ->setParameter('status', Product::STATUS_PENDING_REVIEW)
+            ->orderBy('p.dateCreate', 'ASC')
+            ->getQuery()
+            ->getResult();
 
         return $this->render('admin/product/pending.html.twig', [
             'excursions' => $excursions,
