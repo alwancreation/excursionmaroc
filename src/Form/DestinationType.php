@@ -14,9 +14,10 @@ class DestinationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('destinationName')
-            ->add('destinationCategory')
-            ->add('destinationSlug')
-            ->add('assetFile')
+            ->add('destinationCategory', null, ['required' => false])
+            ->add('destinationSlug', null, ['required' => false, 'label' => 'Slug (généré automatiquement si vide)'])
+            ->add('assetFile', null, ['required' => false, 'label' => 'Image principale'])
+            ->add('meta', \App\Form\MetaType::class, ['label' => false])
             // ->add('destinationIcon')
         ;
     }

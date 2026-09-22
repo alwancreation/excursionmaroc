@@ -26,7 +26,7 @@ class PackageProduct
     // product
     /**
      * @ORM\ManyToOne(targetEntity="Product")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="product_id", onDelete="CASCADE")
      */
     private $product;
 
@@ -54,7 +54,7 @@ class PackageProduct
 
     // booking
     /**
-     * @ORM\ManyToOne(targetEntity="Package")
+     * @ORM\ManyToOne(targetEntity="Package", inversedBy="products")
      * @ORM\JoinColumn(name="package_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $package;

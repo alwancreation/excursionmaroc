@@ -49,6 +49,48 @@ class DefaultController extends AbstractController
     }
 
     /**
+     * @Route("/switch-language/{locale}", name="app_switch_language")
+     */
+    public function switchLanguageAction(Request $request, string $locale)
+    {
+        // Keep in sync with the app_languages Twig global in config/packages/twig.yaml
+        $availableLocales = ['en', 'fr', 'de'];
+        if (\in_array($locale, $availableLocales, true)) {
+            $request->getSession()->set('_locale', $locale);
+        }
+
+        $referer = $request->headers->get('referer');
+        if ($referer && parse_url($referer, PHP_URL_HOST) === $request->getHost()) {
+            return $this->redirect($referer);
+        }
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @Route("/robots.txt", name="robots_txt")
+     */
+    public function robotsAction(Request $request)
+    {
+        $lines = [
+            'User-agent: *',
+            'Disallow: /admin',
+            'Disallow: /agency',
+            'Disallow: /account',
+            'Disallow: /login',
+            'Disallow: /register',
+            '',
+            'Sitemap: ' . $request->getSchemeAndHttpHost() . $this->generateUrl('xml_sitmap_all'),
+        ];
+
+        return new \Symfony\Component\HttpFoundation\Response(
+            implode("\n", $lines) . "\n",
+            200,
+            ['Content-Type' => 'text/plain; charset=UTF-8']
+        );
+    }
+
+    /**
      * @Route("/quote.html", name="free_quote")
      */
     public function quoteAction(Request $request)

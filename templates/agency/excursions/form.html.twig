@@ -1,0 +1,32 @@
+{% extends 'admin/base.html.twig' %}
+{% block page_title %}{{ excursion.productName ?: 'Nouvelle excursion' }}{% endblock %}
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {% if excursion.productId %}
+        <div class="mb-5 d-flex align-items-center">
+            <span class="badge badge-light-info me-3">{{ excursion.status }}</span>
+            <a href="{{ path('agency_excursions') }}" class="me-3">{% trans %}Back to list{% endtrans %}</a>
+            <a href="{{ path('agency_excursion_itinerary', {id: excursion.productId}) }}" class="me-3">{% trans %}Itinerary{% endtrans %}</a>
+            <a href="{{ path('agency_excursion_gallery', {id: excursion.productId}) }}" class="me-3">{% trans %}Gallery{% endtrans %}</a>
+            <a href="{{ path('agency_excursion_schedules', {id: excursion.productId}) }}">{% trans %}Availabilities{% endtrans %}</a>
+        </div>
+    {% endif %}
+
+    <div class="card">
+        <div class="card-body">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary mt-5">{% trans %}Save{% endtrans %}</button>
+                {% if excursion.productId and excursion.status in ['DRAFT', 'REJECTED'] %}
+                    <form method="post" action="{{ path('agency_excursion_submit', {id: excursion.productId}) }}" class="d-inline">
+                        <input type="hidden" name="_token" value="{{ csrf_token('excursion_submit_' ~ excursion.productId) }}">
+                        <button type="submit" class="btn btn-light-success mt-5 ms-3">{% trans %}Submit for review{% endtrans %}</button>
+                    </form>
+                {% endif %}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

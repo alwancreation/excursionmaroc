@@ -1,0 +1,5 @@
+<div class="account-nav" style="margin:15px 0;">
+    <a href="{{ path('account_profile') }}" class="btn btn-sm {{ app.request.attributes.get('_route') == 'account_profile' ? 'btn-primary' : 'btn-default' }}">{% trans %}My profile{% endtrans %}</a>
+    <a href="{{ path('account_bookings') }}" class="btn btn-sm {{ app.request.attributes.get('_route') == 'account_bookings' ? 'btn-primary' : 'btn-default' }}">{% trans %}My bookings{% endtrans %}</a>
+    <a href="{{ path('account_favorites') }}" class="btn btn-sm {{ app.request.attributes.get('_route') == 'account_favorites' ? 'btn-primary' : 'btn-default' }}">{% trans %}My favorites{% endtrans %}</a>
+</div>

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Agency;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,12 +21,7 @@ class XmlController extends AbstractController
      */
     public function mapAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        // $companies = $em->getRepository('App:Company')->findAll();
-        // replace this example code with whatever you need
-        return $this->render('App:xml:map.html.twig', [
-            
-        ]);
+        return $this->render('front/xml/map.html.twig');
     }
 
     /**
@@ -34,9 +30,9 @@ class XmlController extends AbstractController
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $agencies = $em->getRepository('App:Agency')->findAll();
+        $agencies = $em->getRepository(Agency::class)->findBy(['valid' => true]);
         // replace this example code with whatever you need
-        return $this->render('App:xml:xml-agencies.html.twig', [
+        return $this->render('front/xml/xml-agencies.html.twig', [
             "agencies"=>$agencies
         ]);
     }
@@ -47,8 +43,8 @@ class XmlController extends AbstractController
     public function programmesAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $products = $em->getRepository('App:Product')->findAll();
-        return $this->render('App:xml:xml-programmes.html.twig', [
+        $products = $em->getRepository(Product::class)->findBy(['status' => Product::STATUS_PUBLISHED]);
+        return $this->render('front/xml/xml-programmes.html.twig', [
             "products" => $products
         ]);
     }

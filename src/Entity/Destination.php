@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
@@ -75,7 +76,25 @@ public function setAssetFile($assetFile)
      */
     private $destinationIcon;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Product", mappedBy="destinations")
+     */
+    private $products;
 
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
 
     /**
      * Get destinationId
@@ -176,6 +195,33 @@ public function setAssetFile($assetFile)
      * })
      */
     private $mainAsset;
+
+    /**
+     * @var \App\Entity\Meta
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Meta", cascade={"persist"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="meta_id", referencedColumnName="meta_id")
+     * })
+     */
+    private $meta;
+
+    /**
+     * @return Meta
+     */
+    public function getMeta()
+    {
+        return $this->meta ?: new Meta();
+    }
+
+    /**
+     * @param Meta $meta
+     */
+    public function setMeta($meta)
+    {
+        $this->meta = $meta;
+    }
+
     /**
      * @return Asset
      */

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -52,7 +53,75 @@ class Category
      */
     private $categoryIcon;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category_slug", type="string", length=255, nullable=true)
+     */
+    private $categorySlug;
 
+    /**
+     * @var \App\Entity\Meta
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Meta", cascade={"persist"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="meta_id", referencedColumnName="meta_id")
+     * })
+     */
+    private $meta;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $iconFile;
+
+    /**
+     * @return mixed
+     */
+    public function getIconFile()
+    {
+        return $this->iconFile;
+    }
+
+    /**
+     * @param mixed $iconFile
+     */
+    public function setIconFile($iconFile)
+    {
+        $this->iconFile = $iconFile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategorySlug()
+    {
+        return $this->categorySlug;
+    }
+
+    /**
+     * @param string $categorySlug
+     */
+    public function setCategorySlug($categorySlug)
+    {
+        $this->categorySlug = $categorySlug;
+    }
+
+    /**
+     * @return Meta
+     */
+    public function getMeta()
+    {
+        return $this->meta ?: new Meta();
+    }
+
+    /**
+     * @param Meta $meta
+     */
+    public function setMeta($meta)
+    {
+        $this->meta = $meta;
+    }
 
     /**
      * Get categoryId

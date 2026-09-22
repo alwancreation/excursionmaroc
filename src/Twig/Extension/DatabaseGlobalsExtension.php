@@ -30,14 +30,9 @@ class DatabaseGlobalsExtension extends AbstractExtension implements GlobalsInter
     public function getGlobals(): array
     {
 
-        $settings = $this->em->getRepository('App\Entity\Settings')->findAll();
         $categories = $this->em->getRepository('App\Entity\Category')->findAll();
         $vehicles = $this->em->getRepository('App\Entity\Destination')->findAll();
         $themes = $this->em->getRepository('App\Entity\Theme')->findAll();
-        $settingsObject = new \stdClass();
-        foreach ($settings as $setting){
-            $settingsObject->{$setting->getSettingKey()} = $setting->getSettingValue();
-        }
         return array (
             "app_categories" => $categories,
             "app_destinations" => $vehicles,
