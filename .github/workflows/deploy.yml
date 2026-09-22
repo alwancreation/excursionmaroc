@@ -1,0 +1,42 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Debian Server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          port: ${{ secrets.SERVER_PORT }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_SERVER_KEY }}
+          script: |
+            set -e
+
+            APP_DIR="/var/www/excursionmaroc.com"
+            echo "▶ Deploying to ExcursionMaroc.com..."
+            cd "$APP_DIR"
+            sudo git pull origin $(sudo git rev-parse --abbrev-ref HEAD)
+            sudo COMPOSER_ALLOW_SUPERUSER=1 php8.3 /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+            sudo php8.3 bin/console cache:clear --env=prod --no-debug
+            sudo php8.3 bin/console cache:warmup --env=prod --no-debug
+            sudo php8.3 bin/console doctrine:migrations:migrate --no-interaction --env=prod
+            sudo php8.3 bin/console liip:imagine:cache:remove --env=prod 2>/dev/null || true
+            sudo chmod -R 775 var/
+            sudo chmod -R 775 public/uploads/
+            sudo chmod -R 775 public/media/
+            sudo chown -R www-data:www-data var/ public/uploads/
+            sudo chown -R www-data:www-data var/ public/media/
+
+            echo "✅ Deployment complete!"
