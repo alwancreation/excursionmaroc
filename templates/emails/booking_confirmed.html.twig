@@ -1,0 +1,24 @@
+{% extends 'emails/_layout.html.twig' %}
+{% block content %}
+    <p>Bonjour {{ booking.customerName }},</p>
+    <p>Bonne nouvelle ! Votre réservation pour <strong>{{ booking.product.productName }}</strong> a été <strong style="color: #27ae60;">confirmée</strong> par l'agence.</p>
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <th style="text-align:left; padding: 5px; width: 150px; background-color: #EFEFEF; border: solid 1px #E3E3E3;">Référence</th>
+            <td style="padding: 5px; border: solid 1px #E3E3E3;">{{ booking.reference }}</td>
+        </tr>
+        <tr>
+            <th style="text-align:left; padding: 5px; background-color: #EFEFEF; border: solid 1px #E3E3E3;">Date</th>
+            <td style="padding: 5px; border: solid 1px #E3E3E3;">{{ booking.date|date('d/m/Y') }}</td>
+        </tr>
+        <tr>
+            <th style="text-align:left; padding: 5px; background-color: #EFEFEF; border: solid 1px #E3E3E3;">Agence</th>
+            <td style="padding: 5px; border: solid 1px #E3E3E3;">{{ booking.agency }}</td>
+        </tr>
+        <tr>
+            <th style="text-align:left; padding: 5px; background-color: #EFEFEF; border: solid 1px #E3E3E3;">Montant</th>
+            <td style="padding: 5px; border: solid 1px #E3E3E3;">{{ booking.totalPrice }} {{ booking.currency }}</td>
+        </tr>
+    </table>
+    <p style="margin-top: 20px;">Nous vous souhaitons une excellente excursion !</p>
+{% endblock %}

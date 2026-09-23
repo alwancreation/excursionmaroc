@@ -16,6 +16,9 @@
         <h1>{% trans %}Subscribe for new agency{% endtrans %}</h1>
         <div class="row">
             <div class="col-sm-6">
+                {% for message in app.flashes('error') %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                {% endfor %}
                 <div class="panel panel-default">
                 	<div class="panel-body">
                         {{ form_start(form) }}

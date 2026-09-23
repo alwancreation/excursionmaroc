@@ -1,0 +1,56 @@
+{% extends 'admin/base.html.twig' %}
+{% block page_title %}{% trans %}Availabilities{% endtrans %} — {{ excursion.productName }}{% endblock %}
+{% block body %}
+    <a href="{{ path('agency_excursion_edit', {id: excursion.productId}) }}" class="mb-5 d-inline-block">{% trans %}Back to excursion{% endtrans %}</a>
+
+    <div class="card mb-5">
+        <div class="card-body">
+            <table class="table table-row-dashed">
+                <thead>
+                    <tr>
+                        <th>{% trans %}Date{% endtrans %}</th>
+                        <th>{% trans %}Time{% endtrans %}</th>
+                        <th>{% trans %}Places left{% endtrans %} / {% trans %}Capacity{% endtrans %}</th>
+                        <th>{% trans %}Price{% endtrans %}</th>
+                        <th>{% trans %}Status{% endtrans %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for schedule in excursion.schedules %}
+                        <tr>
+                            <td>{{ schedule.date ? schedule.date|date('d/m/Y') : '' }}</td>
+                            <td>{{ schedule.time }}</td>
+                            <td>{{ schedule.remainingCapacity }} / {{ schedule.capacity }}</td>
+                            <td>{{ schedule.price ?: excursion.productPrice }}</td>
+                            <td>
+                                {% if schedule.isFull %}
+                                    <span class="badge badge-light-danger">{% trans %}Complet{% endtrans %}</span>
+                                {% else %}
+                                    <span class="badge badge-light-success">{{ schedule.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form method="post" action="{{ path('agency_excursion_schedule_delete', {id: excursion.productId, scheduleId: schedule.id}) }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('excursion_schedule_delete_' ~ schedule.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-light-danger">{% trans %}Delete{% endtrans %}</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="6">{% trans %}No availability yet.{% endtrans %}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary mt-5">{% trans %}Add availability{% endtrans %}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -52,6 +52,75 @@ class Agency
      */
     private $shortDescription;
 
+    /**
+     * Raison sociale
+     *
+     * @var string
+     *
+     * @ORM\Column(name="legal_name", type="string", length=255, nullable=true)
+     */
+    private $legalName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cover", type="string", length=255, nullable=true)
+     */
+    private $cover;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="whatsapp", type="string", length=255, nullable=true)
+     */
+    private $whatsapp;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=255, nullable=true)
+     */
+    private $country;
+
+    /**
+     * Comma-separated list of spoken languages (e.g. "fr,en,ar")
+     *
+     * @var string
+     *
+     * @ORM\Column(name="languages_spoken", type="string", length=255, nullable=true)
+     */
+    private $languagesSpoken;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="years_experience", type="integer", nullable=true)
+     */
+    private $yearsExperience;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook_url", type="string", length=255, nullable=true)
+     */
+    private $facebookUrl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="instagram_url", type="string", length=255, nullable=true)
+     */
+    private $instagramUrl;
+
+    /**
+     * Badge de confiance attribué par l'admin (distinct du statut actif/inactif).
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="verified", type="boolean", nullable=true, options={"default": false})
+     */
+    private $verified;
+
 
 
 
@@ -143,6 +212,27 @@ class Agency
         $this->asset_file = $asset_file;
     }
 
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    public $cover_file;
+
+    /**
+     * @return mixed
+     */
+    public function getCoverFile()
+    {
+        return $this->cover_file;
+    }
+
+    /**
+     * @param mixed $cover_file
+     */
+    public function setCoverFile($cover_file)
+    {
+        $this->cover_file = $cover_file;
+    }
+
 
 
 
@@ -184,6 +274,150 @@ class Agency
     public function setSite($site)
     {
         $this->site = $site;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLegalName()
+    {
+        return $this->legalName;
+    }
+
+    /**
+     * @param string $legalName
+     */
+    public function setLegalName($legalName)
+    {
+        $this->legalName = $legalName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCover()
+    {
+        return $this->cover;
+    }
+
+    /**
+     * @param string $cover
+     */
+    public function setCover($cover)
+    {
+        $this->cover = $cover;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWhatsapp()
+    {
+        return $this->whatsapp;
+    }
+
+    /**
+     * @param string $whatsapp
+     */
+    public function setWhatsapp($whatsapp)
+    {
+        $this->whatsapp = $whatsapp;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param string $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguagesSpoken()
+    {
+        return $this->languagesSpoken;
+    }
+
+    /**
+     * @param string $languagesSpoken
+     */
+    public function setLanguagesSpoken($languagesSpoken)
+    {
+        $this->languagesSpoken = $languagesSpoken;
+    }
+
+    /**
+     * @return int
+     */
+    public function getYearsExperience()
+    {
+        return $this->yearsExperience;
+    }
+
+    /**
+     * @param int $yearsExperience
+     */
+    public function setYearsExperience($yearsExperience)
+    {
+        $this->yearsExperience = $yearsExperience;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFacebookUrl()
+    {
+        return $this->facebookUrl;
+    }
+
+    /**
+     * @param string $facebookUrl
+     */
+    public function setFacebookUrl($facebookUrl)
+    {
+        $this->facebookUrl = $facebookUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInstagramUrl()
+    {
+        return $this->instagramUrl;
+    }
+
+    /**
+     * @param string $instagramUrl
+     */
+    public function setInstagramUrl($instagramUrl)
+    {
+        $this->instagramUrl = $instagramUrl;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVerified()
+    {
+        return $this->verified;
+    }
+
+    /**
+     * @param bool $verified
+     */
+    public function setVerified($verified)
+    {
+        $this->verified = $verified;
     }
 
     public $user_first_name;
@@ -236,7 +470,9 @@ class Agency
     {
         $this->dateCreate = new \DateTime();
         $this->valid = true;
+        $this->verified = false;
         $this->products = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**

@@ -1,0 +1,26 @@
+{% extends 'front/base.html.twig' %}
+{% form_theme form "bootstrap_3_layout.html.twig" %}
+{% block body %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ url("homepage") }}">{% trans %}Home{% endtrans %}</a></li>
+            <li class="active">{% trans %}My profile{% endtrans %}</li>
+        </ol>
+        {{ include('front/account/_nav.html.twig') }}
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-sm-6">
+                {{ form_start(form, {attr: {enctype: 'multipart/form-data'}}) }}
+                    {{ form_widget(form) }}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

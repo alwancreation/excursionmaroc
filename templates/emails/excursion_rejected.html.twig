@@ -1,0 +1,6 @@
+{% extends 'emails/_layout.html.twig' %}
+{% block content %}
+    <p>Bonjour,</p>
+    <p>Votre excursion <strong>{{ product.productName }}</strong> n'a pas été validée en l'état et nécessite des modifications avant publication.</p>
+    <p style="margin-top: 20px;">Connectez-vous à votre espace agence pour la modifier et la soumettre à nouveau.</p>
+{% endblock %}

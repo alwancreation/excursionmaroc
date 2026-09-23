@@ -39,7 +39,7 @@ class Section
     /**
      * @var \App\Entity\Page
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Page")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Page", inversedBy="sections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="page_id", referencedColumnName="page_id")
      * })
@@ -119,7 +119,7 @@ class Section
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Product",cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Product", inversedBy="sections", cascade={"persist"})
      * @ORM\JoinTable(name="section_has_product",
      *   joinColumns={
      *     @ORM\JoinColumn(name="section_id", referencedColumnName="section_id", onDelete="cascade")
