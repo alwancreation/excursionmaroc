@@ -44,7 +44,10 @@ class AgenciesController extends AbstractController
      */
     public function detailsAction(Request $request,$slug)
     {
-        $agency = $this->getDoctrine()->getRepository("App:Agency")->findOneBy(array("slug"=>$slug));
+        $agency = $this->getDoctrine()->getRepository(Agency::class)->findOneBy(array("slug"=>$slug));
+        if (!$agency) {
+            throw $this->createNotFoundException('Agence introuvable.');
+        }
         // replace this example code with whatever you need
         return $this->render('front/agencies/details.html.twig', [
             "agency"=> $agency
