@@ -33,10 +33,17 @@ jobs:
             sudo php8.3 bin/console cache:warmup --env=prod --no-debug
             sudo php8.3 bin/console doctrine:migrations:migrate --no-interaction --env=prod
             sudo php8.3 bin/console liip:imagine:cache:remove --env=prod 2>/dev/null || true
-            sudo chmod -R 775 var/
-            sudo chmod -R 775 public/uploads/
-            sudo chmod -R 775 public/media/
-            sudo chown -R www-data:www-data var/ public/uploads/
-            sudo chown -R www-data:www-data var/ public/media/
+
+            # Ensure these directories exist before touching permissions: a
+            # missing directory aborts the script here (set -e) and silently
+            # skips every command below it. This is what left public/assets/
+            # (CSS/JS/theme images) and public/uploads/ (excursion photos,
+            # agency logos) unreadable by the web server on past deploys —
+            # the chown never actually ran. public/media/ was a stale
+            # reference: LiipImagine is configured to write its cache under
+            # public/uploads/cache/, not public/media/.
+            sudo mkdir -p var public/uploads public/assets
+            sudo chmod -R 775 var/ public/uploads/ public/assets/
+            sudo chown -R www-data:www-data var/ public/uploads/ public/assets/
 
             echo "✅ Deployment complete!"
