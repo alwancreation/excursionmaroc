@@ -1,0 +1,90 @@
+/* Custom authentication pages design (login, etc.) */
+
+body.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f4c5c 0%, #146c8c 45%, #1d8fae 100%);
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 24px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 20px 45px rgba(15, 76, 92, 0.35);
+    padding: 40px 36px;
+}
+
+.auth-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.auth-logo img {
+    max-height: 64px;
+}
+
+.auth-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #16323d;
+    margin-bottom: 4px;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #6c7a80;
+    font-size: 0.9rem;
+    margin-bottom: 28px;
+}
+
+.auth-card .form-label {
+    font-weight: 600;
+    color: #16323d;
+    font-size: 0.9rem;
+}
+
+.auth-card .form-control {
+    border-radius: 10px;
+    border: 1px solid #d8e0e3;
+    padding: 0.65rem 0.9rem;
+}
+
+.auth-card .form-control:focus {
+    border-color: #1d8fae;
+    box-shadow: 0 0 0 0.2rem rgba(29, 143, 174, 0.15);
+}
+
+.auth-submit {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 0.7rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #146c8c, #1d8fae);
+    color: #fff;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.auth-submit:hover {
+    opacity: 0.9;
+    color: #fff;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: #8a969b;
+}
+
+.auth-footer a {
+    color: #1d8fae;
+    text-decoration: none;
+}

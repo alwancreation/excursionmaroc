@@ -1,5 +1,5 @@
 {% extends 'front/base.html.twig' %}
-{% block metas %}{{ seo_service.metaProduct(product)|raw }}{% endblock %}
+{% block metas %}{{ seo_service.metaProduct(product)|raw }}<link rel="stylesheet" href="{{ asset('assets/css/product-details.css') }}">{% endblock %}
 {% block hero %}{% endblock %}
 {% block bodyHeader %}
     <div class="header-article-details">

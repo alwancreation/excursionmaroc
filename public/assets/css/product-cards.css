@@ -1,0 +1,265 @@
+/* Product grid cards (.grid-item.grid-item-product) - Sahara red theme
+   Self-contained: works both inside ".content-grid" listings and in plain
+   ".row" contexts (e.g. "similar excursions" on the product details page). */
+
+:root {
+    --pc-red: #C1440E;
+    --pc-red-dark: #8E3009;
+    --pc-sand: #F6ECDD;
+    --pc-brown: #4A342A;
+    --pc-muted: #8a7666;
+}
+
+.grid-item.grid-item-product {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: auto !important;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    padding: 0 !important;
+    margin-bottom: 24px;
+    box-shadow: 0 3px 12px rgba(74, 52, 42, 0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.grid-item.grid-item-product:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(74, 52, 42, 0.18);
+}
+
+/* image area (covers both the wrapped ".animated-content" variant and the direct ".item-thumbnail" variant) */
+.grid-item.grid-item-product .animated-content,
+.grid-item.grid-item-product > .item-thumbnail {
+    position: relative !important;
+    height: 200px !important;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    border-radius: 0 !important;
+    overflow: hidden;
+}
+
+.grid-item.grid-item-product .item-thumbnail {
+    position: relative !important;
+    display: block;
+    height: 100%;
+}
+
+.grid-item.grid-item-product .item-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.grid-item.grid-item-product .item-thumbnail:hover img {
+    transform: scale(1.08);
+}
+
+.grid-item.grid-item-product .on-hover {
+    display: none;
+}
+
+/* title + price block (was an absolute overlay on the image, now a normal block under it) */
+.grid-item.grid-item-product .item-content {
+    position: relative !important;
+    height: auto !important;
+    padding: 14px 16px 6px !important;
+    background: #fff;
+}
+
+.grid-item.grid-item-product .item-title {
+    color: var(--pc-brown) !important;
+    text-shadow: none !important;
+    font-size: 17px !important;
+    margin-bottom: 6px !important;
+}
+
+.grid-item.grid-item-product .item-title:after {
+    display: none !important;
+}
+
+.grid-item.grid-item-product .item-title-title {
+    font-weight: 700;
+}
+
+.grid-item.grid-item-product .item-title-title a {
+    color: var(--pc-brown) !important;
+}
+
+.grid-item.grid-item-product .item-title-title a:hover {
+    color: var(--pc-red) !important;
+}
+
+.grid-item.grid-item-product .item-price .price-label {
+    color: var(--pc-muted) !important;
+    font-size: 12px;
+}
+
+.grid-item.grid-item-product .item-price .price-number {
+    color: var(--pc-red) !important;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+/* description text */
+.grid-item.grid-item-product .item-details,
+.grid-item.grid-item-product .item-about {
+    color: var(--pc-muted) !important;
+    opacity: 1 !important;
+    margin-top: 0 !important;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 0 16px;
+}
+
+.grid-item.grid-item-product .footer-item-content {
+    padding: 4px 16px 14px;
+}
+
+.grid-item.grid-item-product .footer-item-content h2 {
+    font-size: 15px !important;
+    color: var(--pc-brown) !important;
+    border-bottom: none !important;
+    height: auto !important;
+    padding-bottom: 4px !important;
+    line-height: 1.3 !important;
+}
+
+.grid-item.grid-item-product .footer-item-content h2 a {
+    color: var(--pc-brown);
+}
+
+.grid-item.grid-item-product .footer-item-content h2 a:hover {
+    color: var(--pc-red);
+}
+
+/* duration / private / difficulty / max-persons badges, overlaid on the image */
+.grid-item.grid-item-product .properties {
+    position: absolute !important;
+    left: 10px !important;
+    top: 10px !important;
+    right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.grid-item.grid-item-product .properties span {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: var(--pc-brown) !important;
+    border-radius: 999px !important;
+    min-width: auto !important;
+    height: auto !important;
+    padding: 4px 10px !important;
+    margin: 0 !important;
+    font-size: 11px;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.grid-item.grid-item-product .properties span b {
+    font-weight: 600;
+    opacity: 1;
+    height: auto;
+    font-size: inherit;
+}
+
+.grid-item.grid-item-product .properties span i {
+    color: var(--pc-red);
+    font-size: 0.9em;
+}
+
+/* action bar - always visible instead of the old hover-reveal trick */
+.grid-item.grid-item-product .item-footer {
+    position: relative !important;
+    opacity: 1 !important;
+    bottom: auto !important;
+    margin-top: auto;
+    border-top: 1px solid #f1e6d8;
+}
+
+.grid-item.grid-item-product .item-footer .product-actions {
+    display: flex;
+}
+
+.grid-item.grid-item-product .item-footer .product-actions a {
+    flex: 1;
+    width: auto !important;
+    float: none !important;
+    padding: 10px 8px !important;
+    font-size: 13px !important;
+    font-weight: 700;
+}
+
+.grid-item.grid-item-product .product-more {
+    background: #fff;
+    color: var(--pc-red) !important;
+}
+
+.grid-item.grid-item-product .product-more:hover {
+    background: var(--pc-sand);
+}
+
+.grid-item.grid-item-product .product-book {
+    background: var(--pc-red);
+    color: #fff !important;
+    border-left: none !important;
+}
+
+.grid-item.grid-item-product .product-book:hover {
+    background: var(--pc-red-dark);
+}
+
+/* ===== Search form (front/inc/form-search.html.twig) =====
+   Originally absolute-positioned to float over a hero image, but the only
+   page using it (search results) has no hero image behind it, so it ended
+   up floating/overlapping. Turned into a normal static card instead. */
+.search-form-container {
+    position: static !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    z-index: auto !important;
+    width: 100% !important;
+    max-width: 900px;
+    margin: 20px auto !important;
+    background: #fff;
+    border: 1px solid #eee0d2;
+    box-shadow: 0 4px 16px rgba(74, 52, 42, 0.1);
+    border-radius: 14px !important;
+    padding: 20px !important;
+}
+
+.search-form-container .form-group-search {
+    margin-bottom: 10px;
+}
+
+.search-form-container .form-control {
+    border: 1px solid #e9d5b3;
+    border-radius: 8px;
+    height: 42px;
+}
+
+.search-form-container .form-control:focus {
+    border-color: var(--pc-red);
+    box-shadow: 0 0 0 0.2rem rgba(193, 68, 14, 0.15);
+}
+
+.search-form-container .btn-success {
+    background: var(--pc-red);
+    border-color: var(--pc-red);
+    border-radius: 8px;
+    font-weight: 700;
+    height: 42px;
+}
+
+.search-form-container .btn-success:hover {
+    background: var(--pc-red-dark);
+    border-color: var(--pc-red-dark);
+}

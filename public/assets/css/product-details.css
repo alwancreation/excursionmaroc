@@ -1,0 +1,456 @@
+/* Product details page - TripAdvisor-inspired design, Sahara red palette */
+
+:root {
+    --pd-red: #C1440E;
+    --pd-red-dark: #8E3009;
+    --pd-red-light: #FDEDE3;
+    --pd-sand: #F6ECDD;
+    --pd-sand-dark: #E9D5B3;
+    --pd-gold: #D9A441;
+    --pd-brown: #4A342A;
+    --pd-green: #2E7D32;
+    --pd-radius: 12px;
+}
+
+/* ===== Header / breadcrumb / title area ===== */
+.header-article-details {
+    background: linear-gradient(180deg, var(--pd-sand) 0%, #ffffff 100%);
+    padding-bottom: 10px;
+}
+
+.header-article-details .top-product-details {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 20px 10px;
+}
+
+.header-article-details .breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 14px;
+    font-size: 13px;
+}
+
+.header-article-details .breadcrumb li a {
+    color: var(--pd-red);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.header-article-details .breadcrumb li.active {
+    color: var(--pd-brown);
+}
+
+.top-product-section h1 {
+    color: var(--pd-brown);
+    font-weight: 800;
+    font-size: 2.1rem;
+    margin: 0 0 12px;
+}
+
+.product-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    color: var(--pd-brown);
+}
+
+.product-header > span a {
+    color: var(--pd-red);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.rating-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--pd-red);
+    color: #fff;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+}
+
+.rating-summary .fa-star,
+.rating-summary .fa-star-o {
+    color: #ffe0b2;
+    font-size: 0.85rem;
+}
+
+.no-reviews-yet {
+    color: #8a7666;
+    font-style: italic;
+}
+
+.favorite-form .btn,
+.product-header > a.btn {
+    border: 2px solid var(--pd-red);
+    color: var(--pd-red);
+    background: #fff;
+    border-radius: 999px;
+    font-weight: 700;
+    padding: 6px 16px;
+    transition: all 0.15s ease-in-out;
+}
+
+.favorite-form .btn:hover,
+.product-header > a.btn:hover {
+    background: var(--pd-red);
+    color: #fff;
+}
+
+/* ===== Image slider ===== */
+/* width is governed by the inner Bootstrap .container, same as .singlePackage */
+.container-slider {
+    margin-top: 18px;
+}
+
+.container-slider .home-slider,
+.container-slider #fullscreen-slider,
+.container-slider .slider-item,
+.container-slider .slider-item img {
+    border-radius: var(--pd-radius);
+}
+
+.container-slider .slider-item img {
+    height: 480px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.container-slider .in-slide-content {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), transparent);
+    color: #fff;
+    border-radius: 0 0 var(--pd-radius) var(--pd-radius);
+}
+
+.container-slider #arrow_left,
+.container-slider #arrow_right {
+    background: var(--pd-red);
+    color: #fff;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.container-slider #arrow_left:hover,
+.container-slider #arrow_right:hover {
+    background: var(--pd-red-dark);
+}
+
+/* ===== Main content layout ===== */
+.singlePackage {
+    max-width: 1200px;
+    background: #f5f6f7;
+    padding-top: 24px;
+    padding-bottom: 40px;
+}
+
+.singlePackage .product-section,
+.singlePackage .product-description,
+.singlePackage .product-months {
+    background: #fff;
+    border: 1px solid #eee0d2;
+    border-radius: var(--pd-radius);
+    box-shadow: 0 2px 10px rgba(74, 52, 42, 0.06);
+    padding: 22px 24px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    color: var(--pd-brown);
+    font-weight: 800;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-top: 0;
+}
+
+.section-title .title-under {
+    height: 4px;
+    width: 60px;
+    margin-top: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--pd-red), var(--pd-gold));
+}
+
+.product-months h4 {
+    color: var(--pd-brown);
+    font-weight: 700;
+}
+
+.product-months span.active {
+    background: var(--pd-red);
+    color: #fff;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    font-weight: 700;
+}
+
+.product-months span:not(.active) {
+    background: var(--pd-sand-dark);
+    color: var(--pd-brown);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+
+/* ===== Details sections / property lists ===== */
+.details-section h3 {
+    color: var(--pd-red-dark);
+    font-weight: 700;
+    font-size: 1.05rem;
+    background: var(--pd-sand);
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 999px;
+}
+
+.one-line-items {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+}
+
+.one-line-items li {
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fbf7f1;
+    border-left: 4px solid var(--pd-sand-dark);
+}
+
+.one-line-items li b {
+    color: var(--pd-brown);
+    margin-right: 6px;
+}
+
+.one-line-items li.highlights {
+    border-left-color: var(--pd-gold);
+}
+
+.one-line-items.included-list li.included {
+    border-left-color: var(--pd-green);
+    background: #f1f8f1;
+}
+
+.one-line-items.included-list li.not-included {
+    border-left-color: var(--pd-red);
+    background: var(--pd-red-light);
+}
+
+.presentation-content {
+    color: #3d3129;
+    line-height: 1.7;
+}
+
+/* ===== Inclusions / practical / terms ===== */
+.product-inclusions h4 {
+    color: var(--pd-brown);
+    font-weight: 700;
+}
+
+/* ===== Itinerary timeline ===== */
+.itinerary-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 24px;
+    border-left: 3px solid var(--pd-sand-dark);
+}
+
+.itinerary-steps li {
+    position: relative;
+    padding-bottom: 22px;
+}
+
+.itinerary-steps li::before {
+    content: "";
+    position: absolute;
+    left: -32px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--pd-red);
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--pd-red);
+}
+
+.itinerary-time {
+    display: inline-block;
+    background: var(--pd-sand);
+    color: var(--pd-red-dark);
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    margin-right: 8px;
+}
+
+.itinerary-location {
+    color: #8a7666;
+    font-style: italic;
+}
+
+/* ===== Schedules table ===== */
+.product-schedules table thead {
+    background: var(--pd-red);
+    color: #fff;
+}
+
+.product-schedules table thead th {
+    border: none;
+    font-weight: 700;
+}
+
+.product-schedules .label-danger {
+    background: var(--pd-red);
+}
+
+.product-schedules .label-success {
+    background: var(--pd-green);
+}
+
+/* ===== Reviews ===== */
+.product-reviews .review-item {
+    border-top: 1px solid #f0e6d8;
+    padding: 18px 0;
+}
+
+.product-reviews .review-item:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
+
+.review-rating .fa-star {
+    color: var(--pd-gold);
+}
+
+.review-rating .fa-star-o {
+    color: #e3d6c3;
+}
+
+.review-author {
+    color: var(--pd-brown);
+    margin: 6px 0 4px;
+}
+
+.review-comment {
+    color: #3d3129;
+}
+
+.review-agency-reply {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: var(--pd-sand);
+    border-radius: 8px;
+    border-left: 4px solid var(--pd-red);
+}
+
+/* ===== Download / PDF ===== */
+.download-section {
+    text-align: center;
+}
+
+.pdf-download {
+    display: inline-block;
+    background: var(--pd-red);
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+}
+
+.pdf-download:hover {
+    background: var(--pd-red-dark);
+    color: #fff;
+}
+
+/* ===== Booking sidebar ===== */
+.product-right-sidebar {
+    position: sticky;
+    top: 20px;
+}
+
+.product-right-sidebar .panel {
+    border: 1px solid #eee0d2;
+    border-radius: var(--pd-radius);
+    box-shadow: 0 4px 16px rgba(74, 52, 42, 0.1);
+    overflow: hidden;
+}
+
+.product-right-sidebar .panel-heading {
+    background: var(--pd-red);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    border: none;
+}
+
+.product-right-sidebar .panel-body {
+    background: #fff;
+}
+
+.booking-base-price {
+    color: var(--pd-brown);
+    font-size: 1rem;
+}
+
+.booking-base-price strong {
+    color: var(--pd-red);
+    font-size: 1.3rem;
+}
+
+.product-right-sidebar .btn-primary.large-btn {
+    background: var(--pd-red);
+    border-color: var(--pd-red);
+    font-weight: 700;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.product-right-sidebar .btn-primary.large-btn:hover {
+    background: var(--pd-red-dark);
+    border-color: var(--pd-red-dark);
+}
+
+.booking-disclaimer {
+    color: #8a7666;
+    font-size: 0.8rem;
+    margin-top: 10px;
+}
+
+/* ===== Similar excursions ===== */
+.product-similar .row {
+    margin-top: 10px;
+}
+
+@media (max-width: 767px) {
+    .container-slider .slider-item img {
+        height: 260px;
+    }
+
+    .top-product-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .product-right-sidebar {
+        position: static;
+        margin-top: 20px;
+    }
+}

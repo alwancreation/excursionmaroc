@@ -1,0 +1,173 @@
+/* Custom admin dashboard design (replaces Metronic theme) */
+
+:root {
+    --admin-sidebar-width: 260px;
+    --admin-primary: #1d8fae;
+    --admin-primary-dark: #146c8c;
+    --admin-dark: #16232f;
+    --admin-bg: #f4f6f9;
+}
+
+body.admin-body {
+    background: var(--admin-bg);
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Sidebar */
+.admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--admin-sidebar-width);
+    background: var(--admin-dark);
+    color: #cfd8dc;
+    display: flex;
+    flex-direction: column;
+    z-index: 1030;
+    transition: transform 0.2s ease-in-out;
+}
+
+.admin-sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-sidebar-logo img {
+    max-height: 36px;
+}
+
+.admin-sidebar-logo span {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.admin-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 0;
+}
+
+.admin-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #b6c1c9;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-left: 3px solid transparent;
+}
+
+.admin-nav .nav-link i {
+    font-size: 1.05rem;
+    width: 20px;
+    text-align: center;
+}
+
+.admin-nav .nav-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.admin-nav .nav-link.active {
+    color: #fff;
+    background: rgba(29, 143, 174, 0.25);
+    border-left-color: var(--admin-primary);
+}
+
+.admin-nav .nav-section-title {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: #6b7a83;
+    padding: 16px 20px 6px;
+}
+
+/* Main content wrapper */
+.admin-main {
+    margin-left: var(--admin-sidebar-width);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-topbar {
+    background: #fff;
+    border-bottom: 1px solid #e5e9ec;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+.admin-topbar .breadcrumb {
+    margin-bottom: 0;
+    font-size: 0.85rem;
+}
+
+.admin-sidebar-toggle {
+    display: none;
+    border: none;
+    background: transparent;
+    font-size: 1.3rem;
+    color: var(--admin-dark);
+}
+
+.admin-content {
+    padding: 24px;
+    flex: 1;
+}
+
+.admin-footer {
+    padding: 16px 24px;
+    color: #8a969b;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* Cards / tables tweaks to look modern on top of Bootstrap defaults */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(22, 35, 47, 0.06);
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: 1px solid #eef1f3;
+}
+
+.btn-primary {
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--admin-primary-dark);
+    border-color: var(--admin-primary-dark);
+}
+
+@media (max-width: 991.98px) {
+    .admin-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .admin-sidebar.show {
+        transform: translateX(0);
+    }
+
+    .admin-main {
+        margin-left: 0;
+    }
+
+    .admin-sidebar-toggle {
+        display: inline-block;
+    }
+}
